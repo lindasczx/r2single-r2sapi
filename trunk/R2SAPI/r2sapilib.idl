@@ -1,0 +1,40 @@
+[
+	version(1.31),
+	uuid(30000000-0000-0313-0000-000000000010),
+	helpstring("R2Single API 1.31 Type Library")
+]
+library R2SAPILib
+{
+//	importlib("stdole32.tlb");
+//	importlib("stdole2.tlb");
+	[
+		dllname("r2sapi.dll"),
+		helpstring("R2Single API 1.31 Type Library")
+	]
+	module R2SAPIExports
+	{
+		[entry("GetFileFromPakA")]
+			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]char* pszFn, [in,string]char* pszFnWant);
+		[entry("MD5")]
+			long __stdcall MD5([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA1")]
+			long __stdcall SHA1([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA224")]
+			long __stdcall SHA224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA256")]
+			long __stdcall SHA256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA384")]
+			long __stdcall SHA384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA512")]
+			long __stdcall SHA512([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("XMLPickAttribW")]
+			long __stdcall XMLPickAttribW([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in]long Pos, [in,string]wchar_t* Attrib);
+		[entry("XMLPickFullTagW")]
+			long __stdcall XMLPickFullTagW([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("XMLPickTagW")]
+			long __stdcall XMLPickTagW([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in]long Pos);
+		[entry("XMLPickTag2W")]
+			long __stdcall XMLPickTag2W([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in,out]long* NextPtr, [in]long Pos);
+
+	}
+}

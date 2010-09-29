@@ -1,0 +1,79 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION FILEVER
+ PRODUCTVERSION PRODUCTVER
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004B0"
+        BEGIN
+            VALUE "CompanyName", "ZX Inc.\0"
+            VALUE "FileDescription",
+#ifdef _DEBUG
+			"R2Single Runtime Library DLL (Debug Version)\0"
+#else
+			"R2Single Runtime Library DLL\0"
+#endif
+            VALUE "FileVersion", FILEVERSTR
+            VALUE "InternalName", "r2sapi\0"
+            VALUE "LegalCopyright", "(C)版权所有 2008-2010 ZX Inc.\0"
+            VALUE "OriginalFilename", "r2sapi.dll\0"
+            VALUE "ProductName", "R2Single Runtime Library DLL\0"
+            VALUE "ProductVersion", PRODUCTVERSTR
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0, 1200
+    END
+END
+
+
+#endif    // Chinese (中国) resources
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+IDT_TYPELIB1			TYPELIB					"r2sapilib.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

@@ -1,0 +1,24 @@
+LIBRARY R2SAPI
+EXPORTS
+
+_
+
+;// libeay32Ä£¿é
+MD5		=stdc_MD5
+SHA		=stdc_SHA
+SHA1		=stdc_SHA1
+SHA224		=stdc_SHA224
+SHA256		=stdc_SHA256
+SHA384		=stdc_SHA384
+SHA512		=stdc_SHA512
+
+;// westpakÄ£¿é
+GetFileFromPakA	=GetFileFromPak
+
+;// xmlparserÄ£¿é
+__p__STR_ERROR_W
+XMLPickAttribW
+XMLPickFullTagW
+XMLPickTagW
+XMLPickTag2W
+
