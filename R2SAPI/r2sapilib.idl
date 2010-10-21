@@ -1,15 +1,25 @@
-[
-	version(1.31),
+﻿[
+	version(1.32),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.31 Type Library")
+	helpstring("R2Single API 1.32 Type Library")
 ]
 library R2SAPILib
 {
 //	importlib("stdole32.tlb");
 //	importlib("stdole2.tlb");
+
+	module R2SAPIConstants
+	{
+		const LPSTR STR_ERROR = "^ERROR";
+		const int   Z_OK = 0;
+		const int   Z_DATA_ERROR = -3;
+		const int   Z_MEM_ERROR = -4;
+		const int   Z_BUF_ERROR = -5;
+	};
+
 	[
 		dllname("r2sapi.dll"),
-		helpstring("R2Single API 1.31 Type Library")
+		helpstring("R2Single API 1.32 Type Library")
 	]
 	module R2SAPIExports
 	{
@@ -35,6 +45,9 @@ library R2SAPILib
 			long __stdcall XMLPickTagW([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in]long Pos);
 		[entry("XMLPickTag2W")]
 			long __stdcall XMLPickTag2W([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("uncompress")]
+			long __stdcall Uncompress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
 
-	}
-}
+	};
+
+};

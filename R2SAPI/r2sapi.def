@@ -16,9 +16,11 @@ SHA512		=stdc_SHA512
 GetFileFromPakA	=GetFileFromPak
 
 ;// xmlparserÄ£¿é
-__p__STR_ERROR_W
 XMLPickAttribW
 XMLPickFullTagW
 XMLPickTagW
 XMLPickTag2W
+
+;// zlibÄ£¿é
+uncompress
 
