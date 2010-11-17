@@ -11,10 +11,17 @@ library R2SAPILib
 	module R2SAPIConstants
 	{
 		const LPSTR STR_ERROR = "^ERROR";
-		const int   Z_OK = 0;
-		const int   Z_DATA_ERROR = -3;
-		const int   Z_MEM_ERROR = -4;
-		const int   Z_BUF_ERROR = -5;
+
+		const long  Z_OK = 0;
+		const long  Z_STREAM_ERROR = -2;
+		const long  Z_DATA_ERROR = -3;
+		const long  Z_MEM_ERROR = -4;
+		const long  Z_BUF_ERROR = -5;
+
+		const long  Z_NO_COMPRESSION = 0;
+		const long  Z_BEST_SPEED = 1;
+		const long  Z_BEST_COMPRESSION = 9;
+		const long  Z_DEFAULT_COMPRESSION = -1;
 	};
 
 	[
@@ -45,6 +52,12 @@ library R2SAPILib
 			long __stdcall XMLPickTagW([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in]long Pos);
 		[entry("XMLPickTag2W")]
 			long __stdcall XMLPickTag2W([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("compress")]
+			long __stdcall Compress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
+		[entry("compress2")]
+			long __stdcall Compress2([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen, [in]long Level);
+		[entry("compressBound")]
+			long __stdcall CompressBound([in]long lSrcLen);
 		[entry("uncompress")]
 			long __stdcall Uncompress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
 
