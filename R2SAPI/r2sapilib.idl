@@ -30,18 +30,20 @@ library R2SAPILib
 	]
 	module R2SAPIExports
 	{
+		[entry("_")]
+			long __stdcall R2SAPIVer();
 		[entry("GetFileFromPakA")]
 			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]char* pszFn, [in,string]char* pszFnWant);
 		[entry("MD5")]
 			long __stdcall MD5([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA1")]
 			long __stdcall SHA1([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
-		[entry("SHA224")]
-			long __stdcall SHA224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+//		[entry("SHA224")]
+//			long __stdcall SHA224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA256")]
 			long __stdcall SHA256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
-		[entry("SHA384")]
-			long __stdcall SHA384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+//		[entry("SHA384")]
+//			long __stdcall SHA384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA512")]
 			long __stdcall SHA512([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("XMLPickAttribW")]
