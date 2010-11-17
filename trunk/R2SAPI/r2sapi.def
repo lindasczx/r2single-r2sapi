@@ -5,11 +5,11 @@ _
 
 ;// libeay32Ä£¿é
 MD5		=stdc_MD5
-SHA		=stdc_SHA
+;SHA		=stdc_SHA
 SHA1		=stdc_SHA1
-SHA224		=stdc_SHA224
+;SHA224		=stdc_SHA224
 SHA256		=stdc_SHA256
-SHA384		=stdc_SHA384
+;SHA384		=stdc_SHA384
 SHA512		=stdc_SHA512
 
 ;// westpakÄ£¿é
@@ -22,5 +22,8 @@ XMLPickTagW
 XMLPickTag2W
 
 ;// zlibÄ£¿é
+compress
+compress2
+compressBound
 uncompress
 
