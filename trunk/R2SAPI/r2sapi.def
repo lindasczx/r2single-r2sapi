@@ -2,6 +2,14 @@ LIBRARY R2SAPI
 EXPORTS
 
 _
+UTF8ToUnicode
+UTF16BEToUnicode
+UTF32ToUnicode
+UTF32BEToUnicode
+UnicodeToUTF8
+UnicodeToUTF16BE=UTF16BEToUnicode
+UnicodeToUTF32
+UnicodeToUTF32BE
 
 ;// libeay32Ä£¿é
 MD5		=stdc_MD5

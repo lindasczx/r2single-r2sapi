@@ -1,11 +1,12 @@
 CC=gcc
 RC=windres
 LINK=dllwrap
+CFLAGS= -c -O3
 CXXFLAGS= -c -O3
 SBFLAGS= -Wl,--enable-stdcall-fixup
 IMPLIB=libcrypto.a libz.a
 IMPOBJ=stdc.o
-LINKOBJ=fileio.o lzssdec.o modxmlparser.o r2sapi.o r2sapi.res
+LINKOBJ=fileio.o lzssdec.o mxmlparser.o r2sapi.o utf.o r2sapi.res
 BIN=r2sapi.dll
 
 
@@ -26,8 +27,11 @@ fileio.o:../r2pak/fileio.cpp
 lzssdec.o:../r2pak/lzssdec.cpp
 	$(CC) ../r2pak/lzssdec.cpp $(CXXFLAGS) -D_USRDLL
 
-modxmlparser.o:../../../modxmlparser.cpp
-	$(CC) ../../../modxmlparser.cpp $(CXXFLAGS)
+mxmlparser.o:../../../mxmlparser.cpp
+	$(CC) ../../../mxmlparser.cpp $(CXXFLAGS)
+
+utf.o:utf.c
+	$(CC) utf.c $(CFLAGS)
 
 r2sapi.o:r2sapi.cpp
 	$(CC) r2sapi.cpp $(CXXFLAGS)

@@ -46,6 +46,22 @@ library R2SAPILib
 //			long __stdcall SHA384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA512")]
 			long __stdcall SHA512([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("UTF8ToUnicode")]
+			long __stdcall UTF8ToUnicode([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
+		[entry("UTF16BEToUnicode")]
+			long __stdcall UTF16BEToUnicode([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
+		[entry("UTF32ToUnicode")]
+			long __stdcall UTF32ToUnicode([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
+		[entry("UTF32BEToUnicode")]
+			long __stdcall UTF32BEToUnicode([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
+		[entry("UnicodeToUTF8")]
+			long __stdcall UnicodeToUTF8([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UnicodeToUTF16BE")]
+			long __stdcall UnicodeToUTF16BE([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UnicodeToUTF32")]
+			long __stdcall UnicodeToUTF32([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UnicodeToUTF32BE")]
+			long __stdcall UnicodeToUTF32BE([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 		[entry("XMLPickAttribW")]
 			long __stdcall XMLPickAttribW([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in]long Pos, [in,string]wchar_t* Attrib);
 		[entry("XMLPickFullTagW")]
