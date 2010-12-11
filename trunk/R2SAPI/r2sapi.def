@@ -1,17 +1,31 @@
-LIBRARY R2SAPI
+﻿LIBRARY R2SAPI
 EXPORTS
 
 _
-UTF8ToUnicode
-UTF16BEToUnicode
-UTF32ToUnicode
-UTF32BEToUnicode
-UnicodeToUTF8
-UnicodeToUTF16BE=UTF16BEToUnicode
-UnicodeToUTF32
-UnicodeToUTF32BE
+;// UTF.c
+UTF8ToUTF16
+UTF8ToUTF32
+UTF16ToUTF8
+UTF16ToUTF16BE	=UTF16BEToUTF16
+UTF16ToUTF32
+UTF16ToUTF32BE
+UTF16BEToUTF16
+UTF32ToUTF8
+UTF32ToUTF16
+UTF32ToUTF32BE	=UTF32BEToUTF32
+UTF32BEToUTF16
+UTF32BEToUTF32
+;//已废弃,不推荐使用
+UTF8ToUnicode	=UTF8ToUTF16
+UnicodeToUTF8	=UTF16ToUTF8
+UnicodeToUTF16BE=UTF16BEToUTF16
+UnicodeToUTF32	=UTF16ToUTF32
+UnicodeToUTF32BE=UTF16ToUTF32BE
+UTF16BEToUnicode=UTF16BEToUTF16
+UTF32ToUnicode	=UTF32ToUTF16
+UTF32BEToUnicode=UTF32BEToUTF16
 
-;// libeay32ģ��
+;// libeay32模块
 MD5		=stdc_MD5
 ;SHA		=stdc_SHA
 SHA1		=stdc_SHA1
@@ -20,16 +34,16 @@ SHA256		=stdc_SHA256
 ;SHA384		=stdc_SHA384
 SHA512		=stdc_SHA512
 
-;// westpakģ��
+;// westpak模块
 GetFileFromPakA	=GetFileFromPak
 
-;// xmlparserģ��
+;// xmlparser模块
 XMLPickAttribW
 XMLPickFullTagW
 XMLPickTagW
 XMLPickTag2W
 
-;// zlibģ��
+;// zlib模块
 compress
 compress2
 compressBound
