@@ -49,7 +49,7 @@ library R2SAPILib
 		[entry("UTF8ToUTF16")]
 			long __stdcall UTF8ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
 		[entry("UTF8ToUTF32")]
-			long __stdcall UTF8ToUTF32([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+			long __stdcall UTF8ToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 		[entry("UTF16ToUTF8")]
 			long __stdcall UTF16ToUTF8([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 		[entry("UTF16ToUTF16BE")]
@@ -61,15 +61,15 @@ library R2SAPILib
 		[entry("UTF16BEToUTF16")]
 			long __stdcall UTF16BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
 		[entry("UTF32ToUTF8")]
-			long __stdcall UTF32ToUTF8([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+			long __stdcall UTF32ToUTF8([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 		[entry("UTF32ToUTF16")]
 			long __stdcall UTF32ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
 		[entry("UTF32ToUTF32BE")]
-			long __stdcall UTF32ToUTF32BE([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
+			long __stdcall UTF32ToUTF32BE([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 		[entry("UTF32BEToUTF16")]
 			long __stdcall UTF32BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
 		[entry("UTF32BEToUTF32")]
-			long __stdcall UTF32BEToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
+			long __stdcall UTF32BEToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 		[entry("XMLPickAttribW")]
 			long __stdcall XMLPickAttribW([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in]long Pos, [in,string]wchar_t* Attrib);
 		[entry("XMLPickFullTagW")]
