@@ -32,8 +32,32 @@ library R2SAPILib
 	{
 		[entry("_")]
 			long __stdcall R2SAPIVer();
-		[entry("GetFileFromPakA")]
-			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]char* pszFn, [in,string]char* pszFnWant);
+////	UTF.c
+		[entry("UTF8ToUTF16")]
+			long __stdcall UTF8ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
+		[entry("UTF8ToUTF32")]
+			long __stdcall UTF8ToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF16ToUTF8")]
+			long __stdcall UTF16ToUTF8([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF16ToUTF16BE")]
+			long __stdcall UTF16ToUTF16BE([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF16ToUTF32")]
+			long __stdcall UTF16ToUTF32([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF16ToUTF32BE")]
+			long __stdcall UTF16ToUTF32BE([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF16BEToUTF16")]
+			long __stdcall UTF16BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
+		[entry("UTF32ToUTF8")]
+			long __stdcall UTF32ToUTF8([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF32ToUTF16")]
+			long __stdcall UTF32ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
+		[entry("UTF32ToUTF32BE")]
+			long __stdcall UTF32ToUTF32BE([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF32BEToUTF16")]
+			long __stdcall UTF32BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
+		[entry("UTF32BEToUTF32")]
+			long __stdcall UTF32BEToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+////	libeay32模块
 		[entry("MD5")]
 			long __stdcall MD5([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA1")]
@@ -46,38 +70,19 @@ library R2SAPILib
 //			long __stdcall SHA384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA512")]
 			long __stdcall SHA512([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
-		[entry("UTF8ToUTF16")]
-			long __stdcall UTF8ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
-		[entry("UTF8ToUTF32")]
-			long __stdcall UTF8ToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF16ToUTF8")]
-			long __stdcall UTF16ToUTF8([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF16ToUTF16BE")]
-			long __stdcall UTF16ToUTF16BE([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF16ToUTF32")]
-			long __stdcall UTF16ToUTF32([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF16ToUTF32BE")]
-			long __stdcall UTF16ToUTF32BE([in,string]wchar_t* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF16BEToUTF16")]
-			long __stdcall UTF16BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
-		[entry("UTF32ToUTF8")]
-			long __stdcall UTF32ToUTF8([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF32ToUTF16")]
-			long __stdcall UTF32ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
-		[entry("UTF32ToUTF32BE")]
-			long __stdcall UTF32ToUTF32BE([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF32BEToUTF16")]
-			long __stdcall UTF32BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]wchar_t* lpDestStr, [in]long cchDest);
-		[entry("UTF32BEToUTF32")]
-			long __stdcall UTF32BEToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+////	westpak模块
+		[entry("GetFileFromPakA")]
+			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]LPCSTR pszFn, [in,string]LPCSTR pszFnWant);
+////	xmlparser模块
 		[entry("XMLPickAttribW")]
-			long __stdcall XMLPickAttribW([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in]long Pos, [in,string]wchar_t* Attrib);
+			long __stdcall XMLPickAttribW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
 		[entry("XMLPickFullTagW")]
-			long __stdcall XMLPickFullTagW([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in,out]long* NextPtr, [in]long Pos);
+			long __stdcall XMLPickFullTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
 		[entry("XMLPickTagW")]
-			long __stdcall XMLPickTagW([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in]long Pos);
+			long __stdcall XMLPickTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos);
 		[entry("XMLPickTag2W")]
-			long __stdcall XMLPickTag2W([in,out,string]wchar_t* StrTo, [in,string]wchar_t* StrFrom, [in,string]wchar_t* Tag, [in,out]long* NextPtr, [in]long Pos);
+			long __stdcall XMLPickTag2W([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+////	zlib模块
 		[entry("compress")]
 			long __stdcall Compress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
 		[entry("compress2")]

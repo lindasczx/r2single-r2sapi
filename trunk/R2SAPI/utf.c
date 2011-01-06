@@ -1,6 +1,6 @@
 /*++
 Copyright (c) 1991-1996,  Microsoft Corporation,
-			  2010,       ZX Inc. All rights reserved.
+              2010,       ZX Inc. All rights reserved.
 Module Name:
     utf.c
 
@@ -8,7 +8,7 @@ Abstract:
     This file contains functions that convert UTF strings to Unicode
     strings and Unicode string to UTF strings.
     
-	Unicode 6.0.0:
+    Unicode 6.0.0:
     UTF-32 range: 00000000 - 0010FFFF
     UTF-16 range: 0000 - DBFF DFFF, no supersurrogates defined right now.
     UTF-8  range: 00 - F4 8F BF BF
@@ -25,40 +25,41 @@ typedef const int * LPCLSTR;
 
 //  Constant Declarations.
 
-#define ASCII             0x7f
-#define UTF8_2_MAX        0x7ff  // max UTF8 2-byte sequence (32*64=2048)
-#define UTF8_3_MAX        0xffff  // max UTF8 3-byte sequence (16*64*64=65536)
-#define UTF8_4_MAX        0x1fffff // max UTF8 4-byte sequence (8*64*64*64=2097152)
-#define UTF8_5_MAX        0x3ffffff // max UTF8 5-byte sequence (4*64*64*64*64=67108864)
-#define UTF8_6_MAX        0x7fffffff // max UTF8 6-byte sequence (maxint)
-#define SURROGATE1_MIN    0xd800
-#define SURROGATE1_MAX    0xdbff
-#define SURROGATE2_MIN    0xdc00
-#define SURROGATE2_MAX    0xdfff
-#define UTF8_1ST_OF_2     0xc0    // 110x xxxx
-#define UTF8_1ST_OF_3     0xe0    // 1110 xxxx
-#define UTF8_1ST_OF_4     0xf0    // 1111 0xxx
-#define UTF8_1ST_OF_5     0xf8    // 1111 10xx
-#define UTF8_1ST_OF_6     0xfc    // 1111 110x
-#define UTF8_TRAIL        0x80    // 10xx xxxx
+#define ASCII                 0x7f
+#define UTF8_2_MAX            0x7ff  // max UTF8 2-byte sequence (32*64=2048)
+#define UTF8_3_MAX            0xffff  // max UTF8 3-byte sequence (16*64*64=65536)
+#define UTF8_4_MAX            0x1fffff // max UTF8 4-byte sequence (8*64*64*64=2097152)
+#define UTF8_5_MAX            0x3ffffff // max UTF8 5-byte sequence (4*64*64*64*64=67108864)
+#define UTF8_6_MAX            0x7fffffff // max UTF8 6-byte sequence (maxint)
+#define UTF8_1ST_OF_2         0xc0    // 110x xxxx
+#define UTF8_1ST_OF_3         0xe0    // 1110 xxxx
+#define UTF8_1ST_OF_4         0xf0    // 1111 0xxx
+#define UTF8_1ST_OF_5         0xf8    // 1111 10xx
+#define UTF8_1ST_OF_6         0xfc    // 1111 110x
+#define UTF8_TRAIL            0x80    // 10xx xxxx
 
-#define MAKEUTF32(u1,u2)  (((((u1)&0x03ff)<<10)|((u2)&0x03ff))+0x10000)
-#define MAKESURROGATE1(u) (0xd800|((((u)-0x10000)>>10)&0x3ff))
-#define MAKESURROGATE2(u) (0xdc00|((u)&0x3ff))
+#define TOP_6_BIT(u)          ((u) >> 30)
+#define LAST5_6_BIT(u)        (((u) & 0x3f000000) >> 24)
+#define LAST4_6_BIT(u)        (((u) & 0xfc0000) >> 18)
+#define LAST3_6_BIT(u)        (((u) & 0x3f000) >> 12)
+#define LAST2_6_BIT(u)        (((u) & 0xfc0) >> 6)
+#define LAST1_6_BIT(u)        ((u) & 0x3f)
 
-#define SWAPBYTEORDER2(u) ((((u)>>8)&0xff)|(((u)<<8)&0xff00))
-#define SWAPBYTEORDER4(u) ((((u)>>24)&0xff)|(((u)>>8)&0xff00)|(((u)<<8)&0xff0000)|((u)<<24))
+#define BIT7(a)               ((a) & 0x80)
+#define BIT6(a)               ((a) & 0x40)
 
-#define TOP_6_BIT(u)      ((u) >> 30)
-#define LAST5_6_BIT(u)    (((u) & 0x3f000000) >> 24)
-#define LAST4_6_BIT(u)    (((u) & 0xfc0000) >> 18)
-#define LAST3_6_BIT(u)    (((u) & 0x3f000) >> 12)
-#define LAST2_6_BIT(u)    (((u) & 0xfc0) >> 6)
-#define LAST1_6_BIT(u)    ((u) & 0x3f)
+#define UTF16_2_MAX           0xffff  // max UTF16 2-byte sequence
+#define HIGH_SURROGATE_START  0xd800
+#define HIGH_SURROGATE_END    0xdbff
+#define LOW_SURROGATE_START   0xdc00
+#define LOW_SURROGATE_END     0xdfff
 
-#define BIT7(a)           ((a) & 0x80)
-#define BIT6(a)           ((a) & 0x40)
+#define MAKEUTF32(u1,u2)      (((((u1)&0x03ff)<<10)|((u2)&0x03ff))+0x10000)
+#define MAKEHIGHSURROGATE(u)  (0xd800|((((u)-0x10000)>>10)&0x3ff))
+#define MAKELOWSURROGATE(u)   (0xdc00|((u)&0x3ff))
 
+#define SWAPBYTEORDER2(u)     ((((u)>>8)&0xff)|(((u)<<8)&0xff00))
+#define SWAPBYTEORDER4(u)     ((((u)>>24)&0xff)|(((u)>>8)&0xff00)|(((u)<<8)&0xff0000)|((u)<<24))
 
 
 //-------------------------------------------------------------------------//
@@ -123,32 +124,32 @@ int WINAPI UTF8ToUTF16(
                 if (nTB == 0)
                 {
                     //  End of sequence.  Advance the output counter.
-                    if(utf32<0x10000)
+                    if(utf32<=UTF16_2_MAX)
                     {
-		                if (cchDest)
-		                {
-	                        lpDestStr[cchWC]=utf32;
-						}
-						cchWC++;
-					}
-					else
-					{
-						//  Out of BMP, output surrogates.
-		                if ((cchWC + 1) < cchDest)
-		                {
-			                if (cchDest)
-			                {
-		                        lpDestStr[cchWC]=MAKESURROGATE1(utf32);
-		                        lpDestStr[cchWC+1]=MAKESURROGATE2(utf32);
-							}
-							cchWC+=2;
-						}
-						else
-						{
-							cchSrc++;
-							break;
-						}
-					}
+                        if (cchDest)
+                        {
+                            lpDestStr[cchWC]=utf32;
+                        }
+                        cchWC++;
+                    }
+                    else
+                    {
+                        //  Out of BMP, output surrogates.
+                        if ((cchWC + 1) < cchDest)
+                        {
+                            if (cchDest)
+                            {
+                                lpDestStr[cchWC]=MAKEHIGHSURROGATE(utf32);
+                                lpDestStr[cchWC+1]=MAKELOWSURROGATE(utf32);
+                            }
+                            cchWC+=2;
+                        }
+                        else
+                        {
+                            cchSrc++;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -239,7 +240,6 @@ int WINAPI UTF16ToUTF8(
             {
                 if ((cchU8 + 1) < cchDest)
                 {
-                    cchSrc--;
                     //  Use upper 5 bits in first byte.
                     //  Use lower 6 bits in second byte.
                     lpDestStr[cchU8++] = UTF8_1ST_OF_2 | (*lpWC >> 6);
@@ -254,46 +254,53 @@ int WINAPI UTF16ToUTF8(
             }
             else
             {
-                cchSrc--;
                 cchU8 += 2;
             }
         }
-        else if ((*lpWC >= SURROGATE1_MIN) && (*lpWC <= SURROGATE1_MAX))
+        else if ((*lpWC >= HIGH_SURROGATE_START) && (*lpWC <= HIGH_SURROGATE_END))
         {
             //  Found 4 byte sequence.
-            if (cchDest)
+            if ((cchSrc>=2) && (*(lpWC+1) >= LOW_SURROGATE_START) && (*(lpWC+1) <= LOW_SURROGATE_END))
             {
-                if (cchSrc>=2 && cchU8+3<cchDest)
+                if (cchDest)
                 {
-					cchSrc--;
-					utf32=MAKEUTF32(*lpWC,*(lpWC+1));
-			        lpWC++;
-                    //  Use upper  3 bits in first byte.
-                    //  Use higher 6 bits in second byte.
-                    //  Use middle 6 bits in third byte.
-                    //  Use lower  6 bits in fourth byte.
-                    lpDestStr[cchU8++] = UTF8_1ST_OF_4 | (utf32 >> 18);
-                    lpDestStr[cchU8++] = UTF8_TRAIL    | LAST3_6_BIT(utf32);
-                    lpDestStr[cchU8++] = UTF8_TRAIL    | LAST2_6_BIT(utf32);
-                    lpDestStr[cchU8++] = UTF8_TRAIL    | LAST1_6_BIT(utf32);
+                    if (cchU8+3<cchDest)
+                    {
+	                    cchSrc--;
+	                    utf32=MAKEUTF32(*lpWC,*(lpWC+1));
+	                    lpWC++;
+                        //  Use upper  3 bits in first byte.
+                        //  Use higher 6 bits in second byte.
+                        //  Use middle 6 bits in third byte.
+                        //  Use lower  6 bits in fourth byte.
+                        lpDestStr[cchU8++] = UTF8_1ST_OF_4 | (utf32 >> 18);
+                        lpDestStr[cchU8++] = UTF8_TRAIL    | LAST3_6_BIT(utf32);
+                        lpDestStr[cchU8++] = UTF8_TRAIL    | LAST2_6_BIT(utf32);
+                        lpDestStr[cchU8++] = UTF8_TRAIL    | LAST1_6_BIT(utf32);
+                    }
+                    else
+                    {
+                        //  Error - buffer too small.
+                        cchSrc++;
+                        break;
+                    }
                 }
                 else
                 {
-                    //  Error - buffer too small.
-                    cchSrc++;
-                    break;
+                    cchSrc--;
+                    lpWC++;
+                    cchU8 += 4;
                 }
-            }
-            else
-            {
-				cchSrc--;
-		        lpWC++;
-                cchU8 += 4;
-            }
-		}
+			}
+			else
+			{
+				goto badsurrogatepair;
+			}
+        }
         else
         {
             //  Found 3 byte sequence.
+badsurrogatepair:
             if (cchDest)
             {
                 if ((cchU8 + 2) < cchDest)
@@ -405,35 +412,35 @@ int WINAPI UTF32ToUTF16(
 
     while ((cchSrc--) && ((cchDest == 0) || (cchWC < cchDest)))
     {
-		if(*pUTF32<0x10000)
-		{
-	        if (cchDest)
-	        {
-	            lpDestStr[cchWC] = *pUTF32;
-	        }
-        	cchWC++;
-		}
-		else
-		{
-			//  Out of BMP, output surrogates.
-			if(cchWC+1<cchDest)
-			{
-		        if (cchDest)
-		        {
-		            lpDestStr[cchWC] = MAKESURROGATE1(*pUTF32);
-		            lpDestStr[cchWC+1] = MAKESURROGATE2(*pUTF32);
-		        }
-	        	cchWC+=2;
-			}
-			else
-			{
+        if(*pUTF32<=UTF16_2_MAX)
+        {
+            if (cchDest)
+            {
+                lpDestStr[cchWC] = *pUTF32;
+            }
+            cchWC++;
+        }
+        else
+        {
+            //  Out of BMP, output surrogates.
+            if(cchWC+1<cchDest)
+            {
+                if (cchDest)
+                {
+                    lpDestStr[cchWC] = MAKEHIGHSURROGATE(*pUTF32);
+                    lpDestStr[cchWC+1] = MAKELOWSURROGATE(*pUTF32);
+                }
+                cchWC+=2;
+            }
+            else
+            {
                 //  Error - buffer too small.
-				cchSrc++;
-				break;
-			}
-		}
-		
-		pUTF32++;
+                cchSrc++;
+                break;
+            }
+        }
+        
+        pUTF32++;
     }
 
     //  Make sure the destination buffer was large enough.
@@ -476,34 +483,33 @@ int WINAPI UTF16ToUTF32(
 
     while ((cchSrc--) && ((cchDest == 0) || (cchU32 < cchDest)))
     {
-        if ((*lpWC >= SURROGATE1_MIN) && (*lpWC <= SURROGATE1_MAX))
+        if ((*lpWC >= HIGH_SURROGATE_START) && (*lpWC <= HIGH_SURROGATE_END))
         {
+            if ((cchSrc>=2) && (*(lpWC+1) >= LOW_SURROGATE_START) && (*(lpWC+1) <= LOW_SURROGATE_END))
+            {
+	            if (cchDest)
+	            {
+                    utf32=MAKEUTF32(*lpWC,*(lpWC+1));
+                    lpDestStr[cchU32] = utf32;
+	            }
+	            cchSrc--;
+	            lpWC++;
+	            cchU32++;
+			}
+			else
+			{
+				goto badsurrogatepair;
+			}
+        }
+        else
+        {
+badsurrogatepair:
             if (cchDest)
             {
-                if (cchSrc>=2)
-                {
-					utf32=MAKEUTF32(*lpWC,*(lpWC+1));
-                    lpDestStr[cchU32] = utf32;
-                }
-                else
-                {
-                    //  Error - buffer too small.
-                    cchSrc++;
-                    break;
-                }
+                lpDestStr[cchU32] = *lpWC;
             }
-			cchSrc--;
-			lpWC++;
-			cchU32++;
-		}
-		else
-		{
-	        if (cchDest)
-	        {
-	            lpDestStr[cchU32] = *lpWC;
-	        }
-        	cchU32++;
-		}
+            cchU32++;
+        }
 
         lpWC++;
     }
@@ -548,35 +554,35 @@ int WINAPI UTF32BEToUTF16(
 
     while ((cchSrc--) && ((cchDest == 0) || (cchWC < cchDest)))
     {
-		utf32=SWAPBYTEORDER4(*pUTF32);
-		if(utf32<0x10000)
-		{
-	        if (cchDest)
-	        {
-	            lpDestStr[cchWC] = utf32;
-	        }
-        	cchWC++;
-		}
-		else
-		{
-			if(cchWC+1<cchDest)
-			{
-		        if (cchDest)
-		        {
-		            lpDestStr[cchWC] = MAKESURROGATE1(utf32);
-		            lpDestStr[cchWC+1] = MAKESURROGATE2(utf32);
-		        }
-	        	cchWC+=2;
-			}
-			else
-			{
+        utf32=SWAPBYTEORDER4(*pUTF32);
+        if(utf32<=UTF16_2_MAX)
+        {
+            if (cchDest)
+            {
+                lpDestStr[cchWC] = utf32;
+            }
+            cchWC++;
+        }
+        else
+        {
+            if(cchWC+1<cchDest)
+            {
+                if (cchDest)
+                {
+                    lpDestStr[cchWC] = MAKEHIGHSURROGATE(utf32);
+                    lpDestStr[cchWC+1] = MAKELOWSURROGATE(utf32);
+                }
+                cchWC+=2;
+            }
+            else
+            {
                 //  Error - buffer too small.
-				cchSrc++;
-				break;
-			}
-		}
+                cchSrc++;
+                break;
+            }
+        }
 
-		pUTF32++;
+        pUTF32++;
     }
 
     //  Make sure the destination buffer was large enough.
@@ -619,34 +625,33 @@ int WINAPI UTF16ToUTF32BE(
 
     while ((cchSrc--) && ((cchDest == 0) || (cchU32 < cchDest)))
     {
-        if ((*lpWC >= SURROGATE1_MIN) && (*lpWC <= SURROGATE1_MAX))
+        if ((*lpWC >= HIGH_SURROGATE_START) && (*lpWC <= HIGH_SURROGATE_END))
         {
+            if ((cchSrc>=2) && (*(lpWC+1) >= LOW_SURROGATE_START) && (*(lpWC+1) <= LOW_SURROGATE_END))
+            {
+	            if (cchDest)
+	            {
+                    utf32=MAKEUTF32(*lpWC,*(lpWC+1));
+                    lpDestStr[cchU32] = SWAPBYTEORDER4(utf32);
+	            }
+	            cchSrc--;
+	            lpWC++;
+	            cchU32++;
+			}
+			else
+			{
+				goto badsurrogatepair;
+			}
+        }
+        else
+        {
+badsurrogatepair:
             if (cchDest)
             {
-                if (cchSrc>=2)
-                {
-					utf32=MAKEUTF32(*lpWC,*(lpWC+1));
-                    lpDestStr[cchU32] = SWAPBYTEORDER4(utf32);
-                }
-                else
-                {
-                    //  Error - buffer too small.
-                    cchSrc++;
-                    break;
-                }
+                lpDestStr[cchU32] = SWAPBYTEORDER4(*lpWC);
             }
-			cchSrc--;
-	        lpWC++;
             cchU32++;
-		}
-		else
-		{
-	        if (cchDest)
-	        {
-	            lpDestStr[cchU32] = SWAPBYTEORDER4(*lpWC);
-	        }
-        	cchU32++;
-		}
+        }
 
         lpWC++;
     }
@@ -764,11 +769,11 @@ int WINAPI UTF8ToUTF32(
                 if (nTB == 0)
                 {
                     //  End of sequence.  Advance the output counter.
-	                if (cchDest)
-	                {
+                    if (cchDest)
+                    {
                         lpDestStr[cchLC]=utf32;
-					}
-					cchLC++;
+                    }
+                    cchLC++;
                 }
             }
         }
@@ -930,7 +935,7 @@ int WINAPI UTF32ToUTF8(
             {
                 cchU8 += 4;
             }
-		}
+        }
         else if (*lpLC <= UTF8_5_MAX)
         {
             //  Found 5 byte sequence.
@@ -960,7 +965,7 @@ int WINAPI UTF32ToUTF8(
             {
                 cchU8 += 5;
             }
-		}
+        }
         else
         {
             //  Found 6 byte sequence.
@@ -992,7 +997,7 @@ int WINAPI UTF32ToUTF8(
             {
                 cchU8 += 6;
             }
-		}
+        }
 
         lpLC++;
     }
