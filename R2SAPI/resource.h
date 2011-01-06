@@ -1,7 +1,7 @@
 // version
-#define APIVER                          84
-#define FILEVER                         1,32,0,84
-#define FILEVERSTR                      "1.32.0.84" /*" BETA"*/ "\0"
+#define APIVER                          86
+#define FILEVER                         1,32,0,86
+#define FILEVERSTR                      "1.32.0.86" /*" BETA"*/ "\0"
 #define PRODUCTVER                      FILEVER
 #define PRODUCTVERSTR                   FILEVERSTR
 
