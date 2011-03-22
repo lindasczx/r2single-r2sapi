@@ -1,7 +1,7 @@
 ﻿[
-	version(1.32),
+	version(1.33),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.32 Type Library")
+	helpstring("R2Single API 1.33 Type Library")
 ]
 library R2SAPILib
 {
@@ -26,7 +26,7 @@ library R2SAPILib
 
 	[
 		dllname("r2sapi.dll"),
-		helpstring("R2Single API 1.32 Type Library")
+		helpstring("R2Single API 1.33 Type Library")
 	]
 	module R2SAPIExports
 	{
@@ -89,6 +89,8 @@ library R2SAPILib
 			long __stdcall Compress2([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen, [in]long Level);
 		[entry("compressBound")]
 			long __stdcall CompressBound([in]long lSrcLen);
+		[entry("crc32")]
+			long __stdcall CRC32([in]long CRC, [in]void* pBuf, [in]long lBufLen);
 		[entry("uncompress")]
 			long __stdcall Uncompress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
 

@@ -53,7 +53,7 @@ BEGIN
 #endif
             VALUE "FileVersion", FILEVERSTR
             VALUE "InternalName", "r2sapi\0"
-            VALUE "LegalCopyright", "(C)版权所有 2008-2010 ZX Inc.\0"
+            VALUE "LegalCopyright", "(C)版权所有 2008-2011 ZX Inc.\0"
             VALUE "OriginalFilename", "r2sapi.dll\0"
             VALUE "ProductName", "R2Single Runtime Library DLL\0"
             VALUE "ProductVersion", PRODUCTVERSTR

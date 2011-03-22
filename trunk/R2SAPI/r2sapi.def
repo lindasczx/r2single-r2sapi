@@ -38,5 +38,6 @@ XMLPickTag2W
 compress
 compress2
 compressBound
+crc32
 uncompress
 
