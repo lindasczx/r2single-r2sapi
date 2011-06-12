@@ -3,6 +3,8 @@ EXPORTS
 
 _
 ;// UTF.c
+cpConvertEncoding
+cpTrCodeSupported
 UTF8ToUTF16
 UTF8ToUTF32
 UTF16ToUTF8
@@ -30,14 +32,23 @@ GetFileFromPakA	=GetFileFromPak
 
 ;// xmlparser模块
 XMLPickAttribW
+XMLPickAttribPosW
 XMLPickFullTagW
+XMLPickFullTagPosW
 XMLPickTagW
 XMLPickTag2W
+XMLPickTagPosW
 
 ;// zlib模块
 compress
 compress2
 compressBound
 crc32
+crc32_combine
+crc32_combine64
+get_crc_table
 uncompress
+;zError
+;zlibCompileFlags
+zlibVersion
 

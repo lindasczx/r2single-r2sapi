@@ -5,7 +5,7 @@
 extern "C"{
 #endif
 
-int _();
+int WINAPI _();
 
 #ifdef __cplusplus
 }

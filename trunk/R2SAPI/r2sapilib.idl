@@ -1,7 +1,7 @@
 ﻿[
-	version(1.33),
+	version(1.34),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.33 Type Library")
+	helpstring("R2Single API 1.34 Type Library")
 ]
 library R2SAPILib
 {
@@ -11,6 +11,14 @@ library R2SAPILib
 	module R2SAPIConstants
 	{
 		const LPSTR STR_ERROR = "^ERROR";
+
+		const long  cpUTF8 = 1;
+		const long  cpUTF16 = 2;
+		const long  cpUTF16LE = 2;
+		const long  cpUTF16BE = 3;
+		const long  cpUTF32 = 4;
+		const long  cpUTF32LE = 4;
+		const long  cpUTF32BE = 5;
 
 		const long  Z_OK = 0;
 		const long  Z_STREAM_ERROR = -2;
@@ -26,13 +34,17 @@ library R2SAPILib
 
 	[
 		dllname("r2sapi.dll"),
-		helpstring("R2Single API 1.33 Type Library")
+		helpstring("R2Single API 1.34 Type Library")
 	]
 	module R2SAPIExports
 	{
 		[entry("_")]
 			long __stdcall R2SAPIVer();
 ////	UTF.c
+		[entry("cpConvertEncoding")]
+			long __stdcall cpConvertEncoding([in]long TrCode, [in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("cpTrCodeSupported")]
+			long __stdcall cpTrCodeSupported([in]long TrCode);
 		[entry("UTF8ToUTF16")]
 			long __stdcall UTF8ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
 		[entry("UTF8ToUTF32")]
@@ -76,12 +88,18 @@ library R2SAPILib
 ////	xmlparser模块
 		[entry("XMLPickAttribW")]
 			long __stdcall XMLPickAttribW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
+		[entry("XMLPickAttribPosW")]
+			long __stdcall XMLPickAttribPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
 		[entry("XMLPickFullTagW")]
 			long __stdcall XMLPickFullTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("XMLPickFullTagPosW")]
+			long __stdcall XMLPickFullTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
 		[entry("XMLPickTagW")]
 			long __stdcall XMLPickTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos);
 		[entry("XMLPickTag2W")]
 			long __stdcall XMLPickTag2W([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("XMLPickTagPosW")]
+			long __stdcall XMLPickTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
 ////	zlib模块
 		[entry("compress")]
 			long __stdcall Compress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
