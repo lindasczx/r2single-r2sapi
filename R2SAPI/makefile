@@ -1,11 +1,12 @@
 CC=gcc
 RC=windres
 LINK=dllwrap
+LIB=lib
 CFLAGS= -c -O3
 CXXFLAGS= -c -O3
-SBFLAGS= -Wl,--enable-stdcall-fixup
+SBFLAGS= -Wl,--add-stdcall-alias
 IMPLIB=libcrypto.a libz.a
-IMPOBJ=stdc.o
+IMPOBJ=stdc.o compress.o uncompr.o crc32.o
 LINKOBJ=fileio.o lzssdec.o mxmlparser.o r2sapi.o utf.o r2sapi.res
 BIN=r2sapi.dll
 
@@ -19,7 +20,8 @@ cleanobj:
 	del $(LINKOBJ)
 
 $(BIN):$(LINKOBJ)
-	$(LINK) -s -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def r2sapi.def --output-lib libr2sapi.a
+	$(LINK) -s -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def r2sapi.def
+	$(LIB) /nologo /def:r2sapi.def $(LINKOBJ) $(IMPOBJ) $(IMPLIB) /out:r2sapi.lib
 
 fileio.o:../r2pak/fileio.cpp
 	$(CC) ../r2pak/fileio.cpp $(CXXFLAGS) -D_USRDLL

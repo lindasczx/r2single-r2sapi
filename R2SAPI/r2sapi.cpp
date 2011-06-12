@@ -6,7 +6,7 @@ BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
                        LPVOID reserved     /* Not used. */ )
 {
 	switch (reason){
-    case DLL_PROCESS_ATTACH:
+	case DLL_PROCESS_ATTACH:
 		break;
 		
 	case DLL_PROCESS_DETACH:
@@ -23,6 +23,6 @@ BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
 	return TRUE;
 }
 
-int _(){
+int WINAPI _(){
 	return APIVER;
 }

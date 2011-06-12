@@ -1,6 +1,6 @@
 /*++
 Copyright (c) 1991-1996,  Microsoft Corporation,
-              2010,       ZX Inc. All rights reserved.
+              2010-2011,  ZX Inc. All rights reserved.
 Module Name:
     utf.c
 
@@ -18,10 +18,7 @@ Revision History:
     2010-12-08    Linda Zhang Edited.
 --*/
 
-#include <windows.h>
-
-typedef int * LPLSTR;
-typedef const int * LPCLSTR;
+#include "utf.h"
 
 //  Constant Declarations.
 
@@ -66,6 +63,106 @@ typedef const int * LPCLSTR;
 //                           INTERNAL ROUTINES                             //
 //-------------------------------------------------------------------------//
 
+
+////////////////////////////////////////////////////////////////////////////
+//
+//  cpConvertEncoding
+//
+//  ×Ö·û´®±àÂë×ª»»ÊÇ·ñÖ§³Ö
+//
+//  2011-06-12  Linda Zhang Created.
+////////////////////////////////////////////////////////////////////////////
+
+int WINAPI cpTrCodeSupported(unsigned int nTrCode){
+    switch(nTrCode){
+        case MAKETRCODE(cpUTF8,cpUTF16LE):
+//        case MAKETRCODE(cpUTF8,cpUTF16BE):
+        case MAKETRCODE(cpUTF8,cpUTF32LE):
+//        case MAKETRCODE(cpUTF8,cpUTF32BE):
+
+        case MAKETRCODE(cpUTF16LE,cpUTF8):
+        case MAKETRCODE(cpUTF16LE,cpUTF16BE):
+        case MAKETRCODE(cpUTF16LE,cpUTF32LE):
+        case MAKETRCODE(cpUTF16LE,cpUTF32BE):
+
+//        case MAKETRCODE(cpUTF16BE,cpUTF8):
+        case MAKETRCODE(cpUTF16BE,cpUTF16LE):
+//        case MAKETRCODE(cpUTF16BE,cpUTF32LE):
+//        case MAKETRCODE(cpUTF16BE,cpUTF32BE):
+
+        case MAKETRCODE(cpUTF32LE,cpUTF8):
+        case MAKETRCODE(cpUTF32LE,cpUTF16LE):
+//        case MAKETRCODE(cpUTF32LE,cpUTF16BE):
+        case MAKETRCODE(cpUTF32LE,cpUTF32BE):
+
+//        case MAKETRCODE(cpUTF32BE,cpUTF8):
+        case MAKETRCODE(cpUTF32BE,cpUTF16LE):
+//        case MAKETRCODE(cpUTF32BE,cpUTF16BE):
+        case MAKETRCODE(cpUTF32BE,cpUTF32LE):
+            return -1;
+
+        default:
+            return 0;
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////
+//
+//  cpConvertEncoding
+//
+//  ×ª»»×Ö·û´®±àÂë
+//
+//  2011-06-12  Linda Zhang Created.
+////////////////////////////////////////////////////////////////////////////
+int WINAPI cpConvertEncoding(
+    unsigned int nTrCode,
+    LPVOID lpSrcStr,
+    int cchSrc,
+    LPVOID lpDestStr,
+    int cchDest)
+{
+    switch(nTrCode){
+        case MAKETRCODE(cpUTF8,cpUTF16LE):
+            return UTF8ToUTF16(lpSrcStr, cchSrc, lpDestStr, cchDest);
+//        case MAKETRCODE(cpUTF8,cpUTF16BE):
+        case MAKETRCODE(cpUTF8,cpUTF32LE):
+            return UTF8ToUTF32(lpSrcStr, cchSrc, lpDestStr, cchDest);
+//        case MAKETRCODE(cpUTF8,cpUTF32BE):
+
+        case MAKETRCODE(cpUTF16LE,cpUTF8):
+            return UTF16ToUTF8(lpSrcStr, cchSrc, lpDestStr, cchDest);
+        case MAKETRCODE(cpUTF16LE,cpUTF16BE):
+        case MAKETRCODE(cpUTF16BE,cpUTF16LE):
+            return UTF16BEToUTF16(lpSrcStr, cchSrc, lpDestStr, cchDest);
+        case MAKETRCODE(cpUTF16LE,cpUTF32LE):
+            return UTF16ToUTF32(lpSrcStr, cchSrc, lpDestStr, cchDest);
+        case MAKETRCODE(cpUTF16LE,cpUTF32BE):
+            return UTF16ToUTF32BE(lpSrcStr, cchSrc, lpDestStr, cchDest);
+
+//        case MAKETRCODE(cpUTF16BE,cpUTF8):
+            return UTF16BEToUTF8(lpSrcStr, cchSrc, lpDestStr, cchDest);
+//        case MAKETRCODE(cpUTF16BE,cpUTF32LE):
+//        case MAKETRCODE(cpUTF16BE,cpUTF32BE):
+
+        case MAKETRCODE(cpUTF32LE,cpUTF8):
+            return UTF32ToUTF8(lpSrcStr, cchSrc, lpDestStr, cchDest);
+        case MAKETRCODE(cpUTF32LE,cpUTF16LE):
+            return UTF32ToUTF16(lpSrcStr, cchSrc, lpDestStr, cchDest);
+//        case MAKETRCODE(cpUTF32LE,cpUTF16BE):
+        case MAKETRCODE(cpUTF32LE,cpUTF32BE):
+        case MAKETRCODE(cpUTF32BE,cpUTF32LE):
+            return UTF32BEToUTF32(lpSrcStr, cchSrc, lpDestStr, cchDest);
+
+//        case MAKETRCODE(cpUTF32BE,cpUTF8):
+        case MAKETRCODE(cpUTF32BE,cpUTF16LE):
+            return UTF32BEToUTF16(lpSrcStr, cchSrc, lpDestStr, cchDest);
+//        case MAKETRCODE(cpUTF32BE,cpUTF16BE):
+
+        default:
+            SetLastError(ERROR_INVALID_PARAMETER);
+            return 0;
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////
 //
@@ -266,9 +363,9 @@ int WINAPI UTF16ToUTF8(
                 {
                     if (cchU8+3<cchDest)
                     {
-	                    cchSrc--;
-	                    utf32=MAKEUTF32(*lpWC,*(lpWC+1));
-	                    lpWC++;
+                        cchSrc--;
+                        utf32=MAKEUTF32(*lpWC,*(lpWC+1));
+                        lpWC++;
                         //  Use upper  3 bits in first byte.
                         //  Use higher 6 bits in second byte.
                         //  Use middle 6 bits in third byte.
@@ -291,11 +388,11 @@ int WINAPI UTF16ToUTF8(
                     lpWC++;
                     cchU8 += 4;
                 }
-			}
-			else
-			{
-				goto badsurrogatepair;
-			}
+            }
+            else
+            {
+                goto badsurrogatepair;
+            }
         }
         else
         {
@@ -487,19 +584,19 @@ int WINAPI UTF16ToUTF32(
         {
             if ((cchSrc>=2) && (*(lpWC+1) >= LOW_SURROGATE_START) && (*(lpWC+1) <= LOW_SURROGATE_END))
             {
-	            if (cchDest)
-	            {
+                if (cchDest)
+                {
                     utf32=MAKEUTF32(*lpWC,*(lpWC+1));
                     lpDestStr[cchU32] = utf32;
-	            }
-	            cchSrc--;
-	            lpWC++;
-	            cchU32++;
-			}
-			else
-			{
-				goto badsurrogatepair;
-			}
+                }
+                cchSrc--;
+                lpWC++;
+                cchU32++;
+            }
+            else
+            {
+                goto badsurrogatepair;
+            }
         }
         else
         {
@@ -629,19 +726,19 @@ int WINAPI UTF16ToUTF32BE(
         {
             if ((cchSrc>=2) && (*(lpWC+1) >= LOW_SURROGATE_START) && (*(lpWC+1) <= LOW_SURROGATE_END))
             {
-	            if (cchDest)
-	            {
+                if (cchDest)
+                {
                     utf32=MAKEUTF32(*lpWC,*(lpWC+1));
                     lpDestStr[cchU32] = SWAPBYTEORDER4(utf32);
-	            }
-	            cchSrc--;
-	            lpWC++;
-	            cchU32++;
-			}
-			else
-			{
-				goto badsurrogatepair;
-			}
+                }
+                cchSrc--;
+                lpWC++;
+                cchU32++;
+            }
+            else
+            {
+                goto badsurrogatepair;
+            }
         }
         else
         {
