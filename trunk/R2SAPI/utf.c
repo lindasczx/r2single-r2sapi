@@ -12,13 +12,10 @@ Abstract:
     UTF-32 range: 00000000 - 0010FFFF
     UTF-16 range: 0000 - DBFF DFFF, no supersurrogates defined right now.
     UTF-8  range: 00 - F4 8F BF BF
-
-Revision History:
-    1996-02-06    JulieB      Created.
-    2010-12-08    Linda Zhang Edited.
 --*/
 
 #include "utf.h"
+#include "gb18030.h"
 
 //  Constant Declarations.
 
@@ -58,7 +55,6 @@ Revision History:
 #define SWAPBYTEORDER2(u)     ((((u)>>8)&0xff)|(((u)<<8)&0xff00))
 #define SWAPBYTEORDER4(u)     ((((u)>>24)&0xff)|(((u)>>8)&0xff00)|(((u)<<8)&0xff0000)|((u)<<24))
 
-
 //-------------------------------------------------------------------------//
 //                           INTERNAL ROUTINES                             //
 //-------------------------------------------------------------------------//
@@ -70,7 +66,6 @@ Revision History:
 //
 //  字符串编码转换是否支持
 //
-//  2011-06-12  Linda Zhang Created.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI cpTrCodeSupported(unsigned int nTrCode){
@@ -84,6 +79,7 @@ int WINAPI cpTrCodeSupported(unsigned int nTrCode){
         case MAKETRCODE(cpUTF16LE,cpUTF16BE):
         case MAKETRCODE(cpUTF16LE,cpUTF32LE):
         case MAKETRCODE(cpUTF16LE,cpUTF32BE):
+        case MAKETRCODE(cpUTF16LE,cpGB18030):
 
 //        case MAKETRCODE(cpUTF16BE,cpUTF8):
         case MAKETRCODE(cpUTF16BE,cpUTF16LE):
@@ -99,6 +95,8 @@ int WINAPI cpTrCodeSupported(unsigned int nTrCode){
         case MAKETRCODE(cpUTF32BE,cpUTF16LE):
 //        case MAKETRCODE(cpUTF32BE,cpUTF16BE):
         case MAKETRCODE(cpUTF32BE,cpUTF32LE):
+
+        case MAKETRCODE(cpGB18030,cpUTF16LE):
             return -1;
 
         default:
@@ -112,7 +110,6 @@ int WINAPI cpTrCodeSupported(unsigned int nTrCode){
 //
 //  转换字符串编码
 //
-//  2011-06-12  Linda Zhang Created.
 ////////////////////////////////////////////////////////////////////////////
 int WINAPI cpConvertEncoding(
     unsigned int nTrCode,
@@ -138,6 +135,8 @@ int WINAPI cpConvertEncoding(
             return UTF16ToUTF32(lpSrcStr, cchSrc, lpDestStr, cchDest);
         case MAKETRCODE(cpUTF16LE,cpUTF32BE):
             return UTF16ToUTF32BE(lpSrcStr, cchSrc, lpDestStr, cchDest);
+        case MAKETRCODE(cpUTF16LE,cpGB18030):
+            return UTF16ToGB18030(lpSrcStr, cchSrc, lpDestStr, cchDest);
 
 //        case MAKETRCODE(cpUTF16BE,cpUTF8):
             return UTF16BEToUTF8(lpSrcStr, cchSrc, lpDestStr, cchDest);
@@ -158,6 +157,9 @@ int WINAPI cpConvertEncoding(
             return UTF32BEToUTF16(lpSrcStr, cchSrc, lpDestStr, cchDest);
 //        case MAKETRCODE(cpUTF32BE,cpUTF16BE):
 
+        case MAKETRCODE(cpGB18030,cpUTF16LE):
+            return GB18030ToUTF16(lpSrcStr, cchSrc, lpDestStr, cchDest);
+
         default:
             SetLastError(ERROR_INVALID_PARAMETER);
             return 0;
@@ -170,8 +172,6 @@ int WINAPI cpConvertEncoding(
 //
 //  将UTF8字符串转为UTF16格式
 //
-//  1996-02-06  JulieB      Created.
-//  2010-12-08  Linda Zhang Edited.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI UTF8ToUTF16(
@@ -298,8 +298,6 @@ int WINAPI UTF8ToUTF16(
 //
 //  将UTF16字符串转为UTF8格式
 //
-//  1996-02-06  JulieB      Created.
-//  2010-12-08  Linda Zhang Edited.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI UTF16ToUTF8(
@@ -443,7 +441,6 @@ badsurrogatepair:
 //
 //  倒转UTF16字符串的字节序
 //
-//  2010-12-08  Linda Zhang Created.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI UTF16BEToUTF16(
@@ -488,7 +485,6 @@ int WINAPI UTF16BEToUTF16(
 //
 //  将UTF32字符串转为UTF16格式
 //
-//  2010-12-08  Linda Zhang Created.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI UTF32ToUTF16(
@@ -558,7 +554,6 @@ int WINAPI UTF32ToUTF16(
 //
 //  将UTF16字符串转为UTF32格式
 //
-//  2010-12-08  Linda Zhang Created.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI UTF16ToUTF32(
@@ -629,7 +624,6 @@ badsurrogatepair:
 //
 //  将UTF32BE字符串转为UTF16格式
 //
-//  2010-12-08  Linda Zhang Created.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI UTF32BEToUTF16(
@@ -700,7 +694,6 @@ int WINAPI UTF32BEToUTF16(
 //
 //  将UTF16字符串转为UTF32BE格式
 //
-//  2010-12-08  Linda Zhang Created.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI UTF16ToUTF32BE(
@@ -771,7 +764,6 @@ badsurrogatepair:
 //
 //  倒转UTF32字符串的字节序
 //
-//  2010-12-11  Linda Zhang Created.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI UTF32BEToUTF32(
@@ -816,7 +808,6 @@ int WINAPI UTF32BEToUTF32(
 //
 //  将UTF8字符串转为UTF32格式
 //
-//  2010-12-11  Linda Zhang Created.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI UTF8ToUTF32(
@@ -922,7 +913,6 @@ int WINAPI UTF8ToUTF32(
 //
 //  将UTF32字符串转为UTF8格式
 //
-//  2010-12-11  Linda Zhang Created.
 ////////////////////////////////////////////////////////////////////////////
 
 int WINAPI UTF32ToUTF8(
@@ -1108,4 +1098,54 @@ int WINAPI UTF32ToUTF8(
 
     //  Return the number of UTF-8 characters written.
     return (cchU8);
+}
+
+
+////////////////////////////////////////////////////////////////////////////
+//
+//  GB18030ToUTF16
+//
+//  将GB18030字符串转为UTF16格式
+//
+////////////////////////////////////////////////////////////////////////////
+
+int WINAPI GB18030ToUTF16(
+    LPCSTR lpSrcStr,
+    int cchSrc,
+    LPWSTR lpDestStr,
+    int cchDest)
+{
+    if(IsValidCodePage(CP_GB18030))
+    {
+        return MultiByteToWideChar(CP_GB18030, 0, lpSrcStr, cchSrc, lpDestStr, cchDest);
+    }
+    else
+    {
+	return NlsDllCodePageTranslation(CP_GB18030, NLS_CP_MBTOWC, lpSrcStr, cchSrc, lpDestStr, cchDest, NULL);
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////
+//
+//  UTF16ToGB18030
+//
+//  将UTF16字符串转为GB18030格式
+//
+////////////////////////////////////////////////////////////////////////////
+
+int WINAPI UTF16ToGB18030(
+    LPCWSTR lpSrcStr,
+    int cchSrc,
+    LPSTR lpDestStr,
+    int cchDest)
+{
+    if(IsValidCodePage(CP_GB18030))
+    {
+        return WideCharToMultiByte(CP_GB18030, 0, lpSrcStr, cchSrc, lpDestStr, cchDest, NULL, NULL);
+    }
+    else
+    {
+	return NlsDllCodePageTranslation(CP_GB18030, NLS_CP_WCTOMB, lpDestStr, cchDest, lpSrcStr, cchSrc, NULL);
+    }
 }

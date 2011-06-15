@@ -12,6 +12,7 @@ library R2SAPILib
 	{
 		const LPSTR STR_ERROR = "^ERROR";
 
+		const long  cpINVALID = -1;
 		const long  cpUTF8 = 1;
 		const long  cpUTF16 = 2;
 		const long  cpUTF16LE = 2;
@@ -19,6 +20,7 @@ library R2SAPILib
 		const long  cpUTF32 = 4;
 		const long  cpUTF32LE = 4;
 		const long  cpUTF32BE = 5;
+		const long  cpGB18030 = 0x100;
 
 		const long  Z_OK = 0;
 		const long  Z_STREAM_ERROR = -2;
