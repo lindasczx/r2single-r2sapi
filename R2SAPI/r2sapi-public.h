@@ -28,6 +28,7 @@ typedef const wchar_t * LPCWSTR;
 typedef int * LPLSTR;
 typedef const int * LPCLSTR;
 
+#define cpINVALID (-1)
 #define cpUTF8    1
 #define cpUTF16LE 2
 #define cpUTF16BE 3
@@ -35,6 +36,7 @@ typedef const int * LPCLSTR;
 #define cpUTF32LE 4
 #define cpUTF32BE 5
 #define cpUTF32   cpUTF32LE
+#define cpGB18030 0x100
 
 #define MAKETRCODE(a,b) (((a)<<16)|(b))
 
