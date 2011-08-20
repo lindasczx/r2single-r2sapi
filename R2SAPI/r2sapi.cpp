@@ -17,7 +17,7 @@ BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
 
 	case DLL_THREAD_DETACH:
 		break;
-    }
+	}
 
 	/* Returns TRUE on success, FALSE on failure */
 	return TRUE;
@@ -26,3 +26,4 @@ BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
 int WINAPI _(){
 	return APIVER;
 }
+
