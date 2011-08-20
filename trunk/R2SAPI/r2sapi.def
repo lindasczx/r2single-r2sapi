@@ -28,15 +28,23 @@ SHA256		=stdc_SHA256
 SHA512		=stdc_SHA512
 
 ;// westpak模块
-GetFileFromPakA	=GetFileFromPak
+GetFileFromPakA
+GetFileFromPakW
 
 ;// xmlparser模块
+XMLPickAttribA
 XMLPickAttribW
+XMLPickAttribPosA
 XMLPickAttribPosW
+XMLPickFullTagA
 XMLPickFullTagW
+XMLPickFullTagPosA
 XMLPickFullTagPosW
+XMLPickTagA
 XMLPickTagW
+XMLPickTag2A
 XMLPickTag2W
+XMLPickTagPosA
 XMLPickTagPosW
 
 ;// zlib模块
@@ -45,7 +53,7 @@ compress2
 compressBound
 crc32
 crc32_combine
-crc32_combine64
+;crc32_combine64
 get_crc_table
 uncompress
 ;zError
