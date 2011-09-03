@@ -111,7 +111,7 @@ library R2SAPILib
 
 	[
 		dllname("r2sapi.dll"),
-		helpstring("R2Single API 1.34 Type Library")
+		helpstring("R2Single API 1.35 Type Library")
 	]
 	module R2SAPIExports
 	{
