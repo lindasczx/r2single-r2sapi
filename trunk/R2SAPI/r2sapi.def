@@ -2,6 +2,15 @@
 EXPORTS
 
 _
+
+;// MD6.c
+MD6
+MD6_Final
+MD6_Init
+MD6_Init_Len
+MD6_Len
+MD6_Update
+
 ;// UTF.c
 cpConvertEncoding
 cpTrCodeSupported
@@ -19,13 +28,46 @@ UTF32BEToUTF16
 UTF32BEToUTF32
 
 ;// libeay32模块
+MD4		=stdc_MD4
+MD4_Final	=stdc_MD4_Final
+MD4_Init	=stdc_MD4_Init
+MD4_Update	=stdc_MD4_Update
 MD5		=stdc_MD5
+MD5_Final	=stdc_MD5_Final
+MD5_Init	=stdc_MD5_Init
+MD5_Update	=stdc_MD5_Update
+MDC2		=stdc_MDC2
+MDC2_Final	=stdc_MDC2_Final
+MDC2_Init	=stdc_MDC2_Init
+MDC2_Update	=stdc_MDC2_Update
+RIPEMD160	=stdc_RIPEMD160
+RIPEMD160_Final	=stdc_RIPEMD160_Final
+RIPEMD160_Init	=stdc_RIPEMD160_Init
+RIPEMD160_Update=stdc_RIPEMD160_Update
 ;SHA		=stdc_SHA
+;SHA_Final	=stdc_SHA_Final
+;SHA_Init	=stdc_SHA_Init
+;SHA_Update	=stdc_SHA_Update
 SHA1		=stdc_SHA1
+SHA1_Final	=stdc_SHA1_Final
+SHA1_Init	=stdc_SHA1_Init
+SHA1_Update	=stdc_SHA1_Update
 ;SHA224		=stdc_SHA224
+;SHA224_Final	=stdc_SHA224_Final
+;SHA224_Init	=stdc_SHA224_Init
+;SHA224_Update	=stdc_SHA224_Update
 SHA256		=stdc_SHA256
+SHA256_Final	=stdc_SHA256_Final
+SHA256_Init	=stdc_SHA256_Init
+SHA256_Update	=stdc_SHA256_Update
 ;SHA384		=stdc_SHA384
+;SHA384_Final	=stdc_SHA384_Final
+;SHA384_Init	=stdc_SHA384_Init
+;SHA384_Update	=stdc_SHA384_Update
 SHA512		=stdc_SHA512
+SHA512_Final	=stdc_SHA512_Final
+SHA512_Init	=stdc_SHA512_Init
+SHA512_Update	=stdc_SHA512_Update
 
 ;// westpak模块
 GetFileFromPakA

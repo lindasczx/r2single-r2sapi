@@ -1,7 +1,7 @@
 ﻿[
-	version(1.34),
+	version(1.35),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.34 Type Library")
+	helpstring("R2Single API 1.35 Type Library")
 ]
 library R2SAPILib
 {
@@ -34,6 +34,81 @@ library R2SAPILib
 		const long  Z_DEFAULT_COMPRESSION = -1;
 	};
 
+	typedef struct MD4_CTX
+	{
+		long A, B, C, D;
+		long NL, NH;
+		long Data[16];
+		long Num;
+	} MD4_CTX;
+	typedef struct MD5_CTX
+	{
+		long A, B, C, D;
+		long NL, NH;
+		long Data[16];
+		long Num;
+	} MD5_CTX;
+	typedef struct MD6_CTX
+	{
+		long D;
+		long HashBitLen;
+		unsigned char HashVal[128];
+		unsigned char HexHashVal[129];
+		long Initialized;
+		long Bits_Processed[2];
+		long Compression_Calls[2];
+		long Finalized;
+		long K[8][2];
+		long KeyLen;
+		long L;
+		long R;
+		long Top;
+		long B[29][64][2];
+		long Bits[29];
+		long I_For_Level[29][2];
+	} MD6_CTX;
+	typedef unsigned char DES_cblock[8];
+	typedef struct MDC2_CTX
+	{
+		long Num;
+		unsigned char Data[8];
+		DES_cblock H,HH;
+		long Pad_Type;
+	} MDC2_CTX;
+	typedef struct RIPEMD160_CTX
+	{
+		long A, B, C, D, E;
+		long NL, NH;
+		long Data[16];
+		long Num;
+	} RIPEMD160_CTX;
+	typedef struct SHA_CTX
+	{
+		long H0, H1, H2, H3, H4;
+		long NL, NH;
+		long Data[16];
+		long Num;
+	} SHA_CTX;
+	typedef struct SHA256_CTX
+	{
+		long H[8];
+		long NL, NH;
+		long Data[16];
+		long Num, MD_Len;
+	} SHA256_CTX;
+	typedef struct SHA512_CTX
+	{
+		//long long H[8];
+		long H[16];
+		//long long NL, NH;
+		long NL[2], NH[2];
+		//union {
+		//	long long D[16];
+			unsigned char P[128];
+		//} U;
+		long Num, MD_Len;
+	} SHA512_CTX;
+
 	[
 		dllname("r2sapi.dll"),
 		helpstring("R2Single API 1.34 Type Library")
@@ -42,6 +117,19 @@ library R2SAPILib
 	{
 		[entry("_")]
 			long __stdcall R2SAPIVer();
+////	MD6.c
+		[entry("MD6")]
+			long __stdcall MD6([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("MD6_Len")]
+			long __stdcall MD6_Len([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult, [in]long lResultLen);
+		[entry("MD6_Init")]
+			long __stdcall MD6_Init([in,out]MD6_CTX* c);
+		[entry("MD6_Init_Len")]
+			long __stdcall MD6_Init_Len([in,out]MD6_CTX* c, [in]long lResultLen);
+		[entry("MD6_Update")]
+			long __stdcall MD6_Update([in,out]MD6_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("MD6_Final")]
+			long __stdcall MD6_Final([in,out]void* pResult, [in,out]MD6_CTX* c);
 ////	UTF.c
 		[entry("cpConvertEncoding")]
 			long __stdcall cpConvertEncoding([in]long TrCode, [in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
@@ -72,18 +160,86 @@ library R2SAPILib
 		[entry("UTF32BEToUTF32")]
 			long __stdcall UTF32BEToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 ////	libeay32模块
+		[entry("MD4")]
+			long __stdcall MD4([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("MD4_Init")]
+			long __stdcall MD4_Init([in,out]MD4_CTX* c);
+		[entry("MD4_Update")]
+			long __stdcall MD4_Update([in,out]MD4_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("MD4_Final")]
+			long __stdcall MD4_Final([in,out]void* pResult, [in,out]MD4_CTX* c);
 		[entry("MD5")]
 			long __stdcall MD5([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("MD5_Init")]
+			long __stdcall MD5_Init([in,out]MD5_CTX* c);
+		[entry("MD5_Update")]
+			long __stdcall MD5_Update([in,out]MD5_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("MD5_Final")]
+			long __stdcall MD5_Final([in,out]void* pResult, [in,out]MD5_CTX* c);
+		[entry("MDC2")]
+			long __stdcall MDC2([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("MDC2_Init")]
+			long __stdcall MDC2_Init([in,out]MDC2_CTX* c);
+		[entry("MDC2_Update")]
+			long __stdcall MDC2_Update([in,out]MDC2_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("MDC2_Final")]
+			long __stdcall MDC2_Final([in,out]void* pResult, [in,out]MDC2_CTX* c);
+		[entry("RIPEMD160")]
+			long __stdcall RIPEMD160([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("RIPEMD160_Init")]
+			long __stdcall RIPEMD160_Init([in,out]RIPEMD160_CTX* c);
+		[entry("RIPEMD160_Update")]
+			long __stdcall RIPEMD160_Update([in,out]RIPEMD160_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("RIPEMD160_Final")]
+			long __stdcall RIPEMD160_Final([in,out]void* pResult, [in,out]RIPEMD160_CTX* c);
+//		[entry("SHA")]
+//			long __stdcall SHA([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+//		[entry("SHA_Init")]
+//			long __stdcall SHA_Init([in,out]SHA_CTX* c);
+//		[entry("SHA_Update")]
+//			long __stdcall SHA_Update([in,out]SHA_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+//		[entry("SHA_Final")]
+//			long __stdcall SHA_Final([in,out]void* pResult, [in,out]SHA_CTX* c);
 		[entry("SHA1")]
 			long __stdcall SHA1([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA1_Init")]
+			long __stdcall SHA1_Init([in,out]SHA_CTX* c);
+		[entry("SHA1_Update")]
+			long __stdcall SHA1_Update([in,out]SHA_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA1_Final")]
+			long __stdcall SHA1_Final([in,out]void* pResult, [in,out]SHA_CTX* c);
 //		[entry("SHA224")]
 //			long __stdcall SHA224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+//		[entry("SHA224_Init")]
+//			long __stdcall SHA224_Init([in,out]SHA256_CTX* c);
+//		[entry("SHA224_Update")]
+//			long __stdcall SHA224_Update([in,out]SHA256_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+//		[entry("SHA224_Final")]
+//			long __stdcall SHA224_Final([in,out]void* pResult, [in,out]SHA256_CTX* c);
 		[entry("SHA256")]
 			long __stdcall SHA256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA256_Init")]
+			long __stdcall SHA256_Init([in,out]SHA256_CTX* c);
+		[entry("SHA256_Update")]
+			long __stdcall SHA256_Update([in,out]SHA256_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA256_Final")]
+			long __stdcall SHA256_Final([in,out]void* pResult, [in,out]SHA256_CTX* c);
 //		[entry("SHA384")]
 //			long __stdcall SHA384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+//		[entry("SHA384_Init")]
+//			long __stdcall SHA384_Init([in,out]SHA512_CTX* c);
+//		[entry("SHA384_Update")]
+//			long __stdcall SHA384_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+//		[entry("SHA384_Final")]
+//			long __stdcall SHA384_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
 		[entry("SHA512")]
 			long __stdcall SHA512([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA512_Init")]
+			long __stdcall SHA512_Init([in,out]SHA512_CTX* c);
+		[entry("SHA512_Update")]
+			long __stdcall SHA512_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA512_Final")]
+			long __stdcall SHA512_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
 ////	westpak模块
 		[entry("GetFileFromPakA")]
 			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]LPCSTR pszFn, [in,string]LPCSTR pszFnWant);
