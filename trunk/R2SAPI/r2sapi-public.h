@@ -46,30 +46,6 @@ typedef struct MD4state_st
 	uint32_t data[MD4_LBLOCK];
 	unsigned int num;
 } MD4_CTX, MD5_CTX;
-#define md6_b 64
-#define md6_c 16
-#define md6_k 8
-#define md6_max_stack_height 29
-#define md6_w 64
-typedef struct md6_state
-{
-	int d;
-	int hashbitlen;
-	unsigned char hashval[ md6_c*(md6_w/8) ];
-	unsigned char hexhashval[(md6_c*(md6_w/8))+1];
-	int initialized;
-	uint64_t bits_processed;
-	uint64_t compression_calls;
-	int finalized;
-	uint64_t K[ md6_k ];
-	int keylen;
-	int L;
-	int r;
-	int top;
-	uint64_t B[ md6_max_stack_height ][ md6_b ];
-	unsigned int bits[ md6_max_stack_height ];
-	uint64_t i_for_level[ md6_max_stack_height ];
-} MD6_CTX;
 #define MDC2_BLOCK 8
 typedef unsigned char DES_cblock[8];
 typedef struct mdc2_ctx_st
@@ -113,8 +89,40 @@ typedef struct SHA512state_st
 	} u;
 	unsigned int num,md_len;
 } SHA512_CTX;
+#define md6_b 64
+#define md6_c 16
+#define md6_k 8
+#define md6_max_stack_height 29
+#define md6_w 64
+typedef struct md6_state
+{
+	int d;
+	int hashbitlen;
+	unsigned char hashval[ md6_c*(md6_w/8) ];
+	unsigned char hexhashval[(md6_c*(md6_w/8))+1];
+	int initialized;
+	uint64_t bits_processed;
+	uint64_t compression_calls;
+	int finalized;
+	uint64_t K[ md6_k ];
+	int keylen;
+	int L;
+	int r;
+	int top;
+	uint64_t B[ md6_max_stack_height ][ md6_b ];
+	unsigned int bits[ md6_max_stack_height ];
+	uint64_t i_for_level[ md6_max_stack_height ];
+} MD6_CTX;
 
 EXPORT int API _();
+
+////md6
+EXPORT int API MD6_Init(MD6_CTX *c);
+EXPORT int API MD6_Init_Len(MD6_CTX *c, int mdlen);
+EXPORT int API MD6_Update(MD6_CTX *c, const void *data, size_t len);
+EXPORT int API MD6_Final(unsigned char *md, MD6_CTX *c);
+EXPORT unsigned char * API MD6(const unsigned char *d, size_t n, unsigned char *md);
+EXPORT unsigned char * API MD6_Len(const unsigned char *d, size_t n, unsigned char *md, int mdlen);
 
 ////utf
 EXPORT int API cpConvertEncoding(unsigned int nTrCode, LPVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
@@ -141,12 +149,6 @@ EXPORT int API MD5_Init(MD5_CTX *c);
 EXPORT int API MD5_Update(MD5_CTX *c, const void *data, size_t len);
 EXPORT int API MD5_Final(unsigned char *md, MD5_CTX *c);
 EXPORT unsigned char * API MD5(const unsigned char *d, size_t n, unsigned char *md);
-EXPORT int API MD6_Init(MD6_CTX *c);
-EXPORT int API MD6_Init_Len(MD6_CTX *c, int mdlen);
-EXPORT int API MD6_Update(MD6_CTX *c, const void *data, size_t len);
-EXPORT int API MD6_Final(unsigned char *md, MD6_CTX *c);
-EXPORT unsigned char * API MD6(const unsigned char *d, size_t n, unsigned char *md);
-EXPORT unsigned char * API MD6_Len(const unsigned char *d, size_t n, unsigned char *md, int mdlen);
 EXPORT int API MDC2_Init(MDC2_CTX *c);
 EXPORT int API MDC2_Update(MDC2_CTX *c, const void *data, size_t len);
 EXPORT int API MDC2_Final(unsigned char *md, MDC2_CTX *c);
