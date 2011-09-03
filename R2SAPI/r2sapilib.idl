@@ -8,6 +8,9 @@ library R2SAPILib
 //	importlib("stdole32.tlb");
 //	importlib("stdole2.tlb");
 
+	[
+		helpstring("R2Single API Constants")
+	]
 	module R2SAPIConstants
 	{
 		const LPSTR STR_ERROR = "^ERROR";
@@ -111,7 +114,7 @@ library R2SAPILib
 
 	[
 		dllname("r2sapi.dll"),
-		helpstring("R2Single API 1.35 Type Library")
+		helpstring("R2Single API Functions")
 	]
 	module R2SAPIExports
 	{
