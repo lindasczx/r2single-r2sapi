@@ -10,7 +10,7 @@ int __stdcall MD6_Init_Len(MD6_CTX *c, int l)
 
 int __stdcall MD6_Update(MD6_CTX *c, const void *data, size_t len)
 {
-	return md6_update(c, (const unsigned char *)data, len*sizeof(char));
+	return md6_update(c, (const unsigned char *)data, len*8);
 }
 
 int __stdcall MD6_Final(unsigned char *md, MD6_CTX *c)
@@ -20,7 +20,7 @@ int __stdcall MD6_Final(unsigned char *md, MD6_CTX *c)
 
 unsigned char * __stdcall MD6_Len(const unsigned char *d, size_t n, unsigned char *md, int l)
 {
-	if(MD6_SUCCESS != md6_hash(l, d, n*sizeof(char), md))
+	if(MD6_SUCCESS != md6_hash(l, d, n*8, md))
 		return NULL;
 	return md;
 }
