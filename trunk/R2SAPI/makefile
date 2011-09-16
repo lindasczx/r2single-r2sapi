@@ -31,6 +31,8 @@ DEFFILE:=	r2sapi.def
 OUTLIB:=	r2sapi.lib
 BIN:=		r2sapi.dll
 
+.PHONY: all clean cleanobj
+
 all:$(BIN)
 
 clean:
