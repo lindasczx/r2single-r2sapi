@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.35.0.160
+	1.35.0.177
 --*/
 
 #ifndef R2SAPI_H_
@@ -19,6 +19,7 @@ extern "C"{
 #include <sys/types.h>
 #include <inttypes.h>
 typedef void * LPVOID;
+typedef const void * LPCVOID;
 typedef char * LPSTR;
 typedef const char * LPCSTR;
 typedef wchar_t * LPWSTR;
@@ -125,7 +126,7 @@ EXPORT unsigned char * API MD6(const unsigned char *d, size_t n, unsigned char *
 EXPORT unsigned char * API MD6_Len(const unsigned char *d, size_t n, unsigned char *md, int mdlen);
 
 ////utf
-EXPORT int API cpConvertEncoding(unsigned int nTrCode, LPVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
+EXPORT int API cpConvertEncoding(unsigned int nTrCode, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
 EXPORT int API cpTrCodeSupported(unsigned int nTrCode);
 EXPORT int API UTF8ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
 EXPORT int API UTF8ToUTF32(LPCSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
