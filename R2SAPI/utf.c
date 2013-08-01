@@ -1119,7 +1119,7 @@ int WINAPI GB18030ToUTF16(
 	}
 	else
 	{
-		return NlsDllCodePageTranslation(CP_GB18030, NLS_CP_MBTOWC, lpSrcStr, cchSrc, lpDestStr, cchDest, NULL);
+		return NlsDllCodePageTranslation(CP_GB18030, NLS_CP_MBTOWC, (LPSTR)lpSrcStr, cchSrc, lpDestStr, cchDest, NULL);
 	}
 }
 
@@ -1144,6 +1144,6 @@ int WINAPI UTF16ToGB18030(
 	}
 	else
 	{
-		return NlsDllCodePageTranslation(CP_GB18030, NLS_CP_WCTOMB, lpDestStr, cchDest, lpSrcStr, cchSrc, NULL);
+		return NlsDllCodePageTranslation(CP_GB18030, NLS_CP_WCTOMB, lpDestStr, cchDest, (LPWSTR)lpSrcStr, cchSrc, NULL);
 	}
 }

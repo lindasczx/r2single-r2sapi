@@ -10,6 +10,7 @@ set /a ver+=1
 echo #define APIVER %ver% >build.h
 
 make clean
+ar -x libz.a
 make
 pause
 make cleanobj

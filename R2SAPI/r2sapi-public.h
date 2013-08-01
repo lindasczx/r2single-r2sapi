@@ -116,6 +116,7 @@ typedef struct md6_state
 } MD6_CTX;
 
 EXPORT int API _();
+#define R2SAPIVer (_())
 
 ////md6
 EXPORT int API MD6_Init(MD6_CTX *c);
@@ -184,20 +185,20 @@ EXPORT long API GetFileFromPakA(void* pBuf, long ulBufLen, LPCSTR pszFn, LPCSTR 
 EXPORT long API GetFileFromPakW(void* pBuf, long ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
 
 ////xmlparser
-EXPORT int     API XMLPickAttribW(LPWSTR, LPCWSTR, LPCWSTR, long, LPCWSTR);
-EXPORT int     API XMLPickAttribA(LPSTR, LPCSTR, LPCSTR, long, LPCSTR);
-EXPORT int     API XMLPickAttribPosW(long&, long&, LPCWSTR, LPCWSTR, long, LPCWSTR);
-EXPORT int     API XMLPickAttribPosA(long&, long&, LPCSTR, LPCSTR, long, LPCSTR);
-EXPORT int     API XMLPickFullTagW(LPWSTR, LPCWSTR, LPCWSTR, long&, long);
-EXPORT int     API XMLPickFullTagA(LPSTR, LPCSTR, LPCSTR, long&, long);
-EXPORT int     API XMLPickFullTagPosW(long&, long&, LPCWSTR, LPCWSTR, long&, long);
-EXPORT int     API XMLPickFullTagPosA(long&, long&, LPCSTR, LPCSTR, long&, long);
-EXPORT int     API XMLPickTagW(LPWSTR, LPCWSTR, LPCWSTR, long);
-EXPORT int     API XMLPickTagA(LPSTR, LPCSTR, LPCSTR, long);
-EXPORT int     API XMLPickTag2W(LPWSTR, LPCWSTR, LPCWSTR, long&, long);
-EXPORT int     API XMLPickTag2A(LPSTR, LPCSTR, LPCSTR, long&, long);
-EXPORT int     API XMLPickTagPosW(long&, long&, LPCWSTR, LPCWSTR, long);
-EXPORT int     API XMLPickTagPosA(long&, long&, LPCSTR, LPCSTR, long);
+EXPORT int API XMLPickAttribW(LPWSTR, LPCWSTR, LPCWSTR, long, LPCWSTR);
+EXPORT int API XMLPickAttribA(LPSTR, LPCSTR, LPCSTR, long, LPCSTR);
+EXPORT int API XMLPickAttribPosW(long&, long&, LPCWSTR, LPCWSTR, long, LPCWSTR);
+EXPORT int API XMLPickAttribPosA(long&, long&, LPCSTR, LPCSTR, long, LPCSTR);
+EXPORT int API XMLPickFullTagW(LPWSTR, LPCWSTR, LPCWSTR, long&, long);
+EXPORT int API XMLPickFullTagA(LPSTR, LPCSTR, LPCSTR, long&, long);
+EXPORT int API XMLPickFullTagPosW(long&, long&, LPCWSTR, LPCWSTR, long&, long);
+EXPORT int API XMLPickFullTagPosA(long&, long&, LPCSTR, LPCSTR, long&, long);
+EXPORT int API XMLPickTagW(LPWSTR, LPCWSTR, LPCWSTR, long);
+EXPORT int API XMLPickTagA(LPSTR, LPCSTR, LPCSTR, long);
+EXPORT int API XMLPickTag2W(LPWSTR, LPCWSTR, LPCWSTR, long&, long);
+EXPORT int API XMLPickTag2A(LPSTR, LPCSTR, LPCSTR, long&, long);
+EXPORT int API XMLPickTagPosW(long&, long&, LPCWSTR, LPCWSTR, long);
+EXPORT int API XMLPickTagPosA(long&, long&, LPCSTR, LPCSTR, long);
 
 ////zlib
 EXPORT int API compress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);

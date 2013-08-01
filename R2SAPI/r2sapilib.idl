@@ -195,14 +195,6 @@ library R2SAPILib
 			long __stdcall RIPEMD160_Update([in,out]RIPEMD160_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("RIPEMD160_Final")]
 			long __stdcall RIPEMD160_Final([in,out]void* pResult, [in,out]RIPEMD160_CTX* c);
-//		[entry("SHA")]
-//			long __stdcall SHA([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
-//		[entry("SHA_Init")]
-//			long __stdcall SHA_Init([in,out]SHA_CTX* c);
-//		[entry("SHA_Update")]
-//			long __stdcall SHA_Update([in,out]SHA_CTX* c, [in]void* pBuffer, [in]long lBufLen);
-//		[entry("SHA_Final")]
-//			long __stdcall SHA_Final([in,out]void* pResult, [in,out]SHA_CTX* c);
 		[entry("SHA1")]
 			long __stdcall SHA1([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA1_Init")]

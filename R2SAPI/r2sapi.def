@@ -69,6 +69,16 @@ SHA512_Final	=stdc_SHA512_Final
 SHA512_Init	=stdc_SHA512_Init
 SHA512_Update	=stdc_SHA512_Update
 
+;// 增补NIST Hash函数
+;SHA512_224
+;SHA512_224_Final
+;SHA512_224_Init
+;SHA512_224_Update
+;SHA512_256
+;SHA512_256_Final
+;SHA512_256_Init
+;SHA512_256_Update
+
 ;// westpak模块
 GetFileFromPakA
 GetFileFromPakW
