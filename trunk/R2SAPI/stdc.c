@@ -91,26 +91,6 @@ unsigned char * __stdcall stdc_RIPEMD160(const unsigned char *d, size_t n, unsig
 	return RIPEMD160(d, n, md);
 }
 
-////////////////SHA-0
-/*
-int __stdcall stdc_SHA_Init(SHA_CTX *c)
-{
-	return SHA_Init(c);
-}
-int __stdcall stdc_SHA_Update(SHA_CTX *c, const void *data, size_t len)
-{
-	return SHA_Update(c, data, len);
-}
-int __stdcall stdc_SHA_Final(unsigned char *md, SHA_CTX *c)
-{
-	return SHA_Final(md, c);
-}
-unsigned char * __stdcall stdc_SHA(const unsigned char *d, size_t n, unsigned char *md)
-{
-	return SHA(d, n, md);
-}
-*/
-
 ////////////////SHA-1
 int __stdcall stdc_SHA1_Init(SHA_CTX *c)
 {

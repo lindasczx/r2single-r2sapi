@@ -12,6 +12,7 @@ IMPLIB:=	libcrypto.a libz.a c_g18030.lib
 IMPOBJ:=	compress.o uncompr.o crc32.o
 
 CSRC:=		stdc.c
+CSRC+=		sha512-t.c
 CSRC+=		utf.c
 CSRC+=		md6_compress.c
 CSRC+=		md6_mode.c
@@ -36,10 +37,10 @@ BIN:=		r2sapi.dll
 all:$(BIN)
 
 clean:
-	$(RM) $(BIN) $(LINKOBJ) $(TYPELIB)
+	$(RM) $(BIN) $(LINKOBJ) $(TYPELIB) *.o
 
 cleanobj:
-	$(RM) $(LINKOBJ)
+	$(RM) $(LINKOBJ) *.o
 
 $(BIN): $(LINKOBJ)
 	$(LINK) -s -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE)
