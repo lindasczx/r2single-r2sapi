@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.35.0.177
+	1.36.0.204
 --*/
 
 #ifndef R2SAPI_H_
@@ -11,9 +11,11 @@ Version:
 
 #ifdef __cplusplus
 extern "C"{
+#define EXPORT extern "C"
+#else
+#define EXPORT
 #endif
 
-#define EXPORT extern "C"
 #define API __stdcall
 
 #include <sys/types.h>
@@ -37,7 +39,7 @@ typedef const int * LPCLSTR;
 #define cpUTF32   cpUTF32LE
 #define cpGB18030 0x100
 
-#define MAKETRCODE(a,b) (((a)<<16)|(b))
+#define MAKETRCODE(a,b) ( (uint32_t)( (((uint32_t)(uint16_t)a)<<16) | ((uint32_t)(uint16_t)b) ) )
 
 #define MD4_LBLOCK 16
 typedef struct MD4state_st
@@ -114,6 +116,25 @@ typedef struct md6_state
 	unsigned int bits[ md6_max_stack_height ];
 	uint64_t i_for_level[ md6_max_stack_height ];
 } MD6_CTX;
+#define BLAKE2S_BLOCKBYTES 64
+#define BLAKE2S_OUTBYTES 32
+#define BLAKE_ALIGNMENT 64
+#define BLAKE_DATA_SIZE (48 + 2 * BLAKE2S_BLOCKBYTES)
+typedef struct blake2s_state
+{
+	unsigned char ubuf[BLAKE_DATA_SIZE + BLAKE_ALIGNMENT];
+	unsigned char *buf;       // byte   buf[2 * BLAKE2S_BLOCKBYTES].
+	unsigned int *h, *t, *f; // uint32 h[8], t[2], f[2].
+	size_t   buflen;
+	unsigned char last_node;
+} BLAKE2S_CTX;
+typedef struct blake2sp_state
+{
+	BLAKE2S_CTX S[8];
+	BLAKE2S_CTX R;
+	unsigned char buf[8 * BLAKE2S_BLOCKBYTES];
+	size_t buflen;
+} BLAKE2SP_CTX;
 
 EXPORT int API _();
 #define R2SAPIVer (_())
@@ -125,6 +146,12 @@ EXPORT int API MD6_Update(MD6_CTX *c, const void *data, size_t len);
 EXPORT int API MD6_Final(unsigned char *md, MD6_CTX *c);
 EXPORT unsigned char * API MD6(const unsigned char *d, size_t n, unsigned char *md);
 EXPORT unsigned char * API MD6_Len(const unsigned char *d, size_t n, unsigned char *md, int mdlen);
+
+////blake2sp
+EXPORT int API BLAKE2SP_Init(BLAKE2SP_CTX *c);
+EXPORT int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
+EXPORT int API BLAKE2SP_Final(unsigned char *md, BLAKE2SP_CTX *c);
+EXPORT unsigned char * API BLAKE2SP(const unsigned char *d, size_t n, unsigned char *md);
 
 ////utf
 EXPORT int API cpConvertEncoding(unsigned int nTrCode, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
@@ -187,18 +214,24 @@ EXPORT long API GetFileFromPakW(void* pBuf, long ulBufLen, LPCWSTR pszFn, LPCWST
 ////xmlparser
 EXPORT int API XMLPickAttribW(LPWSTR, LPCWSTR, LPCWSTR, long, LPCWSTR);
 EXPORT int API XMLPickAttribA(LPSTR, LPCSTR, LPCSTR, long, LPCSTR);
-EXPORT int API XMLPickAttribPosW(long&, long&, LPCWSTR, LPCWSTR, long, LPCWSTR);
-EXPORT int API XMLPickAttribPosA(long&, long&, LPCSTR, LPCSTR, long, LPCSTR);
-EXPORT int API XMLPickFullTagW(LPWSTR, LPCWSTR, LPCWSTR, long&, long);
-EXPORT int API XMLPickFullTagA(LPSTR, LPCSTR, LPCSTR, long&, long);
-EXPORT int API XMLPickFullTagPosW(long&, long&, LPCWSTR, LPCWSTR, long&, long);
-EXPORT int API XMLPickFullTagPosA(long&, long&, LPCSTR, LPCSTR, long&, long);
+EXPORT int API XMLPickAttrib2W(LPWSTR, long, LPCWSTR, LPCWSTR, long, LPCWSTR);
+EXPORT int API XMLPickAttrib2A(LPSTR, long, LPCSTR, LPCSTR, long, LPCSTR);
+EXPORT int API XMLPickAttribPosW(long*, long*, LPCWSTR, LPCWSTR, long, LPCWSTR);
+EXPORT int API XMLPickAttribPosA(long*, long*, LPCSTR, LPCSTR, long, LPCSTR);
+EXPORT int API XMLPickFullTagW(LPWSTR, LPCWSTR, LPCWSTR, long*, long);
+EXPORT int API XMLPickFullTagA(LPSTR, LPCSTR, LPCSTR, long*, long);
+EXPORT int API XMLPickFullTag2W(LPWSTR, long, LPCWSTR, LPCWSTR, long*, long);
+EXPORT int API XMLPickFullTag2A(LPSTR, long, LPCSTR, LPCSTR, long*, long);
+EXPORT int API XMLPickFullTagPosW(long*, long*, LPCWSTR, LPCWSTR, long*, long);
+EXPORT int API XMLPickFullTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
 EXPORT int API XMLPickTagW(LPWSTR, LPCWSTR, LPCWSTR, long);
 EXPORT int API XMLPickTagA(LPSTR, LPCSTR, LPCSTR, long);
-EXPORT int API XMLPickTag2W(LPWSTR, LPCWSTR, LPCWSTR, long&, long);
-EXPORT int API XMLPickTag2A(LPSTR, LPCSTR, LPCSTR, long&, long);
-EXPORT int API XMLPickTagPosW(long&, long&, LPCWSTR, LPCWSTR, long);
-EXPORT int API XMLPickTagPosA(long&, long&, LPCSTR, LPCSTR, long);
+EXPORT int API XMLPickTag2W(LPWSTR, LPCWSTR, LPCWSTR, long*, long);
+EXPORT int API XMLPickTag2A(LPSTR, LPCSTR, LPCSTR, long*, long);
+EXPORT int API XMLPickTag3W(LPWSTR, long, LPCWSTR, LPCWSTR, long*, long);
+EXPORT int API XMLPickTag3A(LPSTR, long, LPCSTR, LPCSTR, long*, long);
+EXPORT int API XMLPickTagPosW(long*, long*, LPCWSTR, LPCWSTR, long*, long);
+EXPORT int API XMLPickTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
 
 ////zlib
 EXPORT int API compress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);

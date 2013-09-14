@@ -7,6 +7,7 @@ RM:=		rm
 
 CFLAGS:=	-O3 -I. -D_USRDLL
 CXXFLAGS:=	-O3 -I. -D_USRDLL
+LINKFLAGS:=	-s
 SBFLAGS:=	-Wl,--add-stdcall-alias
 IMPLIB:=	libcrypto.a libz.a c_g18030.lib
 IMPOBJ:=	compress.o uncompr.o crc32.o
@@ -17,8 +18,10 @@ CSRC+=		utf.c
 CSRC+=		md6_compress.c
 CSRC+=		md6_mode.c
 CSRC+=		md6.c
+CSRC+=		../../../mxmlparser.c
 CXXSRC:=	r2sapi.cpp
-CXXSRC+=	../../../mxmlparser.cpp
+CXXSRC+=	blake2.cpp
+CXXSRC+=	blake2s.cpp
 CXXSRC+=	../r2pak/fileio.cpp
 CXXSRC+=	../r2pak/lzssdec.cpp
 
@@ -43,7 +46,7 @@ cleanobj:
 	$(RM) $(LINKOBJ) *.o
 
 $(BIN): $(LINKOBJ)
-	$(LINK) -s -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE)
+	$(LINK) $(LINKFLAGS) -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE)
 	$(LIB) /nologo /def:$(DEFFILE) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) /out:$(OUTLIB)
 
 $(RES): r2sapi.rc $(TYPELIB)
