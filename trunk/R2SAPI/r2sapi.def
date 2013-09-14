@@ -11,6 +11,12 @@ MD6_Init_Len
 MD6_Len
 MD6_Update
 
+;// BLAKE2模块
+BLAKE2SP
+BLAKE2SP_Final
+BLAKE2SP_Init
+BLAKE2SP_Update
+
 ;// UTF.c
 cpConvertEncoding
 cpTrCodeSupported
@@ -86,16 +92,22 @@ GetFileFromPakW
 ;// xmlparser模块
 XMLPickAttribA
 XMLPickAttribW
+XMLPickAttrib2A
+XMLPickAttrib2W
 XMLPickAttribPosA
 XMLPickAttribPosW
 XMLPickFullTagA
 XMLPickFullTagW
+XMLPickFullTag2A
+XMLPickFullTag2W
 XMLPickFullTagPosA
 XMLPickFullTagPosW
 XMLPickTagA
 XMLPickTagW
 XMLPickTag2A
 XMLPickTag2W
+XMLPickTag3A
+XMLPickTag3W
 XMLPickTagPosA
 XMLPickTagPosW
 

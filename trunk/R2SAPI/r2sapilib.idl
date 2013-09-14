@@ -1,7 +1,7 @@
 ﻿[
-	version(1.35),
+	version(1.36),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.35 Type Library")
+	helpstring("R2Single API 1.36 Type Library")
 ]
 library R2SAPILib
 {
@@ -37,6 +37,21 @@ library R2SAPILib
 		const long  Z_DEFAULT_COMPRESSION = -1;
 	};
 
+	typedef struct BLAKE2S_CTX
+	{
+		unsigned char UBuf[240];
+		long Buf;
+		long H, T, F;
+		long BufLen;
+		unsigned char Last_Node;
+	} BLAKE2S_CTX;
+	typedef struct BLAKE2SP_CTX
+	{
+		BLAKE2S_CTX S[8];
+		BLAKE2S_CTX R;
+		unsigned char Buf[512];
+		long BufLen;
+	} BLAKE2SP_CTX;
 	typedef struct MD4_CTX
 	{
 		long A, B, C, D;
@@ -133,6 +148,15 @@ library R2SAPILib
 			long __stdcall MD6_Update([in,out]MD6_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("MD6_Final")]
 			long __stdcall MD6_Final([in,out]void* pResult, [in,out]MD6_CTX* c);
+////	BLAKE2模块
+		[entry("BLAKE2SP")]
+			long __stdcall BLAKE2SP([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("BLAKE2SP_Init")]
+			long __stdcall BLAKE2SP_Init([in,out]BLAKE2SP_CTX* c);
+		[entry("BLAKE2SP_Update")]
+			long __stdcall BLAKE2SP_Update([in,out]BLAKE2SP_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("BLAKE2SP_Final")]
+			long __stdcall BLAKE2SP_Final([in,out]void* pResult, [in,out]BLAKE2SP_CTX* c);
 ////	UTF.c
 		[entry("cpConvertEncoding")]
 			long __stdcall cpConvertEncoding([in]long TrCode, [in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
@@ -241,16 +265,22 @@ library R2SAPILib
 ////	xmlparser模块
 		[entry("XMLPickAttribW")]
 			long __stdcall XMLPickAttribW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
+		[entry("XMLPickAttrib2W")]
+			long __stdcall XMLPickAttrib2W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
 		[entry("XMLPickAttribPosW")]
 			long __stdcall XMLPickAttribPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
 		[entry("XMLPickFullTagW")]
 			long __stdcall XMLPickFullTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("XMLPickFullTag2W")]
+			long __stdcall XMLPickFullTag2W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
 		[entry("XMLPickFullTagPosW")]
 			long __stdcall XMLPickFullTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
 		[entry("XMLPickTagW")]
 			long __stdcall XMLPickTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos);
 		[entry("XMLPickTag2W")]
 			long __stdcall XMLPickTag2W([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("XMLPickTag3W")]
+			long __stdcall XMLPickTag3W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
 		[entry("XMLPickTagPosW")]
 			long __stdcall XMLPickTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
 ////	zlib模块
