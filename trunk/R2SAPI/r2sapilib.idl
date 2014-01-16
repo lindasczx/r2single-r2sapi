@@ -14,6 +14,10 @@ library R2SAPILib
 	module R2SAPIConstants
 	{
 		const LPSTR STR_ERROR = "^ERROR";
+		const long  XML_ERR_OK = 0;
+		const long  XML_ERR_NOTFOUND = -1;
+		const long  XML_ERR_BUFFER = -2;
+		const long  XML_ERR_INVALID_PARAM = -3;
 
 		const long  cpINVALID = -1;
 		const long  cpUTF8 = 1;
@@ -23,6 +27,10 @@ library R2SAPILib
 		const long  cpUTF32 = 4;
 		const long  cpUTF32LE = 4;
 		const long  cpUTF32BE = 5;
+		const long  cpUTFEBCDIC = 0x40;
+		const long  cpUTF1 = 0x41;
+		const long  cpCESU8 = 0x80;
+		const long  cpUTF7 = 0xa0;
 		const long  cpGB18030 = 0x100;
 
 		const long  Z_OK = 0;
@@ -162,6 +170,8 @@ library R2SAPILib
 			long __stdcall cpConvertEncoding([in]long TrCode, [in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 		[entry("cpTrCodeSupported")]
 			long __stdcall cpTrCodeSupported([in]long TrCode);
+		[entry("cpMakeTrCode")]
+			long __stdcall MakeTrCode([in]short CPFrom, [in]short CPTo);
 		[entry("UTF8ToUTF16")]
 			long __stdcall UTF8ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
 		[entry("UTF8ToUTF32")]

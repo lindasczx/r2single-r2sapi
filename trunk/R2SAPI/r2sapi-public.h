@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.36.0.204
+	1.36.0.248
 --*/
 
 #ifndef R2SAPI_H_
@@ -11,9 +11,6 @@ Version:
 
 #ifdef __cplusplus
 extern "C"{
-#define EXPORT extern "C"
-#else
-#define EXPORT
 #endif
 
 #define API __stdcall
@@ -29,17 +26,22 @@ typedef const wchar_t * LPCWSTR;
 typedef int * LPLSTR;
 typedef const int * LPCLSTR;
 
-#define cpINVALID (-1)
-#define cpUTF8    1
-#define cpUTF16LE 2
-#define cpUTF16BE 3
-#define cpUTF16   cpUTF16LE
-#define cpUTF32LE 4
-#define cpUTF32BE 5
-#define cpUTF32   cpUTF32LE
-#define cpGB18030 0x100
+#define cpINVALID   (-1)
+#define cpUTF8      1
+#define cpUTF16LE   2
+#define cpUTF16BE   3
+#define cpUTF16     cpUTF16LE
+#define cpUTF32LE   4
+#define cpUTF32BE   5
+#define cpUTF32     cpUTF32LE
+#define cpUTFEBCDIC 0x40
+#define cpUTF1      0x41
+#define cpCESU8     0x80
+#define cpUTF7      0xa0
+#define cpGB18030   0x100
 
 #define MAKETRCODE(a,b) ( (uint32_t)( (((uint32_t)(uint16_t)a)<<16) | ((uint32_t)(uint16_t)b) ) )
+//unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto);
 
 #define MD4_LBLOCK 16
 typedef struct MD4state_st
@@ -136,113 +138,113 @@ typedef struct blake2sp_state
 	size_t buflen;
 } BLAKE2SP_CTX;
 
-EXPORT int API _();
+int API _();
 #define R2SAPIVer (_())
 
 ////md6
-EXPORT int API MD6_Init(MD6_CTX *c);
-EXPORT int API MD6_Init_Len(MD6_CTX *c, int mdlen);
-EXPORT int API MD6_Update(MD6_CTX *c, const void *data, size_t len);
-EXPORT int API MD6_Final(unsigned char *md, MD6_CTX *c);
-EXPORT unsigned char * API MD6(const unsigned char *d, size_t n, unsigned char *md);
-EXPORT unsigned char * API MD6_Len(const unsigned char *d, size_t n, unsigned char *md, int mdlen);
+int API MD6_Init(MD6_CTX *c);
+int API MD6_Init_Len(MD6_CTX *c, int mdlen);
+int API MD6_Update(MD6_CTX *c, const void *data, size_t len);
+int API MD6_Final(unsigned char *md, MD6_CTX *c);
+unsigned char * API MD6(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API MD6_Len(const unsigned char *d, size_t n, unsigned char *md, int mdlen);
 
 ////blake2sp
-EXPORT int API BLAKE2SP_Init(BLAKE2SP_CTX *c);
-EXPORT int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
-EXPORT int API BLAKE2SP_Final(unsigned char *md, BLAKE2SP_CTX *c);
-EXPORT unsigned char * API BLAKE2SP(const unsigned char *d, size_t n, unsigned char *md);
+int API BLAKE2SP_Init(BLAKE2SP_CTX *c);
+int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
+int API BLAKE2SP_Final(unsigned char *md, BLAKE2SP_CTX *c);
+unsigned char * API BLAKE2SP(const unsigned char *d, size_t n, unsigned char *md);
 
 ////utf
-EXPORT int API cpConvertEncoding(unsigned int nTrCode, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
-EXPORT int API cpTrCodeSupported(unsigned int nTrCode);
-EXPORT int API UTF8ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-EXPORT int API UTF8ToUTF32(LPCSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-EXPORT int API UTF16ToUTF8(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
-EXPORT int API UTF16ToUTF16BE(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-EXPORT int API UTF16ToUTF32(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-EXPORT int API UTF16ToUTF32BE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-EXPORT int API UTF16BEToUTF16(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-EXPORT int API UTF32ToUTF8(LPCLSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
-EXPORT int API UTF32ToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-EXPORT int API UTF32ToUTF32BE(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-EXPORT int API UTF32BEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-EXPORT int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API cpConvertEncoding(unsigned int nTrCode, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
+int API cpTrCodeSupported(unsigned int nTrCode);
+int API UTF8ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF8ToUTF32(LPCSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF16ToUTF8(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
+int API UTF16ToUTF16BE(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF16ToUTF32(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF16ToUTF32BE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF16BEToUTF16(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF32ToUTF8(LPCLSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
+int API UTF32ToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF32ToUTF32BE(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF32BEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
 
 ////libcrypto
-EXPORT int API MD4_Init(MD4_CTX *c);
-EXPORT int API MD4_Update(MD4_CTX *c, const void *data, size_t len);
-EXPORT int API MD4_Final(unsigned char *md, MD4_CTX *c);
-EXPORT unsigned char * API MD4(const unsigned char *d, size_t n, unsigned char *md);
-EXPORT int API MD5_Init(MD5_CTX *c);
-EXPORT int API MD5_Update(MD5_CTX *c, const void *data, size_t len);
-EXPORT int API MD5_Final(unsigned char *md, MD5_CTX *c);
-EXPORT unsigned char * API MD5(const unsigned char *d, size_t n, unsigned char *md);
-EXPORT int API MDC2_Init(MDC2_CTX *c);
-EXPORT int API MDC2_Update(MDC2_CTX *c, const void *data, size_t len);
-EXPORT int API MDC2_Final(unsigned char *md, MDC2_CTX *c);
-EXPORT unsigned char * API MDC2(const unsigned char *d, size_t n, unsigned char *md);
-EXPORT int API RIPEMD160_Init(RIPEMD160_CTX *c);
-EXPORT int API RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len);
-EXPORT int API RIPEMD160_Final(unsigned char *md, RIPEMD160_CTX *c);
-EXPORT unsigned char * API RIPEMD160(const unsigned char *d, size_t n, unsigned char *md);
-EXPORT int API SHA1_Init(SHA_CTX *c);
-EXPORT int API SHA1_Update(SHA_CTX *c, const void *data, size_t len);
-EXPORT int API SHA1_Final(unsigned char *md, SHA_CTX *c);
-EXPORT unsigned char * API SHA1(const unsigned char *d, size_t n, unsigned char *md);
-//EXPORT int API SHA224_Init(SHA256_CTX *c);
-//EXPORT int API SHA224_Update(SHA256_CTX *c, const void *data, size_t len);
-//EXPORT int API SHA224_Final(unsigned char *md, SHA256_CTX *c);
-//EXPORT unsigned char * API SHA224(const unsigned char *d, size_t n, unsigned char *md);
-EXPORT int API SHA256_Init(SHA256_CTX *c);
-EXPORT int API SHA256_Update(SHA256_CTX *c, const void *data, size_t len);
-EXPORT int API SHA256_Final(unsigned char *md, SHA256_CTX *c);
-EXPORT unsigned char * API SHA256(const unsigned char *d, size_t n, unsigned char *md);
-//EXPORT int API SHA384_Init(SHA512_CTX *c);
-//EXPORT int API SHA384_Update(SHA512_CTX *c, const void *data, size_t len);
-//EXPORT int API SHA384_Final(unsigned char *md, SHA512_CTX *c);
-//EXPORT unsigned char * API SHA384(const unsigned char *d, size_t n, unsigned char *md);
-EXPORT int API SHA512_Init(SHA512_CTX *c);
-EXPORT int API SHA512_Update(SHA512_CTX *c, const void *data, size_t len);
-EXPORT int API SHA512_Final(unsigned char *md, SHA512_CTX *c);
-EXPORT unsigned char * API SHA512(const unsigned char *d, size_t n, unsigned char *md);
+int API MD4_Init(MD4_CTX *c);
+int API MD4_Update(MD4_CTX *c, const void *data, size_t len);
+int API MD4_Final(unsigned char *md, MD4_CTX *c);
+unsigned char * API MD4(const unsigned char *d, size_t n, unsigned char *md);
+int API MD5_Init(MD5_CTX *c);
+int API MD5_Update(MD5_CTX *c, const void *data, size_t len);
+int API MD5_Final(unsigned char *md, MD5_CTX *c);
+unsigned char * API MD5(const unsigned char *d, size_t n, unsigned char *md);
+int API MDC2_Init(MDC2_CTX *c);
+int API MDC2_Update(MDC2_CTX *c, const void *data, size_t len);
+int API MDC2_Final(unsigned char *md, MDC2_CTX *c);
+unsigned char * API MDC2(const unsigned char *d, size_t n, unsigned char *md);
+int API RIPEMD160_Init(RIPEMD160_CTX *c);
+int API RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len);
+int API RIPEMD160_Final(unsigned char *md, RIPEMD160_CTX *c);
+unsigned char * API RIPEMD160(const unsigned char *d, size_t n, unsigned char *md);
+int API SHA1_Init(SHA_CTX *c);
+int API SHA1_Update(SHA_CTX *c, const void *data, size_t len);
+int API SHA1_Final(unsigned char *md, SHA_CTX *c);
+unsigned char * API SHA1(const unsigned char *d, size_t n, unsigned char *md);
+//int API SHA224_Init(SHA256_CTX *c);
+//int API SHA224_Update(SHA256_CTX *c, const void *data, size_t len);
+//int API SHA224_Final(unsigned char *md, SHA256_CTX *c);
+//unsigned char * API SHA224(const unsigned char *d, size_t n, unsigned char *md);
+int API SHA256_Init(SHA256_CTX *c);
+int API SHA256_Update(SHA256_CTX *c, const void *data, size_t len);
+int API SHA256_Final(unsigned char *md, SHA256_CTX *c);
+unsigned char * API SHA256(const unsigned char *d, size_t n, unsigned char *md);
+//int API SHA384_Init(SHA512_CTX *c);
+//int API SHA384_Update(SHA512_CTX *c, const void *data, size_t len);
+//int API SHA384_Final(unsigned char *md, SHA512_CTX *c);
+//unsigned char * API SHA384(const unsigned char *d, size_t n, unsigned char *md);
+int API SHA512_Init(SHA512_CTX *c);
+int API SHA512_Update(SHA512_CTX *c, const void *data, size_t len);
+int API SHA512_Final(unsigned char *md, SHA512_CTX *c);
+unsigned char * API SHA512(const unsigned char *d, size_t n, unsigned char *md);
 
 ////westpak
-EXPORT long API GetFileFromPakA(void* pBuf, long ulBufLen, LPCSTR pszFn, LPCSTR pszFnWant);
-EXPORT long API GetFileFromPakW(void* pBuf, long ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
+long API GetFileFromPakA(void* pBuf, long ulBufLen, LPCSTR pszFn, LPCSTR pszFnWant);
+long API GetFileFromPakW(void* pBuf, long ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
 
 ////xmlparser
-EXPORT int API XMLPickAttribW(LPWSTR, LPCWSTR, LPCWSTR, long, LPCWSTR);
-EXPORT int API XMLPickAttribA(LPSTR, LPCSTR, LPCSTR, long, LPCSTR);
-EXPORT int API XMLPickAttrib2W(LPWSTR, long, LPCWSTR, LPCWSTR, long, LPCWSTR);
-EXPORT int API XMLPickAttrib2A(LPSTR, long, LPCSTR, LPCSTR, long, LPCSTR);
-EXPORT int API XMLPickAttribPosW(long*, long*, LPCWSTR, LPCWSTR, long, LPCWSTR);
-EXPORT int API XMLPickAttribPosA(long*, long*, LPCSTR, LPCSTR, long, LPCSTR);
-EXPORT int API XMLPickFullTagW(LPWSTR, LPCWSTR, LPCWSTR, long*, long);
-EXPORT int API XMLPickFullTagA(LPSTR, LPCSTR, LPCSTR, long*, long);
-EXPORT int API XMLPickFullTag2W(LPWSTR, long, LPCWSTR, LPCWSTR, long*, long);
-EXPORT int API XMLPickFullTag2A(LPSTR, long, LPCSTR, LPCSTR, long*, long);
-EXPORT int API XMLPickFullTagPosW(long*, long*, LPCWSTR, LPCWSTR, long*, long);
-EXPORT int API XMLPickFullTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
-EXPORT int API XMLPickTagW(LPWSTR, LPCWSTR, LPCWSTR, long);
-EXPORT int API XMLPickTagA(LPSTR, LPCSTR, LPCSTR, long);
-EXPORT int API XMLPickTag2W(LPWSTR, LPCWSTR, LPCWSTR, long*, long);
-EXPORT int API XMLPickTag2A(LPSTR, LPCSTR, LPCSTR, long*, long);
-EXPORT int API XMLPickTag3W(LPWSTR, long, LPCWSTR, LPCWSTR, long*, long);
-EXPORT int API XMLPickTag3A(LPSTR, long, LPCSTR, LPCSTR, long*, long);
-EXPORT int API XMLPickTagPosW(long*, long*, LPCWSTR, LPCWSTR, long*, long);
-EXPORT int API XMLPickTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
+int API XMLPickAttribW(LPWSTR, LPCWSTR, LPCWSTR, long, LPCWSTR);
+int API XMLPickAttribA(LPSTR, LPCSTR, LPCSTR, long, LPCSTR);
+int API XMLPickAttrib2W(LPWSTR, long, LPCWSTR, LPCWSTR, long, LPCWSTR);
+int API XMLPickAttrib2A(LPSTR, long, LPCSTR, LPCSTR, long, LPCSTR);
+int API XMLPickAttribPosW(long*, long*, LPCWSTR, LPCWSTR, long, LPCWSTR);
+int API XMLPickAttribPosA(long*, long*, LPCSTR, LPCSTR, long, LPCSTR);
+int API XMLPickFullTagW(LPWSTR, LPCWSTR, LPCWSTR, long*, long);
+int API XMLPickFullTagA(LPSTR, LPCSTR, LPCSTR, long*, long);
+int API XMLPickFullTag2W(LPWSTR, long, LPCWSTR, LPCWSTR, long*, long);
+int API XMLPickFullTag2A(LPSTR, long, LPCSTR, LPCSTR, long*, long);
+int API XMLPickFullTagPosW(long*, long*, LPCWSTR, LPCWSTR, long*, long);
+int API XMLPickFullTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
+int API XMLPickTagW(LPWSTR, LPCWSTR, LPCWSTR, long);
+int API XMLPickTagA(LPSTR, LPCSTR, LPCSTR, long);
+int API XMLPickTag2W(LPWSTR, LPCWSTR, LPCWSTR, long*, long);
+int API XMLPickTag2A(LPSTR, LPCSTR, LPCSTR, long*, long);
+int API XMLPickTag3W(LPWSTR, long, LPCWSTR, LPCWSTR, long*, long);
+int API XMLPickTag3A(LPSTR, long, LPCSTR, LPCSTR, long*, long);
+int API XMLPickTagPosW(long*, long*, LPCWSTR, LPCWSTR, long*, long);
+int API XMLPickTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
 
 ////zlib
-EXPORT int API compress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);
-EXPORT int API compress2(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen, int level);
-EXPORT unsigned long API compressBound(unsigned long sourceLen);
-EXPORT unsigned long API crc32(unsigned long crc, const char *buf, unsigned int len);
-EXPORT unsigned long API crc32_combine(unsigned long, unsigned long, long);
-//EXPORT unsigned long API crc32_combine64(unsigned long, unsigned long, long long);
-EXPORT const unsigned long * API get_crc_table(void);
-EXPORT int API uncompress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);
-EXPORT const char * API zlibVersion(void);
+int API compress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);
+int API compress2(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen, int level);
+unsigned long API compressBound(unsigned long sourceLen);
+unsigned long API crc32(unsigned long crc, const char *buf, unsigned int len);
+unsigned long API crc32_combine(unsigned long, unsigned long, long);
+//unsigned long API crc32_combine64(unsigned long, unsigned long, long long);
+const unsigned long * API get_crc_table(void);
+int API uncompress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);
+const char * API zlibVersion(void);
 
 #ifdef __cplusplus
 }
