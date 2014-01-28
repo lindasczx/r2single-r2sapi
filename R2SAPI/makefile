@@ -1,3 +1,6 @@
+# 若编译出错，把下面这个变量改成TRUE即可
+COMPILE_FROM_PUBLIC:=FALSE
+
 CC:=		gcc
 CXX:=		g++
 RC:=		windres
@@ -11,6 +14,9 @@ LINKFLAGS:=	-s -lstdc++
 #SBFLAGS:=	-Wl,--add-stdcall-alias
 IMPLIB:=	libcrypto.a libz.a c_g18030.lib
 IMPOBJ:=	compress.o uncompr.o crc32.o
+ifneq ($(COMPILE_FROM_PUBLIC), FALSE)
+IMPOBJ:=	$(IMPOBJ) private/xmlparser.o private/fileio.o private/lzssdec.o
+endif
 
 CSRC:=		stdc.c
 CSRC+=		sha512-t.c
@@ -19,12 +25,16 @@ CSRC+=		utf7.c
 CSRC+=		md6_compress.c
 CSRC+=		md6_mode.c
 CSRC+=		md6.c
+ifeq ($(COMPILE_FROM_PUBLIC), FALSE)
 CSRC+=		../../../xmlparser.c
+endif
 CXXSRC:=	r2sapi.cpp
 CXXSRC+=	blake2.cpp
 CXXSRC+=	blake2s.cpp
+ifeq ($(COMPILE_FROM_PUBLIC), FALSE)
 CXXSRC+=	../r2pak/fileio.cpp
 CXXSRC+=	../r2pak/lzssdec.cpp
+endif
 
 COBJ:=		$(CSRC:%.c=%.o)
 CXXOBJ:=	$(CXXSRC:%.cpp=%.o)
