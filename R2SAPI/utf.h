@@ -1,4 +1,4 @@
-#ifndef UTF_H_
+ï»¿#ifndef UTF_H_
 #define UTF_H_
 
 #include <inttypes.h>
@@ -35,7 +35,7 @@ extern "C"{
 typedef int * LPLSTR;
 typedef const int * LPCLSTR;
 
-// APIÓÐ¾ßÌåÊµÏÖµÄº¯Êý
+// APIæœ‰å…·ä½“å®žçŽ°çš„å‡½æ•°
 unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto);
 int WINAPI cpConvertEncoding(unsigned int nTrCode, LPVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
 int WINAPI cpTrCodeSupported(unsigned int nTrCode);
@@ -43,7 +43,7 @@ int WINAPI GB18030ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cch
 int WINAPI UTF16ToGB18030(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
 int WINAPI UTF7ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
 int WINAPI UTF16ToUTF7(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
-// API°ü×°º¯Êý
+// APIåŒ…è£…å‡½æ•°
 int WINAPI UTF16BEToUTF16(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
 int WINAPI UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
 int WINAPI UTF8ToUTF16LE(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
@@ -54,7 +54,7 @@ int WINAPI UTF16LEToUTF32BE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int 
 int WINAPI UTF32LEToUTF8(LPCLSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
 int WINAPI UTF32LEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
 int WINAPI UTF32BEToUTF16LE(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-// ÄÚ²¿º¯Êý
+// å†…éƒ¨å‡½æ•°
 size_t lcslen(LPCLSTR lpSrcStr);
 int CopyString(int nSize, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
 int SwapByte(int nSize, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);

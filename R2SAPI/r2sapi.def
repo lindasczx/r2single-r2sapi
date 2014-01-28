@@ -35,6 +35,10 @@ UTF32BEToUTF16	=UTF32BEToUTF16LE
 UTF32BEToUTF32
 
 ;// libeay32模块
+MD2		=stdc_MD2
+MD2_Final	=stdc_MD2_Final
+MD2_Init	=stdc_MD2_Init
+MD2_Update	=stdc_MD2_Update
 MD4		=stdc_MD4
 MD4_Final	=stdc_MD4_Final
 MD4_Init	=stdc_MD4_Init
@@ -59,32 +63,32 @@ SHA1		=stdc_SHA1
 SHA1_Final	=stdc_SHA1_Final
 SHA1_Init	=stdc_SHA1_Init
 SHA1_Update	=stdc_SHA1_Update
-;SHA224		=stdc_SHA224
-;SHA224_Final	=stdc_SHA224_Final
-;SHA224_Init	=stdc_SHA224_Init
-;SHA224_Update	=stdc_SHA224_Update
+SHA224		=stdc_SHA224
+SHA224_Final	=stdc_SHA224_Final
+SHA224_Init	=stdc_SHA224_Init
+SHA224_Update	=stdc_SHA224_Update
 SHA256		=stdc_SHA256
 SHA256_Final	=stdc_SHA256_Final
 SHA256_Init	=stdc_SHA256_Init
 SHA256_Update	=stdc_SHA256_Update
-;SHA384		=stdc_SHA384
-;SHA384_Final	=stdc_SHA384_Final
-;SHA384_Init	=stdc_SHA384_Init
-;SHA384_Update	=stdc_SHA384_Update
+SHA384		=stdc_SHA384
+SHA384_Final	=stdc_SHA384_Final
+SHA384_Init	=stdc_SHA384_Init
+SHA384_Update	=stdc_SHA384_Update
 SHA512		=stdc_SHA512
 SHA512_Final	=stdc_SHA512_Final
 SHA512_Init	=stdc_SHA512_Init
 SHA512_Update	=stdc_SHA512_Update
 
 ;// 增补NIST Hash函数
-;SHA512_224
-;SHA512_224_Final
-;SHA512_224_Init
-;SHA512_224_Update
-;SHA512_256
-;SHA512_256_Final
-;SHA512_256_Init
-;SHA512_256_Update
+SHA512_224
+SHA512_224_Final
+SHA512_224_Init
+SHA512_224_Update
+SHA512_256
+SHA512_256_Final
+SHA512_256_Init
+SHA512_256_Update
 
 ;// westpak模块
 GetFileFromPakA

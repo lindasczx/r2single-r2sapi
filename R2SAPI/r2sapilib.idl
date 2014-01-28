@@ -60,6 +60,13 @@ library R2SAPILib
 		unsigned char Buf[512];
 		long BufLen;
 	} BLAKE2SP_CTX;
+	typedef struct MD2_CTX
+	{
+		long Num;
+		unsigned char Data[16];
+		long Cksm[16];
+		long State[16];
+	} MD2_CTX;
 	typedef struct MD4_CTX
 	{
 		long A, B, C, D;
@@ -197,6 +204,14 @@ library R2SAPILib
 		[entry("UTF32BEToUTF32")]
 			long __stdcall UTF32BEToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 ////	libeay32模块
+		[entry("MD2")]
+			long __stdcall MD2([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("MD2_Init")]
+			long __stdcall MD2_Init([in,out]MD2_CTX* c);
+		[entry("MD2_Update")]
+			long __stdcall MD2_Update([in,out]MD2_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("MD2_Final")]
+			long __stdcall MD2_Final([in,out]void* pResult, [in,out]MD2_CTX* c);
 		[entry("MD4")]
 			long __stdcall MD4([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("MD4_Init")]
@@ -237,14 +252,14 @@ library R2SAPILib
 			long __stdcall SHA1_Update([in,out]SHA_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA1_Final")]
 			long __stdcall SHA1_Final([in,out]void* pResult, [in,out]SHA_CTX* c);
-//		[entry("SHA224")]
-//			long __stdcall SHA224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
-//		[entry("SHA224_Init")]
-//			long __stdcall SHA224_Init([in,out]SHA256_CTX* c);
-//		[entry("SHA224_Update")]
-//			long __stdcall SHA224_Update([in,out]SHA256_CTX* c, [in]void* pBuffer, [in]long lBufLen);
-//		[entry("SHA224_Final")]
-//			long __stdcall SHA224_Final([in,out]void* pResult, [in,out]SHA256_CTX* c);
+		[entry("SHA224")]
+			long __stdcall SHA224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA224_Init")]
+			long __stdcall SHA224_Init([in,out]SHA256_CTX* c);
+		[entry("SHA224_Update")]
+			long __stdcall SHA224_Update([in,out]SHA256_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA224_Final")]
+			long __stdcall SHA224_Final([in,out]void* pResult, [in,out]SHA256_CTX* c);
 		[entry("SHA256")]
 			long __stdcall SHA256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA256_Init")]
@@ -253,14 +268,14 @@ library R2SAPILib
 			long __stdcall SHA256_Update([in,out]SHA256_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA256_Final")]
 			long __stdcall SHA256_Final([in,out]void* pResult, [in,out]SHA256_CTX* c);
-//		[entry("SHA384")]
-//			long __stdcall SHA384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
-//		[entry("SHA384_Init")]
-//			long __stdcall SHA384_Init([in,out]SHA512_CTX* c);
-//		[entry("SHA384_Update")]
-//			long __stdcall SHA384_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
-//		[entry("SHA384_Final")]
-//			long __stdcall SHA384_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
+		[entry("SHA384")]
+			long __stdcall SHA384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA384_Init")]
+			long __stdcall SHA384_Init([in,out]SHA512_CTX* c);
+		[entry("SHA384_Update")]
+			long __stdcall SHA384_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA384_Final")]
+			long __stdcall SHA384_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
 		[entry("SHA512")]
 			long __stdcall SHA512([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA512_Init")]
@@ -269,6 +284,23 @@ library R2SAPILib
 			long __stdcall SHA512_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA512_Final")]
 			long __stdcall SHA512_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
+////	增补NIST Hash函数
+		[entry("SHA512_224")]
+			long __stdcall SHA512_224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA512_224_Init")]
+			long __stdcall SHA512_224_Init([in,out]SHA512_CTX* c);
+		[entry("SHA512_224_Update")]
+			long __stdcall SHA512_224_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA512_224_Final")]
+			long __stdcall SHA512_224_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
+		[entry("SHA512_256")]
+			long __stdcall SHA512_256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA512_256_Init")]
+			long __stdcall SHA512_256_Init([in,out]SHA512_CTX* c);
+		[entry("SHA512_256_Update")]
+			long __stdcall SHA512_256_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA512_256_Final")]
+			long __stdcall SHA512_256_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
 ////	westpak模块
 		[entry("GetFileFromPakA")]
 			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]LPCSTR pszFn, [in,string]LPCSTR pszFnWant);
