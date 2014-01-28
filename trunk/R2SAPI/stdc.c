@@ -1,4 +1,5 @@
 #include <openssl/crypto.h>
+#include <openssl/md2.h>
 #include <openssl/md4.h>
 #include <openssl/md5.h>
 #include <openssl/mdc2.h>
@@ -17,6 +18,24 @@ unsigned long __stdcall stdc_SSLeay(void)
 const char * __stdcall stdc_SSLeay_version(int t)
 {
 	return SSLeay_version(t);
+}
+
+////////////////MD2
+int __stdcall stdc_MD2_Init(MD2_CTX *c)
+{
+	return MD2_Init(c);
+}
+int __stdcall stdc_MD2_Update(MD2_CTX *c, const void *data, size_t len)
+{
+	return MD2_Update(c, data, len);
+}
+int __stdcall stdc_MD2_Final(unsigned char *md, MD2_CTX *c)
+{
+	return MD2_Final(md, c);
+}
+unsigned char * __stdcall stdc_MD2(const unsigned char *d, size_t n, unsigned char *md)
+{
+	return MD2(d, n, md);
 }
 
 ////////////////MD4
@@ -110,7 +129,6 @@ unsigned char * __stdcall stdc_SHA1(const unsigned char *d, size_t n, unsigned c
 }
 
 ////////////////SHA-224
-/*
 int __stdcall stdc_SHA224_Init(SHA256_CTX *c)
 {
 	return SHA224_Init(c);
@@ -127,7 +145,6 @@ unsigned char * __stdcall stdc_SHA224(const unsigned char *d, size_t n, unsigned
 {
 	return SHA224(d, n, md);
 }
-*/
 
 ////////////////SHA-256
 int __stdcall stdc_SHA256_Init(SHA256_CTX *c)
@@ -148,7 +165,6 @@ unsigned char * __stdcall stdc_SHA256(const unsigned char *d, size_t n, unsigned
 }
 
 ////////////////SHA-384
-/*
 int __stdcall stdc_SHA384_Init(SHA512_CTX *c)
 {
 	return SHA384_Init(c);
@@ -165,7 +181,6 @@ unsigned char * __stdcall stdc_SHA384(const unsigned char *d, size_t n, unsigned
 {
 	return SHA384(d, n, md);
 }
-*/
 
 ////////////////SHA-512
 int __stdcall stdc_SHA512_Init(SHA512_CTX *c)
