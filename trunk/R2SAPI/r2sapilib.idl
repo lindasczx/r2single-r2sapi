@@ -19,6 +19,16 @@ library R2SAPILib
 		const long  XML_ERR_BUFFER = -2;
 		const long  XML_ERR_INVALID_PARAM = -3;
 
+		const long  Z_OK = 0;
+		const long  Z_STREAM_ERROR = -2;
+		const long  Z_DATA_ERROR = -3;
+		const long  Z_MEM_ERROR = -4;
+		const long  Z_BUF_ERROR = -5;
+		const long  Z_NO_COMPRESSION = 0;
+		const long  Z_BEST_SPEED = 1;
+		const long  Z_BEST_COMPRESSION = 9;
+		const long  Z_DEFAULT_COMPRESSION = -1;
+
 		const long  cpINVALID = -1;
 		const long  cpUTF8 = 1;
 		const long  cpUTF16 = 2;
@@ -32,17 +42,6 @@ library R2SAPILib
 		const long  cpCESU8 = 0x80;
 		const long  cpUTF7 = 0xa0;
 		const long  cpGB18030 = 0x100;
-
-		const long  Z_OK = 0;
-		const long  Z_STREAM_ERROR = -2;
-		const long  Z_DATA_ERROR = -3;
-		const long  Z_MEM_ERROR = -4;
-		const long  Z_BUF_ERROR = -5;
-
-		const long  Z_NO_COMPRESSION = 0;
-		const long  Z_BEST_SPEED = 1;
-		const long  Z_BEST_COMPRESSION = 9;
-		const long  Z_DEFAULT_COMPRESSION = -1;
 	};
 
 	typedef struct BLAKE2S_CTX
@@ -141,6 +140,12 @@ library R2SAPILib
 		//} U;
 		long Num, MD_Len;
 	} SHA512_CTX;
+	typedef struct SM3_CTX
+	{
+		long Total[2];
+		long State[8];
+		unsigned char Buffer[64];
+	} SM3_CTX;
 
 	[
 		dllname("r2sapi.dll"),
@@ -150,60 +155,40 @@ library R2SAPILib
 	{
 		[entry("_")]
 			long __stdcall R2SAPIVer();
-////	MD6.c
-		[entry("MD6")]
-			long __stdcall MD6([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
-		[entry("MD6_Len")]
-			long __stdcall MD6_Len([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult, [in]long lResultLen);
-		[entry("MD6_Init")]
-			long __stdcall MD6_Init([in,out]MD6_CTX* c);
-		[entry("MD6_Init_Len")]
-			long __stdcall MD6_Init_Len([in,out]MD6_CTX* c, [in]long lResultLen);
-		[entry("MD6_Update")]
-			long __stdcall MD6_Update([in,out]MD6_CTX* c, [in]void* pBuffer, [in]long lBufLen);
-		[entry("MD6_Final")]
-			long __stdcall MD6_Final([in,out]void* pResult, [in,out]MD6_CTX* c);
-////	BLAKE2模块
-		[entry("BLAKE2SP")]
-			long __stdcall BLAKE2SP([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
-		[entry("BLAKE2SP_Init")]
-			long __stdcall BLAKE2SP_Init([in,out]BLAKE2SP_CTX* c);
-		[entry("BLAKE2SP_Update")]
-			long __stdcall BLAKE2SP_Update([in,out]BLAKE2SP_CTX* c, [in]void* pBuffer, [in]long lBufLen);
-		[entry("BLAKE2SP_Final")]
-			long __stdcall BLAKE2SP_Final([in,out]void* pResult, [in,out]BLAKE2SP_CTX* c);
-////	UTF.c
-		[entry("cpConvertEncoding")]
-			long __stdcall cpConvertEncoding([in]long TrCode, [in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("cpTrCodeSupported")]
-			long __stdcall cpTrCodeSupported([in]long TrCode);
-		[entry("cpMakeTrCode")]
-			long __stdcall MakeTrCode([in]short CPFrom, [in]short CPTo);
-		[entry("UTF8ToUTF16")]
-			long __stdcall UTF8ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
-		[entry("UTF8ToUTF32")]
-			long __stdcall UTF8ToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF16ToUTF8")]
-			long __stdcall UTF16ToUTF8([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF16ToUTF16BE")]
-			long __stdcall UTF16ToUTF16BE([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF16ToUTF32")]
-			long __stdcall UTF16ToUTF32([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF16ToUTF32BE")]
-			long __stdcall UTF16ToUTF32BE([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF16BEToUTF16")]
-			long __stdcall UTF16BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
-		[entry("UTF32ToUTF8")]
-			long __stdcall UTF32ToUTF8([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF32ToUTF16")]
-			long __stdcall UTF32ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
-		[entry("UTF32ToUTF32BE")]
-			long __stdcall UTF32ToUTF32BE([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-		[entry("UTF32BEToUTF16")]
-			long __stdcall UTF32BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
-		[entry("UTF32BEToUTF32")]
-			long __stdcall UTF32BEToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
-////	libeay32模块
+///////////////////////////////////////////
+//////// 1. R2Beat PAK文件格式相关
+///////////////////////////////////////////
+////	westpak模块
+		[entry("GetFileFromPakA")]
+			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]LPCSTR pszFn, [in,string]LPCSTR pszFnWant);
+///////////////////////////////////////////
+//////// 2. 解析XML
+///////////////////////////////////////////
+////	xmlparser模块
+		[entry("XMLPickAttribW")]
+			long __stdcall XMLPickAttribW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
+		[entry("XMLPickAttrib2W")]
+			long __stdcall XMLPickAttrib2W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
+		[entry("XMLPickAttribPosW")]
+			long __stdcall XMLPickAttribPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
+		[entry("XMLPickFullTagW")]
+			long __stdcall XMLPickFullTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("XMLPickFullTag2W")]
+			long __stdcall XMLPickFullTag2W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("XMLPickFullTagPosW")]
+			long __stdcall XMLPickFullTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("XMLPickTagW")]
+			long __stdcall XMLPickTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos);
+		[entry("XMLPickTag2W")]
+			long __stdcall XMLPickTag2W([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("XMLPickTag3W")]
+			long __stdcall XMLPickTag3W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+		[entry("XMLPickTagPosW")]
+			long __stdcall XMLPickTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+///////////////////////////////////////////
+//////// 3. Hash函数
+///////////////////////////////////////////
+////	openssl模块
 		[entry("MD2")]
 			long __stdcall MD2([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("MD2_Init")]
@@ -301,30 +286,40 @@ library R2SAPILib
 			long __stdcall SHA512_256_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA512_256_Final")]
 			long __stdcall SHA512_256_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
-////	westpak模块
-		[entry("GetFileFromPakA")]
-			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]LPCSTR pszFn, [in,string]LPCSTR pszFnWant);
-////	xmlparser模块
-		[entry("XMLPickAttribW")]
-			long __stdcall XMLPickAttribW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
-		[entry("XMLPickAttrib2W")]
-			long __stdcall XMLPickAttrib2W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
-		[entry("XMLPickAttribPosW")]
-			long __stdcall XMLPickAttribPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
-		[entry("XMLPickFullTagW")]
-			long __stdcall XMLPickFullTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
-		[entry("XMLPickFullTag2W")]
-			long __stdcall XMLPickFullTag2W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
-		[entry("XMLPickFullTagPosW")]
-			long __stdcall XMLPickFullTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
-		[entry("XMLPickTagW")]
-			long __stdcall XMLPickTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos);
-		[entry("XMLPickTag2W")]
-			long __stdcall XMLPickTag2W([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
-		[entry("XMLPickTag3W")]
-			long __stdcall XMLPickTag3W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
-		[entry("XMLPickTagPosW")]
-			long __stdcall XMLPickTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+////	MD6.c
+		[entry("MD6")]
+			long __stdcall MD6([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("MD6_Len")]
+			long __stdcall MD6_Len([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult, [in]long lResultLen);
+		[entry("MD6_Init")]
+			long __stdcall MD6_Init([in,out]MD6_CTX* c);
+		[entry("MD6_Init_Len")]
+			long __stdcall MD6_Init_Len([in,out]MD6_CTX* c, [in]long lResultLen);
+		[entry("MD6_Update")]
+			long __stdcall MD6_Update([in,out]MD6_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("MD6_Final")]
+			long __stdcall MD6_Final([in,out]void* pResult, [in,out]MD6_CTX* c);
+////	BLAKE2模块
+		[entry("BLAKE2SP")]
+			long __stdcall BLAKE2SP([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("BLAKE2SP_Init")]
+			long __stdcall BLAKE2SP_Init([in,out]BLAKE2SP_CTX* c);
+		[entry("BLAKE2SP_Update")]
+			long __stdcall BLAKE2SP_Update([in,out]BLAKE2SP_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("BLAKE2SP_Final")]
+			long __stdcall BLAKE2SP_Final([in,out]void* pResult, [in,out]BLAKE2SP_CTX* c);
+////	国密SM3.c
+		[entry("SM3")]
+			long __stdcall SM3([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SM3_Init")]
+			long __stdcall SM3_Init([in,out]SM3_CTX* c);
+		[entry("SM3_Update")]
+			long __stdcall SM3_Update([in,out]SM3_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SM3_Final")]
+			long __stdcall SM3_Final([in,out]void* pResult, [in,out]SM3_CTX* c);
+///////////////////////////////////////////
+//////// 4. 压缩解压
+///////////////////////////////////////////
 ////	zlib模块
 		[entry("compress")]
 			long __stdcall Compress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
@@ -336,6 +331,40 @@ library R2SAPILib
 			long __stdcall CRC32([in]long CRC, [in]void* pBuf, [in]long lBufLen);
 		[entry("uncompress")]
 			long __stdcall Uncompress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
+///////////////////////////////////////////
+//////// 5. 字符编码转换
+///////////////////////////////////////////
+////	UTF.c
+		[entry("cpConvertEncoding")]
+			long __stdcall cpConvertEncoding([in]long TrCode, [in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("cpTrCodeSupported")]
+			long __stdcall cpTrCodeSupported([in]long TrCode);
+		[entry("cpMakeTrCode")]
+			long __stdcall MakeTrCode([in]short CPFrom, [in]short CPTo);
+		[entry("UTF8ToUTF16")]
+			long __stdcall UTF8ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
+		[entry("UTF8ToUTF32")]
+			long __stdcall UTF8ToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF16ToUTF8")]
+			long __stdcall UTF16ToUTF8([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF16ToUTF16BE")]
+			long __stdcall UTF16ToUTF16BE([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF16ToUTF32")]
+			long __stdcall UTF16ToUTF32([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF16ToUTF32BE")]
+			long __stdcall UTF16ToUTF32BE([in,string]LPWSTR lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF16BEToUTF16")]
+			long __stdcall UTF16BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
+		[entry("UTF32ToUTF8")]
+			long __stdcall UTF32ToUTF8([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF32ToUTF16")]
+			long __stdcall UTF32ToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
+		[entry("UTF32ToUTF32BE")]
+			long __stdcall UTF32ToUTF32BE([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+		[entry("UTF32BEToUTF16")]
+			long __stdcall UTF32BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
+		[entry("UTF32BEToUTF32")]
+			long __stdcall UTF32BEToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 
 	};
 

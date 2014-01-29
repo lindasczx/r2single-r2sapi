@@ -25,6 +25,7 @@ CSRC+=		utf7.c
 CSRC+=		md6_compress.c
 CSRC+=		md6_mode.c
 CSRC+=		md6.c
+CSRC+=		sm3.c
 ifeq ($(COMPILE_FROM_PUBLIC), FALSE)
 CSRC+=		../../../xmlparser.c
 endif
