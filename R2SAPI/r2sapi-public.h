@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.36.0.248
+	1.36.0.259
 --*/
 
 #ifndef R2SAPI_H_
@@ -43,6 +43,14 @@ typedef const int * LPCLSTR;
 #define MAKETRCODE(a,b) ( (uint32_t)( (((uint32_t)(uint16_t)a)<<16) | ((uint32_t)(uint16_t)b) ) )
 //unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto);
 
+#define MD2_BLOCK 16
+typedef struct MD2state_st
+{
+	unsigned int num;
+	unsigned char data[MD2_BLOCK];
+	uint32_t cksm[MD2_BLOCK];
+	uint32_t state[MD2_BLOCK];
+} MD2_CTX;
 #define MD4_LBLOCK 16
 typedef struct MD4state_st
 {
@@ -137,81 +145,27 @@ typedef struct blake2sp_state
 	unsigned char buf[8 * BLAKE2S_BLOCKBYTES];
 	size_t buflen;
 } BLAKE2SP_CTX;
+typedef struct sm3_context
+{
+	unsigned int total[2]; /*!< number of bytes processed */
+	unsigned int state[8]; /*!< intermediate digest state */
+	unsigned char buffer[64]; /*!< data block being processed */
+} SM3_CTX;
 
 int API _();
 #define R2SAPIVer (_())
 
-////md6
-int API MD6_Init(MD6_CTX *c);
-int API MD6_Init_Len(MD6_CTX *c, int mdlen);
-int API MD6_Update(MD6_CTX *c, const void *data, size_t len);
-int API MD6_Final(unsigned char *md, MD6_CTX *c);
-unsigned char * API MD6(const unsigned char *d, size_t n, unsigned char *md);
-unsigned char * API MD6_Len(const unsigned char *d, size_t n, unsigned char *md, int mdlen);
-
-////blake2sp
-int API BLAKE2SP_Init(BLAKE2SP_CTX *c);
-int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
-int API BLAKE2SP_Final(unsigned char *md, BLAKE2SP_CTX *c);
-unsigned char * API BLAKE2SP(const unsigned char *d, size_t n, unsigned char *md);
-
-////utf
-int API cpConvertEncoding(unsigned int nTrCode, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
-int API cpTrCodeSupported(unsigned int nTrCode);
-int API UTF8ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-int API UTF8ToUTF32(LPCSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-int API UTF16ToUTF8(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
-int API UTF16ToUTF16BE(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-int API UTF16ToUTF32(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-int API UTF16ToUTF32BE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-int API UTF16BEToUTF16(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-int API UTF32ToUTF8(LPCLSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
-int API UTF32ToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-int API UTF32ToUTF32BE(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-int API UTF32BEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-
-////libcrypto
-int API MD4_Init(MD4_CTX *c);
-int API MD4_Update(MD4_CTX *c, const void *data, size_t len);
-int API MD4_Final(unsigned char *md, MD4_CTX *c);
-unsigned char * API MD4(const unsigned char *d, size_t n, unsigned char *md);
-int API MD5_Init(MD5_CTX *c);
-int API MD5_Update(MD5_CTX *c, const void *data, size_t len);
-int API MD5_Final(unsigned char *md, MD5_CTX *c);
-unsigned char * API MD5(const unsigned char *d, size_t n, unsigned char *md);
-int API MDC2_Init(MDC2_CTX *c);
-int API MDC2_Update(MDC2_CTX *c, const void *data, size_t len);
-int API MDC2_Final(unsigned char *md, MDC2_CTX *c);
-unsigned char * API MDC2(const unsigned char *d, size_t n, unsigned char *md);
-int API RIPEMD160_Init(RIPEMD160_CTX *c);
-int API RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len);
-int API RIPEMD160_Final(unsigned char *md, RIPEMD160_CTX *c);
-unsigned char * API RIPEMD160(const unsigned char *d, size_t n, unsigned char *md);
-int API SHA1_Init(SHA_CTX *c);
-int API SHA1_Update(SHA_CTX *c, const void *data, size_t len);
-int API SHA1_Final(unsigned char *md, SHA_CTX *c);
-unsigned char * API SHA1(const unsigned char *d, size_t n, unsigned char *md);
-//int API SHA224_Init(SHA256_CTX *c);
-//int API SHA224_Update(SHA256_CTX *c, const void *data, size_t len);
-//int API SHA224_Final(unsigned char *md, SHA256_CTX *c);
-//unsigned char * API SHA224(const unsigned char *d, size_t n, unsigned char *md);
-int API SHA256_Init(SHA256_CTX *c);
-int API SHA256_Update(SHA256_CTX *c, const void *data, size_t len);
-int API SHA256_Final(unsigned char *md, SHA256_CTX *c);
-unsigned char * API SHA256(const unsigned char *d, size_t n, unsigned char *md);
-//int API SHA384_Init(SHA512_CTX *c);
-//int API SHA384_Update(SHA512_CTX *c, const void *data, size_t len);
-//int API SHA384_Final(unsigned char *md, SHA512_CTX *c);
-//unsigned char * API SHA384(const unsigned char *d, size_t n, unsigned char *md);
-int API SHA512_Init(SHA512_CTX *c);
-int API SHA512_Update(SHA512_CTX *c, const void *data, size_t len);
-int API SHA512_Final(unsigned char *md, SHA512_CTX *c);
-unsigned char * API SHA512(const unsigned char *d, size_t n, unsigned char *md);
+///////////////////////////////////////////
+//////// 1. R2Beat PAK文件格式相关
+///////////////////////////////////////////
 
 ////westpak
 long API GetFileFromPakA(void* pBuf, long ulBufLen, LPCSTR pszFn, LPCSTR pszFnWant);
 long API GetFileFromPakW(void* pBuf, long ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
+
+///////////////////////////////////////////
+//////// 2. 解析XML
+///////////////////////////////////////////
 
 ////xmlparser
 int API XMLPickAttribW(LPWSTR, LPCWSTR, LPCWSTR, long, LPCWSTR);
@@ -235,6 +189,85 @@ int API XMLPickTag3A(LPSTR, long, LPCSTR, LPCSTR, long*, long);
 int API XMLPickTagPosW(long*, long*, LPCWSTR, LPCWSTR, long*, long);
 int API XMLPickTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
 
+///////////////////////////////////////////
+//////// 3. Hash函数
+///////////////////////////////////////////
+
+////libcrypto
+int API MD2_Init(MD2_CTX *c);
+int API MD2_Update(MD2_CTX *c, const void *data, size_t len);
+int API MD2_Final(unsigned char *md, MD2_CTX *c);
+unsigned char * API MD2(const unsigned char *d, size_t n, unsigned char *md);
+int API MD4_Init(MD4_CTX *c);
+int API MD4_Update(MD4_CTX *c, const void *data, size_t len);
+int API MD4_Final(unsigned char *md, MD4_CTX *c);
+unsigned char * API MD4(const unsigned char *d, size_t n, unsigned char *md);
+int API MD5_Init(MD5_CTX *c);
+int API MD5_Update(MD5_CTX *c, const void *data, size_t len);
+int API MD5_Final(unsigned char *md, MD5_CTX *c);
+unsigned char * API MD5(const unsigned char *d, size_t n, unsigned char *md);
+int API MDC2_Init(MDC2_CTX *c);
+int API MDC2_Update(MDC2_CTX *c, const void *data, size_t len);
+int API MDC2_Final(unsigned char *md, MDC2_CTX *c);
+unsigned char * API MDC2(const unsigned char *d, size_t n, unsigned char *md);
+int API RIPEMD160_Init(RIPEMD160_CTX *c);
+int API RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len);
+int API RIPEMD160_Final(unsigned char *md, RIPEMD160_CTX *c);
+unsigned char * API RIPEMD160(const unsigned char *d, size_t n, unsigned char *md);
+int API SHA1_Init(SHA_CTX *c);
+int API SHA1_Update(SHA_CTX *c, const void *data, size_t len);
+int API SHA1_Final(unsigned char *md, SHA_CTX *c);
+unsigned char * API SHA1(const unsigned char *d, size_t n, unsigned char *md);
+int API SHA224_Init(SHA256_CTX *c);
+int API SHA224_Update(SHA256_CTX *c, const void *data, size_t len);
+int API SHA224_Final(unsigned char *md, SHA256_CTX *c);
+unsigned char * API SHA224(const unsigned char *d, size_t n, unsigned char *md);
+int API SHA256_Init(SHA256_CTX *c);
+int API SHA256_Update(SHA256_CTX *c, const void *data, size_t len);
+int API SHA256_Final(unsigned char *md, SHA256_CTX *c);
+unsigned char * API SHA256(const unsigned char *d, size_t n, unsigned char *md);
+int API SHA384_Init(SHA512_CTX *c);
+int API SHA384_Update(SHA512_CTX *c, const void *data, size_t len);
+int API SHA384_Final(unsigned char *md, SHA512_CTX *c);
+unsigned char * API SHA384(const unsigned char *d, size_t n, unsigned char *md);
+int API SHA512_Init(SHA512_CTX *c);
+int API SHA512_Update(SHA512_CTX *c, const void *data, size_t len);
+int API SHA512_Final(unsigned char *md, SHA512_CTX *c);
+unsigned char * API SHA512(const unsigned char *d, size_t n, unsigned char *md);
+////nist sha-2 addition
+int API SHA512_224_Init(SHA512_CTX *c);
+int API SHA512_224_Update(SHA512_CTX *c, const void *data, size_t len);
+int API SHA512_224_Final(unsigned char *md, SHA512_CTX *c);
+unsigned char * API SHA512_224(const unsigned char *d, size_t n, unsigned char *md);
+int API SHA512_256_Init(SHA512_CTX *c);
+int API SHA512_256_Update(SHA512_CTX *c, const void *data, size_t len);
+int API SHA512_256_Final(unsigned char *md, SHA512_CTX *c);
+unsigned char * API SHA512_256(const unsigned char *d, size_t n, unsigned char *md);
+
+////md6
+int API MD6_Init(MD6_CTX *c);
+int API MD6_Init_Len(MD6_CTX *c, int mdlen);
+int API MD6_Update(MD6_CTX *c, const void *data, size_t len);
+int API MD6_Final(unsigned char *md, MD6_CTX *c);
+unsigned char * API MD6(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API MD6_Len(const unsigned char *d, size_t n, unsigned char *md, int mdlen);
+
+////blake2sp
+int API BLAKE2SP_Init(BLAKE2SP_CTX *c);
+int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
+int API BLAKE2SP_Final(unsigned char *md, BLAKE2SP_CTX *c);
+unsigned char * API BLAKE2SP(const unsigned char *d, size_t n, unsigned char *md);
+
+////国密SM3
+int API SM3_Init(SM3_CTX *c);
+int API SM3_Update(SM3_CTX *c, const void *data, size_t len);
+int API SM3_Final(unsigned char *md, SM3_CTX *c);
+unsigned char * API SM3(const unsigned char *d, size_t n, unsigned char *md);
+
+///////////////////////////////////////////
+//////// 4. 压缩解压
+///////////////////////////////////////////
+
 ////zlib
 int API compress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);
 int API compress2(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen, int level);
@@ -245,6 +278,26 @@ unsigned long API crc32_combine(unsigned long, unsigned long, long);
 const unsigned long * API get_crc_table(void);
 int API uncompress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);
 const char * API zlibVersion(void);
+
+///////////////////////////////////////////
+//////// 5. 字符编码转换
+///////////////////////////////////////////
+
+////utf
+int API cpConvertEncoding(unsigned int nTrCode, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
+int API cpTrCodeSupported(unsigned int nTrCode);
+int API UTF8ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF8ToUTF32(LPCSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF16ToUTF8(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
+int API UTF16ToUTF16BE(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF16ToUTF32(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF16ToUTF32BE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF16BEToUTF16(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF32ToUTF8(LPCLSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
+int API UTF32ToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF32ToUTF32BE(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF32BEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
 
 #ifdef __cplusplus
 }

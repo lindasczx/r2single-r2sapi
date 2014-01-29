@@ -3,38 +3,45 @@ EXPORTS
 
 _
 
-;// MD6.c
-MD6
-MD6_Final
-MD6_Init
-MD6_Init_Len
-MD6_Len
-MD6_Update
+;///////////////////////////////////////////
+;//////// 1. R2Beat PAK文件格式相关
+;///////////////////////////////////////////
 
-;// BLAKE2模块
-BLAKE2SP
-BLAKE2SP_Final
-BLAKE2SP_Init
-BLAKE2SP_Update
+;// westpak模块
+GetFileFromPakA
+GetFileFromPakW
 
-;// UTF.c
-cpConvertEncoding
-cpMakeTrCode
-cpTrCodeSupported
-UTF8ToUTF16	=UTF8ToUTF16LE
-UTF8ToUTF32	=UTF8ToUTF32LE
-UTF16ToUTF8	=UTF16LEToUTF8
-UTF16ToUTF16BE	=UTF16BEToUTF16
-UTF16ToUTF32	=UTF16LEToUTF32LE
-UTF16ToUTF32BE	=UTF16LEToUTF32BE
-UTF16BEToUTF16
-UTF32ToUTF8	=UTF32LEToUTF8
-UTF32ToUTF16	=UTF32LEToUTF16LE
-UTF32ToUTF32BE	=UTF32BEToUTF32
-UTF32BEToUTF16	=UTF32BEToUTF16LE
-UTF32BEToUTF32
+;///////////////////////////////////////////
+;//////// 2. 解析XML
+;///////////////////////////////////////////
 
-;// libeay32模块
+;// xmlparser模块
+XMLPickAttribA
+XMLPickAttribW
+XMLPickAttrib2A
+XMLPickAttrib2W
+XMLPickAttribPosA
+XMLPickAttribPosW
+XMLPickFullTagA
+XMLPickFullTagW
+XMLPickFullTag2A
+XMLPickFullTag2W
+XMLPickFullTagPosA
+XMLPickFullTagPosW
+XMLPickTagA
+XMLPickTagW
+XMLPickTag2A
+XMLPickTag2W
+XMLPickTag3A
+XMLPickTag3W
+XMLPickTagPosA
+XMLPickTagPosW
+
+;///////////////////////////////////////////
+;//////// 3. Hash函数
+;///////////////////////////////////////////
+
+;// openssl模块
 MD2		=stdc_MD2
 MD2_Final	=stdc_MD2_Final
 MD2_Init	=stdc_MD2_Init
@@ -90,31 +97,29 @@ SHA512_256_Final
 SHA512_256_Init
 SHA512_256_Update
 
-;// westpak模块
-GetFileFromPakA
-GetFileFromPakW
+;// MD6.c
+MD6
+MD6_Final
+MD6_Init
+MD6_Init_Len
+MD6_Len
+MD6_Update
 
-;// xmlparser模块
-XMLPickAttribA
-XMLPickAttribW
-XMLPickAttrib2A
-XMLPickAttrib2W
-XMLPickAttribPosA
-XMLPickAttribPosW
-XMLPickFullTagA
-XMLPickFullTagW
-XMLPickFullTag2A
-XMLPickFullTag2W
-XMLPickFullTagPosA
-XMLPickFullTagPosW
-XMLPickTagA
-XMLPickTagW
-XMLPickTag2A
-XMLPickTag2W
-XMLPickTag3A
-XMLPickTag3W
-XMLPickTagPosA
-XMLPickTagPosW
+;// BLAKE2模块
+BLAKE2SP
+BLAKE2SP_Final
+BLAKE2SP_Init
+BLAKE2SP_Update
+
+;// 国密SM3.c
+SM3
+SM3_Final
+SM3_Init
+SM3_Update
+
+;///////////////////////////////////////////
+;//////// 4. 压缩解压
+;///////////////////////////////////////////
 
 ;// zlib模块
 compress
@@ -128,4 +133,25 @@ uncompress
 ;zError
 ;zlibCompileFlags
 zlibVersion
+
+;///////////////////////////////////////////
+;//////// 5. 字符编码转换
+;///////////////////////////////////////////
+
+;// UTF.c
+cpConvertEncoding
+cpMakeTrCode
+cpTrCodeSupported
+UTF8ToUTF16	=UTF8ToUTF16LE
+UTF8ToUTF32	=UTF8ToUTF32LE
+UTF16ToUTF8	=UTF16LEToUTF8
+UTF16ToUTF16BE	=UTF16BEToUTF16
+UTF16ToUTF32	=UTF16LEToUTF32LE
+UTF16ToUTF32BE	=UTF16LEToUTF32BE
+UTF16BEToUTF16
+UTF32ToUTF8	=UTF32LEToUTF8
+UTF32ToUTF16	=UTF32LEToUTF16LE
+UTF32ToUTF32BE	=UTF32BEToUTF32
+UTF32BEToUTF16	=UTF32BEToUTF16LE
+UTF32BEToUTF32
 
