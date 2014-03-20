@@ -1,0 +1,110 @@
+﻿版本	名称			说明
+200	BLAKE2SP		BLAKE2sp散列函数
+200	BLAKE2SP_Final		BLAKE2sp散列函数
+200	BLAKE2SP_Init		BLAKE2sp散列函数
+200	BLAKE2SP_Update		BLAKE2sp散列函数
+65	GetFileFromPakA		从PAK文件中读取一个文件
+129	GetFileFromPakW		从PAK文件中读取一个文件
+255	MD2			MD2散列函数
+255	MD2_Final		MD2散列函数
+255	MD2_Init		MD2散列函数
+255	MD2_Update		MD2散列函数
+164	MD4			MD4散列函数
+164	MD4_Final		MD4散列函数
+164	MD4_Init		MD4散列函数
+164	MD4_Update		MD4散列函数
+65	MD5			MD5散列函数
+164	MD5_Final		MD5散列函数
+164	MD5_Init		MD5散列函数
+164	MD5_Update		MD5散列函数
+164	MD6			MD6散列函数
+164	MD6_Final		MD6散列函数
+164	MD6_Init		MD6散列函数
+164	MD6_Init_Len		MD6散列函数（可变长度）
+164	MD6_Len			MD6散列函数（可变长度）
+164	MD6_Update		MD6散列函数
+164	MDC2			MDC-2散列函数
+164	MDC2_Final		MDC-2散列函数
+164	MDC2_Init		MDC-2散列函数
+164	MDC2_Update		MDC-2散列函数
+164	RIPEMD160		RIPEMD-160散列函数
+164	RIPEMD160_Final		RIPEMD-160散列函数
+164	RIPEMD160_Init		RIPEMD-160散列函数
+164	RIPEMD160_Update	RIPEMD-160散列函数
+65	SHA1			SHA-1散列函数
+164	SHA1_Final		SHA-1散列函数
+164	SHA1_Init		SHA-1散列函数
+164	SHA1_Update		SHA-1散列函数
+255	SHA224			SHA-224散列函数
+255	SHA224_Final		SHA-224散列函数
+255	SHA224_Init		SHA-224散列函数
+255	SHA224_Update		SHA-224散列函数
+65	SHA256			SHA-256散列函数
+164	SHA256_Final		SHA-256散列函数
+164	SHA256_Init		SHA-256散列函数
+164	SHA256_Update		SHA-256散列函数
+255	SHA384			SHA-384散列函数
+255	SHA384_Final		SHA-384散列函数
+255	SHA384_Init		SHA-384散列函数
+255	SHA384_Update		SHA-384散列函数
+65	SHA512			SHA-512散列函数
+255	SHA512_224		SHA-512/224散列函数
+255	SHA512_224_Final	SHA-512/224散列函数
+255	SHA512_224_Init		SHA-512/224散列函数
+255	SHA512_224_Update	SHA-512/224散列函数
+255	SHA512_256		SHA-512/256散列函数
+255	SHA512_256_Final	SHA-512/256散列函数
+255	SHA512_256_Init		SHA-512/256散列函数
+255	SHA512_256_Update	SHA-512/256散列函数
+164	SHA512_Final		SHA-512散列函数
+164	SHA512_Init		SHA-512散列函数
+164	SHA512_Update		SHA-512散列函数
+259	SM3			SM3散列函数
+259	SM3_Final		SM3散列函数
+259	SM3_Init		SM3散列函数
+259	SM3_Update		SM3散列函数
+84	UTF16BEToUTF16		把字符串从UTF-16BE编码转为UTF-16LE编码（仅VB推荐使用）
+84	UTF16ToUTF16BE		把字符串从UTF-16LE编码转为UTF-16BE编码（仅VB推荐使用）
+84	UTF16ToUTF32		把字符串从UTF-16LE编码转为UTF-32LE编码（仅VB推荐使用）
+84	UTF16ToUTF32BE		把字符串从UTF-16LE编码转为UTF-32BE编码（仅VB推荐使用）
+84	UTF16ToUTF8		把字符串从UTF-16LE编码转为UTF-8编码   （仅VB推荐使用）
+84	UTF32BEToUTF16		把字符串从UTF-32BE编码转为UTF-16LE编码（仅VB推荐使用）
+84	UTF32BEToUTF32		把字符串从UTF-32BE编码转为UTF-32LE编码（不推荐使用）
+84	UTF32ToUTF16		把字符串从UTF-32LE编码转为UTF-16LE编码（仅VB推荐使用）
+84	UTF32ToUTF32BE		把字符串从UTF-32LE编码转为UTF-32BE编码（不推荐使用）
+84	UTF32ToUTF8		把字符串从UTF-32LE编码转为UTF-8编码   （不推荐使用）
+84	UTF8ToUTF16		把字符串从UTF-8编码转为UTF-16LE编码   （仅VB推荐使用）
+84	UTF8ToUTF32		把字符串从UTF-8编码转为UTF-32LE编码   （不推荐使用）
+204	XMLPickAttrib2A		提取一个XML标记的属性（ANSI）	（安全版，推荐使用）
+204	XMLPickAttrib2W		提取一个XML标记的属性（Unicode）（安全版，推荐使用）
+129	XMLPickAttribA		提取一个XML标记的属性（ANSI）	（不推荐使用）
+129	XMLPickAttribPosA	提取一个XML标记的属性（ANSI）	（位置版，推荐使用）
+120	XMLPickAttribPosW	提取一个XML标记的属性（Unicode）（位置版，推荐使用）
+65	XMLPickAttribW		提取一个XML标记的属性（Unicode）（不推荐使用）
+204	XMLPickFullTag2A	提取一个完整的XML标记（ANSI）	（安全版，推荐使用）
+204	XMLPickFullTag2W	提取一个完整的XML标记（Unicode）（安全版，推荐使用）
+129	XMLPickFullTagA		提取一个完整的XML标记（ANSI）	（不推荐使用）
+129	XMLPickFullTagPosA	提取一个完整的XML标记（ANSI）	（位置版，推荐使用）
+120	XMLPickFullTagPosW	提取一个完整的XML标记（Unicode）（位置版，推荐使用）
+65	XMLPickFullTagW		提取一个完整的XML标记（Unicode）（不推荐使用）
+129	XMLPickTag2A		提取一个XML标记的内容（ANSI）	（不推荐使用）
+65	XMLPickTag2W		提取一个XML标记的内容（Unicode）（不推荐使用）
+204	XMLPickTag3A		提取一个XML标记的内容（ANSI）	（安全版，推荐使用）
+204	XMLPickTag3W		提取一个XML标记的内容（Unicode）（安全版，推荐使用）
+129	XMLPickTagA		提取一个XML标记的内容（ANSI）	（简化版，不推荐使用）
+129	XMLPickTagPosA		提取一个XML标记的内容（ANSI）	（位置版，推荐使用）
+120	XMLPickTagPosW		提取一个XML标记的内容（Unicode）（位置版，推荐使用）
+65	XMLPickTagW		提取一个XML标记的内容（Unicode）（简化版，不推荐使用）
+1	_			R2SAPI库版本号
+70	compress		zlib压缩函数
+70	compress2		zlib压缩函数
+70	compressBound		zlib压缩函数
+120	cpConvertEncoding	转换字符串编码			（推荐使用）
+252	cpMakeTrCode		生成转换码
+120	cpTrCodeSupported	转换码是否支持
+87	crc32			CRC32校验函数
+120	crc32_combine		CRC32校验函数
+120	get_crc_table		CRC32校验函数
+67	uncompress		zlib解压函数
+120	zlibVersion		zlib库版本号
+
