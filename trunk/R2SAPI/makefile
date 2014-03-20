@@ -1,4 +1,6 @@
-# 若编译出错，把下面这个变量改成TRUE即可
+# 缂栬瘧骞冲彴锛歐indows + GCC + GNU Binutils + GNU Make + MSVC(lib.exe + link.exe 鐢ㄤ簬鐢熸垚闈欐�佸鍏ュ簱鏂囦欢)
+# 娴嬭瘯骞冲彴锛歐indows XP + MinGW 4.0.0 (GCC 4.8.1 + Binutils 2.23.2 + Make 3.82) + MSVC2010(lib.exe + link.exe 10.0.40219.1)
+# 鑻ョ紪璇戝嚭閿欙紝鎶婁笅闈㈣繖涓彉閲忔敼鎴怲RUE鍗冲彲
 COMPILE_FROM_PUBLIC:=FALSE
 
 CC:=		gcc
