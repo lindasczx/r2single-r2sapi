@@ -46,8 +46,8 @@ RES:=		r2sapi.res
 LINKOBJ:=	$(COBJ) $(CXXOBJ) $(RES)
 TYPELIB:=	r2sapilib.tlb
 DEFFILE:=	r2sapi.def
-OUTLIB:=	r2sapi.lib
-BIN:=		r2sapi.dll
+OUTLIB:=	bin/r2sapi.lib
+BIN:=		bin/r2sapi.dll
 
 .PHONY: all clean cleanobj
 
@@ -57,7 +57,7 @@ clean:
 	$(RM) $(BIN) $(LINKOBJ) $(TYPELIB) *.o
 
 cleanobj:
-	$(RM) $(LINKOBJ) *.o
+	$(RM) $(LINKOBJ) $(TYPELIB) *.o
 
 $(BIN): $(LINKOBJ)
 	$(LINK) -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE) $(LINKFLAGS)
