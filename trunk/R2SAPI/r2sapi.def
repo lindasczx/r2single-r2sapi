@@ -10,6 +10,8 @@ _
 ;// westpak模块
 GetFileFromPakA
 GetFileFromPakW
+LzssCompress	=lzsscompress
+LzssDecompress	=lzssdecompress
 
 ;///////////////////////////////////////////
 ;//////// 2. 解析XML

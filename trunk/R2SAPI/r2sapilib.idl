@@ -159,8 +159,12 @@ library R2SAPILib
 //////// 1. R2Beat PAK文件格式相关
 ///////////////////////////////////////////
 ////	westpak模块
-		[entry("GetFileFromPakA")]
-			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]LPCSTR pszFn, [in,string]LPCSTR pszFnWant);
+		[entry("GetFileFromPakW")]
+			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]LPCWSTR pszFn, [in,string]LPCWSTR pszFnWant);
+		[entry("LzssCompress")]
+			void __stdcall LzssCompress([in,out]void* pDataBuffer, [in]long ulDataBytes, [in,out]void* pOutputBuffer, [in,out]long* ulOutputBytes);
+		[entry("LzssDecompress")]
+			void __stdcall LzssDecompress([in,out]void* pDataBuffer, [in]long ulDataBytes, [in,out]void* pOutputBuffer, [in]long ulOutputBytes);
 ///////////////////////////////////////////
 //////// 2. 解析XML
 ///////////////////////////////////////////

@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.36.0.259
+	1.36.0.272
 --*/
 
 #ifndef R2SAPI_H_
@@ -16,7 +16,7 @@ extern "C"{
 #define API __stdcall
 
 #include <sys/types.h>
-#include <inttypes.h>
+#include <stdint.h>
 typedef void * LPVOID;
 typedef const void * LPCVOID;
 typedef char * LPSTR;
@@ -162,6 +162,8 @@ int API _();
 ////westpak
 long API GetFileFromPakA(void* pBuf, long ulBufLen, LPCSTR pszFn, LPCSTR pszFnWant);
 long API GetFileFromPakW(void* pBuf, long ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
+void API LzssCompress(const char* pDataBuffer, unsigned long ulDataBytes, char* pOutputBuffer, unsigned long* ulOutputBytes);
+void API LzssDecompress(const char* pDataBuffer, unsigned long ulDataBytes, char* pOutputBuffer, unsigned long ulOutputBytes);
 
 ///////////////////////////////////////////
 //////// 2. Ω‚ŒˆXML
