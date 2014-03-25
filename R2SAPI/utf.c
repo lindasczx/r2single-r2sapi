@@ -189,7 +189,7 @@ unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto) {
 
 ////////////////////////////////////////////////////////////////////////////
 //
-//  cpConvertEncoding
+//  cpTrCodeSupported
 //
 //  字符串编码转换是否支持
 //
@@ -283,7 +283,7 @@ int WINAPI cpTrCodeSupported(unsigned int nTrCode){
 ////////////////////////////////////////////////////////////////////////////
 int WINAPI cpConvertEncoding(
 	unsigned int nTrCode,
-	LPVOID lpSrcStr,
+	LPCVOID lpSrcStr,
 	int cchSrc,
 	LPVOID lpDestStr,
 	int cchDest)

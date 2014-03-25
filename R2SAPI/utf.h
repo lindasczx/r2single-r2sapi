@@ -1,7 +1,7 @@
 ﻿#ifndef UTF_H_
 #define UTF_H_
 
-#include <inttypes.h>
+#include <stdint.h>
 #include <windows.h>
 
 #ifdef __cplusplus
@@ -30,14 +30,16 @@ extern "C"{
 
 #define MAKETRCODE(a,b) ( (uint32_t)( (((uint32_t)(uint16_t)a)<<16) | ((uint32_t)(uint16_t)b) ) )
 
+#ifndef	ARRAYSIZE
 #define ARRAYSIZE(x) (sizeof(x)/sizeof(x[0]))
+#endif
 
 typedef int * LPLSTR;
 typedef const int * LPCLSTR;
 
 // API有具体实现的函数
 unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto);
-int WINAPI cpConvertEncoding(unsigned int nTrCode, LPVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
+int WINAPI cpConvertEncoding(unsigned int nTrCode, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
 int WINAPI cpTrCodeSupported(unsigned int nTrCode);
 int WINAPI GB18030ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
 int WINAPI UTF16ToGB18030(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
