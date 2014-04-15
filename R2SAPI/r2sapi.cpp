@@ -7,8 +7,8 @@ BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
 {
 	switch (reason){
 	case DLL_PROCESS_ATTACH:
-		if (!IsValidCodePage(54936))	// GB18030
-			return FALSE;
+		//if (!IsValidCodePage(54936))	// GB18030
+		//	return FALSE;
 		break;
 		
 	case DLL_PROCESS_DETACH:
