@@ -163,6 +163,8 @@ library R2SAPILib
 			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]LPCWSTR pszFn, [in,string]LPCWSTR pszFnWant);
 		[entry("LzssCompress")]
 			void __stdcall LzssCompress([in,out]void* pDataBuffer, [in]long ulDataBytes, [in,out]void* pOutputBuffer, [in,out]long* ulOutputBytes);
+		[entry("LzssCompress2")]
+			void __stdcall LzssCompress2([in,out]void* pDataBuffer, [in]long ulDataBytes, [in,out]void* pOutputBuffer, [in,out]long* ulOutputBytes, [in]long CompressLevel);
 		[entry("LzssDecompress")]
 			void __stdcall LzssDecompress([in,out]void* pDataBuffer, [in]long ulDataBytes, [in,out]void* pOutputBuffer, [in]long ulOutputBytes);
 ///////////////////////////////////////////

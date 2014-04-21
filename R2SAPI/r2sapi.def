@@ -11,6 +11,7 @@ _
 GetFileFromPakA
 GetFileFromPakW
 LzssCompress	=lzsscompress
+LzssCompress2	=lzsscompress2
 LzssDecompress	=lzssdecompress
 
 ;///////////////////////////////////////////

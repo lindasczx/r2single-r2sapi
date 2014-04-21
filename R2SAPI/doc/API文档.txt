@@ -5,8 +5,9 @@
 200		BLAKE2SP_Update		BLAKE2sp散列函数
 65	274	GetFileFromPakA		从PAK文件中读取一个文件
 129	274	GetFileFromPakW		从PAK文件中读取一个文件
-272		LzssCompress		LZSS压缩函数
-272		LzssDecompress		LZSS解压函数
+272	274	LzssCompress		LZSS压缩函数
+275		LzssCompress2		LZSS压缩函数（可变压缩级别）
+272	274	LzssDecompress		LZSS解压函数
 255		MD2			MD2散列函数
 255		MD2_Final		MD2散列函数
 255		MD2_Init		MD2散列函数

@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.36.0.272
+	1.37.0.275
 --*/
 
 #ifndef R2SAPI_H_
@@ -163,6 +163,7 @@ int API _();
 long API GetFileFromPakA(void* pBuf, long ulBufLen, LPCSTR pszFn, LPCSTR pszFnWant);
 long API GetFileFromPakW(void* pBuf, long ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
 void API LzssCompress(const char* pDataBuffer, unsigned long ulDataBytes, char* pOutputBuffer, unsigned long* ulOutputBytes);
+void API LzssCompress2(const char* pDataBuffer, unsigned long ulDataBytes, char* pOutputBuffer, unsigned long* ulOutputBytes, int CompressLevel);
 void API LzssDecompress(const char* pDataBuffer, unsigned long ulDataBytes, char* pOutputBuffer, unsigned long ulOutputBytes);
 
 ///////////////////////////////////////////
