@@ -7,7 +7,7 @@
 #		如果忽略可选项，请自己改makefile和资源文件
 #
 # 测试平台：	Windows XP SP3
-#		MinGW 4.0.0 (GCC 4.8.1 + Binutils 2.23.2 + Make 3.82)
+#		MinGW 4.0.0 (GCC 4.8.1 + Binutils 2.24 + Make 3.82)
 #		MSVC 2010 SP1 (lib.exe + link.exe 10.0.40219.1)
 #		WinSDK 7.1 (midl.exe + midlc.exe 7.0.555.1)
 #
