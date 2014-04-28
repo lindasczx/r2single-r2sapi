@@ -29,7 +29,7 @@ RM:=		rm
 
 CFLAGS:=	-O3 -I. -D_USRDLL
 CXXFLAGS:=	-O3 -I. -D_USRDLL
-LINKFLAGS:=	-s -lstdc++ -Wl,--subsystem,console:4.0 --image-base 0x65000000
+LINKFLAGS:=	-s -lstdc++ -Wl,--subsystem,console:4.0 --image-base 0x65000000 -Wl,--insert-timestamp
 MIDLFLAGS:=	
 ifneq ($(NO_MSVC_SDK), FALSE)
 MIDLFLAGS:=	-I include
