@@ -2,17 +2,22 @@
 #		GCC
 #		GNU Binutils
 #		GNU Make
-#		MSVC (lib.exe + link.exe 用于生成静态导入库文件，可选)
-#		Windows SDK 2001年以后的版本 (midl.exe + midlc.exe 5.3以上，用于生成类型库，可选)
-#		如果忽略可选项，请自己改makefile和资源文件
+#		MSVC 7.0以上 (cl + lib + link，可选，工具包另有提供)
+#		Windows SDK (midl + midlc + 头文件，可选，工具包另有提供)
+#		如果忽略可选项，请自己改makefile
 #
 # 测试平台：	Windows XP SP3
 #		MinGW 4.0.0 (GCC 4.8.1 + Binutils 2.24 + Make 3.82)
-#		MSVC 2010 SP1 (lib.exe + link.exe 10.0.40219.1)
-#		WinSDK 7.1 (midl.exe + midlc.exe 7.0.555.1)
+#		MSVC 2010 SP1 (cl + lib + link 10.0.40219.1)
+#		WinSDK 7.1 (midl + midlc 7.0.555.1)
 #
-# 若编译出错，把下面这个变量改成TRUE即可
+# 若编译出错，顾名思义把下面两个变量改成TRUE即可
 COMPILE_FROM_PUBLIC:=FALSE
+NO_MSVC_SDK:=	FALSE
+
+ifneq ($(NO_MSVC_SDK), FALSE)
+export PATH:=	tool;$(PATH)
+endif
 
 CC:=		gcc
 CXX:=		g++
@@ -25,6 +30,10 @@ RM:=		rm
 CFLAGS:=	-O3 -I. -D_USRDLL
 CXXFLAGS:=	-O3 -I. -D_USRDLL
 LINKFLAGS:=	-s -lstdc++ -Wl,--subsystem,console:4.0 --image-base 0x65000000
+MIDLFLAGS:=	
+ifneq ($(NO_MSVC_SDK), FALSE)
+MIDLFLAGS:=	-I include
+endif
 #SBFLAGS:=	-Wl,--add-stdcall-alias
 IMPLIB:=	libcrypto.a libz.a c_g18030.lib
 IMPOBJ:=	compress.o uncompr.o crc32.o
@@ -80,7 +89,7 @@ $(RES): r2sapi.rc $(TYPELIB)
 	$(RC) $< -o $(RES) -O coff
 
 $(TYPELIB): r2sapilib.idl
-	$(MIDL) $< /tlb $@
+	$(MIDL) $(MIDLFLAGS) $< /tlb $@
 
 $(COBJ): $(CSRC)
 
