@@ -44,6 +44,10 @@ library R2SAPILib
 		const long  cpGB18030 = 0x100;
 	};
 
+	typedef struct Int64
+	{
+		long Lo, Hi;
+	} Int64;
 	typedef struct BLAKE2S_CTX
 	{
 		unsigned char UBuf[240];
@@ -333,10 +337,19 @@ library R2SAPILib
 			long __stdcall Compress2([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen, [in]long Level);
 		[entry("compressBound")]
 			long __stdcall CompressBound([in]long lSrcLen);
-		[entry("crc32")]
+		[entry("CRC32")]
 			long __stdcall CRC32([in]long CRC, [in]void* pBuf, [in]long lBufLen);
+		[entry("CRC32_Combine")]
+			long __stdcall CRC32_Combine([in]long CRC1, [in]long CRC2, [in]long Len2);
+		[entry("CRC32_Combine64")]
+			long __stdcall CRC32_Combine64([in]long CRC1, [in]long CRC2, [in]long Len2Lo, [in]long Len2Hi);
 		[entry("uncompress")]
 			long __stdcall Uncompress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
+////	CRC64.c
+		[entry("CRC64")]
+			Int64 __stdcall CRC64([in]long CRCLo, [in]long CRCHi, [in]void* pBuf, [in]long lBufLenLo, [in]long lBufLenHi);
+		[entry("CRC64_Combine")]
+			Int64 __stdcall CRC64_Combine([in]long CRC1Lo, [in]long CRC1Hi, [in]long CRC2Lo, [in]long CRC2Hi, [in]long Len2Lo, [in]long Len2Hi);
 ///////////////////////////////////////////
 //////// 5. 字符编码转换
 ///////////////////////////////////////////

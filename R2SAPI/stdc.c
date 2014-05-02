@@ -1,5 +1,4 @@
 #include <openssl/crypto.h>
-#include <openssl/md2.h>
 #include <openssl/md4.h>
 #include <openssl/md5.h>
 #include <openssl/mdc2.h>
@@ -18,24 +17,6 @@ unsigned long __stdcall stdc_SSLeay(void)
 const char * __stdcall stdc_SSLeay_version(int t)
 {
 	return SSLeay_version(t);
-}
-
-////////////////MD2
-int __stdcall stdc_MD2_Init(MD2_CTX *c)
-{
-	return MD2_Init(c);
-}
-int __stdcall stdc_MD2_Update(MD2_CTX *c, const void *data, size_t len)
-{
-	return MD2_Update(c, data, len);
-}
-int __stdcall stdc_MD2_Final(unsigned char *md, MD2_CTX *c)
-{
-	return MD2_Final(md, c);
-}
-unsigned char * __stdcall stdc_MD2(const unsigned char *d, size_t n, unsigned char *md)
-{
-	return MD2(d, n, md);
 }
 
 ////////////////MD4

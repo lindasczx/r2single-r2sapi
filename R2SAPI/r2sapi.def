@@ -45,10 +45,6 @@ XMLPickTagPosW
 ;///////////////////////////////////////////
 
 ;// openssl模块
-MD2		=stdc_MD2
-MD2_Final	=stdc_MD2_Final
-MD2_Init	=stdc_MD2_Init
-MD2_Update	=stdc_MD2_Update
 MD4		=stdc_MD4
 MD4_Final	=stdc_MD4_Final
 MD4_Init	=stdc_MD4_Init
@@ -129,13 +125,22 @@ compress
 compress2
 compressBound
 crc32
+CRC32		=crc32
 crc32_combine
+CRC32_Combine	=crc32_combine
+CRC32_Combine64	=crc32_combine64
+CRC32_GetTable	=get_crc_table
 ;crc32_combine64
 get_crc_table
 uncompress
 ;zError
 ;zlibCompileFlags
 zlibVersion
+
+;// CRC64.c
+CRC64		=crc64
+CRC64_Combine	=crc64_combine
+CRC64_GetTable	=get_crc64_table
 
 ;///////////////////////////////////////////
 ;//////// 5. 字符编码转换
