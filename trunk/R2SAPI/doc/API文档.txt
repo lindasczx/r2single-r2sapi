@@ -3,15 +3,18 @@
 200		BLAKE2SP_Final		BLAKE2sp散列函数
 200		BLAKE2SP_Init		BLAKE2sp散列函数
 200		BLAKE2SP_Update		BLAKE2sp散列函数
+284		CRC32			CRC32校验函数
+284		CRC32_Combine		CRC32校验函数（多线程）
+284		CRC32_Combine64		CRC32校验函数（多线程）
+284		CRC32_GetTable		CRC32校验函数
+284		CRC64			CRC64校验函数
+284		CRC64_Combine		CRC64校验函数（多线程）
+284		CRC64_GetTable		CRC64校验函数
 65	274	GetFileFromPakA		从PAK文件中读取一个文件
 129	274	GetFileFromPakW		从PAK文件中读取一个文件
 272	275	LzssCompress		LZSS压缩函数
 275	276	LzssCompress2		LZSS压缩函数（可变压缩级别，暂时与固定压缩级别一致）
 272	274	LzssDecompress		LZSS解压函数
-255		MD2			MD2散列函数
-255		MD2_Final		MD2散列函数
-255		MD2_Init		MD2散列函数
-255		MD2_Update		MD2散列函数
 164		MD4			MD4散列函数
 164		MD4_Final		MD4散列函数
 164		MD4_Init		MD4散列函数
@@ -105,9 +108,9 @@
 120		cpConvertEncoding	转换字符串编码			（推荐使用）
 252		cpMakeTrCode		生成转换码
 120		cpTrCodeSupported	转换码是否支持
-87		crc32			CRC32校验函数
-120		crc32_combine		CRC32校验函数
-120		get_crc_table		CRC32校验函数
+87		crc32			CRC32校验函数			（废弃，请用别的名称）
+120		crc32_combine		CRC32校验函数			（废弃，请用别的名称）
+120		get_crc_table		CRC32校验函数			（废弃，请用别的名称）
 67		uncompress		zlib解压函数
 120		zlibVersion		zlib库版本号
 

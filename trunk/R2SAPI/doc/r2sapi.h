@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.37.0.275
+	1.37.0.284
 --*/
 
 #ifndef R2SAPI_H_
@@ -43,14 +43,6 @@ typedef const int * LPCLSTR;
 #define MAKETRCODE(a,b) ( (uint32_t)( (((uint32_t)(uint16_t)a)<<16) | ((uint32_t)(uint16_t)b) ) )
 //unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto);
 
-#define MD2_BLOCK 16
-typedef struct MD2state_st
-{
-	unsigned int num;
-	unsigned char data[MD2_BLOCK];
-	uint32_t cksm[MD2_BLOCK];
-	uint32_t state[MD2_BLOCK];
-} MD2_CTX;
 #define MD4_LBLOCK 16
 typedef struct MD4state_st
 {
@@ -197,10 +189,6 @@ int API XMLPickTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
 ///////////////////////////////////////////
 
 ////libcrypto
-int API MD2_Init(MD2_CTX *c);
-int API MD2_Update(MD2_CTX *c, const void *data, size_t len);
-int API MD2_Final(unsigned char *md, MD2_CTX *c);
-unsigned char * API MD2(const unsigned char *d, size_t n, unsigned char *md);
 int API MD4_Init(MD4_CTX *c);
 int API MD4_Update(MD4_CTX *c, const void *data, size_t len);
 int API MD4_Final(unsigned char *md, MD4_CTX *c);
@@ -275,12 +263,17 @@ unsigned char * API SM3(const unsigned char *d, size_t n, unsigned char *md);
 int API compress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);
 int API compress2(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen, int level);
 unsigned long API compressBound(unsigned long sourceLen);
-unsigned long API crc32(unsigned long crc, const char *buf, unsigned int len);
-unsigned long API crc32_combine(unsigned long, unsigned long, long);
-//unsigned long API crc32_combine64(unsigned long, unsigned long, long long);
-const unsigned long * API get_crc_table(void);
+uint32_t API CRC32(uint32_t crc, const char *buf, uint32_t len);
+uint32_t API CRC32_Combine(uint32_t crc1, uint32_t crc2, int32_t len2);
+uint32_t API CRC32_Combine64(uint32_t crc1, uint32_t crc2, int64_t len2);
+const uint32_t * API CRC32_GetTable(void);
 int API uncompress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);
 const char * API zlibVersion(void);
+
+////crc64
+uint64_t API CRC64(uint64_t crc, const char *buf, uint64_t len);
+uint64_t API CRC64_Combine(uint64_t crc1, uint64_t crc2, int64_t len2);
+const uint64_t * API CRC64_GetTable(void);
 
 ///////////////////////////////////////////
 //////// 5. 字符编码转换
@@ -301,6 +294,14 @@ int API UTF32ToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest
 int API UTF32ToUTF32BE(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
 int API UTF32BEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
 int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+
+///////////////////////////////////////////
+//////// 6. 不再使用的旧函数
+///////////////////////////////////////////
+
+#define crc32(crc, buf, len)		CRC32((crc), (buf), (len))
+#define crc32_combine(crc1, crc2, len2)	CRC32_Combine((crc1), (crc2), (len2))
+#define get_crc_table()			CRC32_GetTable()
 
 #ifdef __cplusplus
 }
