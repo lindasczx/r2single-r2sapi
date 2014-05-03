@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.37.0.284
+	1.37.0.318
 --*/
 
 #ifndef R2SAPI_H_
@@ -154,9 +154,9 @@ int API _();
 ////westpak
 long API GetFileFromPakA(void* pBuf, long ulBufLen, LPCSTR pszFn, LPCSTR pszFnWant);
 long API GetFileFromPakW(void* pBuf, long ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
-void API LzssCompress(const char* pDataBuffer, unsigned long ulDataBytes, char* pOutputBuffer, unsigned long* ulOutputBytes);
-void API LzssCompress2(const char* pDataBuffer, unsigned long ulDataBytes, char* pOutputBuffer, unsigned long* ulOutputBytes, int CompressLevel);
-void API LzssDecompress(const char* pDataBuffer, unsigned long ulDataBytes, char* pOutputBuffer, unsigned long ulOutputBytes);
+void API LzssCompress(const void* pDataBuffer, unsigned long ulDataBytes, void* pOutputBuffer, unsigned long* ulOutputBytes);
+void API LzssCompress2(const void* pDataBuffer, unsigned long ulDataBytes, void* pOutputBuffer, unsigned long* ulOutputBytes, int CompressLevel);
+void API LzssDecompress(const void* pDataBuffer, unsigned long ulDataBytes, void* pOutputBuffer, unsigned long ulOutputBytes);
 
 ///////////////////////////////////////////
 //////// 2. 解析XML
@@ -192,86 +192,86 @@ int API XMLPickTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
 int API MD4_Init(MD4_CTX *c);
 int API MD4_Update(MD4_CTX *c, const void *data, size_t len);
 int API MD4_Final(unsigned char *md, MD4_CTX *c);
-unsigned char * API MD4(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API MD4(const void *d, size_t n, unsigned char *md);
 int API MD5_Init(MD5_CTX *c);
 int API MD5_Update(MD5_CTX *c, const void *data, size_t len);
 int API MD5_Final(unsigned char *md, MD5_CTX *c);
-unsigned char * API MD5(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API MD5(const void *d, size_t n, unsigned char *md);
 int API MDC2_Init(MDC2_CTX *c);
 int API MDC2_Update(MDC2_CTX *c, const void *data, size_t len);
 int API MDC2_Final(unsigned char *md, MDC2_CTX *c);
-unsigned char * API MDC2(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API MDC2(const void *d, size_t n, unsigned char *md);
 int API RIPEMD160_Init(RIPEMD160_CTX *c);
 int API RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len);
 int API RIPEMD160_Final(unsigned char *md, RIPEMD160_CTX *c);
-unsigned char * API RIPEMD160(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API RIPEMD160(const void *d, size_t n, unsigned char *md);
 int API SHA1_Init(SHA_CTX *c);
 int API SHA1_Update(SHA_CTX *c, const void *data, size_t len);
 int API SHA1_Final(unsigned char *md, SHA_CTX *c);
-unsigned char * API SHA1(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API SHA1(const void *d, size_t n, unsigned char *md);
 int API SHA224_Init(SHA256_CTX *c);
 int API SHA224_Update(SHA256_CTX *c, const void *data, size_t len);
 int API SHA224_Final(unsigned char *md, SHA256_CTX *c);
-unsigned char * API SHA224(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API SHA224(const void *d, size_t n, unsigned char *md);
 int API SHA256_Init(SHA256_CTX *c);
 int API SHA256_Update(SHA256_CTX *c, const void *data, size_t len);
 int API SHA256_Final(unsigned char *md, SHA256_CTX *c);
-unsigned char * API SHA256(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API SHA256(const void *d, size_t n, unsigned char *md);
 int API SHA384_Init(SHA512_CTX *c);
 int API SHA384_Update(SHA512_CTX *c, const void *data, size_t len);
 int API SHA384_Final(unsigned char *md, SHA512_CTX *c);
-unsigned char * API SHA384(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API SHA384(const void *d, size_t n, unsigned char *md);
 int API SHA512_Init(SHA512_CTX *c);
 int API SHA512_Update(SHA512_CTX *c, const void *data, size_t len);
 int API SHA512_Final(unsigned char *md, SHA512_CTX *c);
-unsigned char * API SHA512(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API SHA512(const void *d, size_t n, unsigned char *md);
 ////nist sha-2 addition
 int API SHA512_224_Init(SHA512_CTX *c);
 int API SHA512_224_Update(SHA512_CTX *c, const void *data, size_t len);
 int API SHA512_224_Final(unsigned char *md, SHA512_CTX *c);
-unsigned char * API SHA512_224(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API SHA512_224(const void *d, size_t n, unsigned char *md);
 int API SHA512_256_Init(SHA512_CTX *c);
 int API SHA512_256_Update(SHA512_CTX *c, const void *data, size_t len);
 int API SHA512_256_Final(unsigned char *md, SHA512_CTX *c);
-unsigned char * API SHA512_256(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API SHA512_256(const void *d, size_t n, unsigned char *md);
 
 ////md6
 int API MD6_Init(MD6_CTX *c);
 int API MD6_Init_Len(MD6_CTX *c, int mdlen);
 int API MD6_Update(MD6_CTX *c, const void *data, size_t len);
 int API MD6_Final(unsigned char *md, MD6_CTX *c);
-unsigned char * API MD6(const unsigned char *d, size_t n, unsigned char *md);
-unsigned char * API MD6_Len(const unsigned char *d, size_t n, unsigned char *md, int mdlen);
+unsigned char * API MD6(const void *d, size_t n, unsigned char *md);
+unsigned char * API MD6_Len(const void *d, size_t n, unsigned char *md, int mdlen);
 
 ////blake2sp
 int API BLAKE2SP_Init(BLAKE2SP_CTX *c);
 int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
 int API BLAKE2SP_Final(unsigned char *md, BLAKE2SP_CTX *c);
-unsigned char * API BLAKE2SP(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API BLAKE2SP(const void *d, size_t n, unsigned char *md);
 
 ////国密SM3
 int API SM3_Init(SM3_CTX *c);
 int API SM3_Update(SM3_CTX *c, const void *data, size_t len);
 int API SM3_Final(unsigned char *md, SM3_CTX *c);
-unsigned char * API SM3(const unsigned char *d, size_t n, unsigned char *md);
+unsigned char * API SM3(const void *d, size_t n, unsigned char *md);
 
 ///////////////////////////////////////////
 //////// 4. 压缩解压
 ///////////////////////////////////////////
 
 ////zlib
-int API compress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);
-int API compress2(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen, int level);
-unsigned long API compressBound(unsigned long sourceLen);
-uint32_t API CRC32(uint32_t crc, const char *buf, uint32_t len);
+uint32_t API CRC32(uint32_t crc, const void *buf, uint32_t len);
 uint32_t API CRC32_Combine(uint32_t crc1, uint32_t crc2, int32_t len2);
 uint32_t API CRC32_Combine64(uint32_t crc1, uint32_t crc2, int64_t len2);
 const uint32_t * API CRC32_GetTable(void);
-int API uncompress(char *dest, unsigned long *destLen, const char *source, unsigned long sourceLen);
+int API ZlibCompress(void *dest, unsigned int *destLen, const void *source, unsigned int sourceLen);
+int API ZlibCompress2(void *dest, unsigned int *destLen, const void *source, unsigned int sourceLen, int level);
+unsigned int API ZlibCompressBound(unsigned int sourceLen);
+int API ZlibUncompress(void *dest, unsigned int *destLen, const void *source, unsigned int sourceLen);
 const char * API zlibVersion(void);
 
 ////crc64
-uint64_t API CRC64(uint64_t crc, const char *buf, uint64_t len);
+uint64_t API CRC64(uint64_t crc, const void *buf, uint64_t len);
 uint64_t API CRC64_Combine(uint64_t crc1, uint64_t crc2, int64_t len2);
 const uint64_t * API CRC64_GetTable(void);
 
@@ -299,9 +299,13 @@ int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDe
 //////// 6. 不再使用的旧函数
 ///////////////////////////////////////////
 
-#define crc32(crc, buf, len)		CRC32((crc), (buf), (len))
-#define crc32_combine(crc1, crc2, len2)	CRC32_Combine((crc1), (crc2), (len2))
-#define get_crc_table()			CRC32_GetTable()
+#define crc32(crc, buf, len)					CRC32((crc), (buf), (len))
+#define crc32_combine(crc1, crc2, len2)				CRC32_Combine((crc1), (crc2), (len2))
+#define get_crc_table()						CRC32_GetTable()
+#define compress(dest, destLen, source, sourceLen)		ZlibCompress((dest), (destLen), (source), (sourceLen))
+#define compress2(dest, destLen, source, sourceLen, level)	ZlibCompress2((dest), (destLen), (source), (sourceLen), (level))
+#define compressBound(sourceLen)				ZlibCompressBound(sourceLen)
+#define uncompress(dest, destLen, source, sourceLen)		ZlibUncompress((dest), (destLen), (source), (sourceLen))
 
 #ifdef __cplusplus
 }

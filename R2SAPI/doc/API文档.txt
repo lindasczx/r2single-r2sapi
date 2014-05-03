@@ -101,16 +101,20 @@
 129		XMLPickTagPosA		提取一个XML标记的内容（ANSI）	（位置版，推荐使用）
 120		XMLPickTagPosW		提取一个XML标记的内容（Unicode）（位置版，推荐使用）
 65		XMLPickTagW		提取一个XML标记的内容（Unicode）（简化版，不推荐使用）
+318		ZlibCompress		zlib压缩函数
+318		ZlibCompress2		zlib压缩函数
+318		ZlibCompressBound	zlib压缩函数
+318		ZlibUncompress		zlib解压函数
 1		_			R2SAPI库版本号
-70		compress		zlib压缩函数
-70		compress2		zlib压缩函数
-70		compressBound		zlib压缩函数
+70		compress		zlib压缩函数		（2014-5废弃，请用别的名称）
+70		compress2		zlib压缩函数		（2014-5废弃，请用别的名称）
+70		compressBound		zlib压缩函数		（2014-5废弃，请用别的名称）
 120		cpConvertEncoding	转换字符串编码			（推荐使用）
 252		cpMakeTrCode		生成转换码
 120		cpTrCodeSupported	转换码是否支持
-87		crc32			CRC32校验函数			（废弃，请用别的名称）
-120		crc32_combine		CRC32校验函数			（废弃，请用别的名称）
-120		get_crc_table		CRC32校验函数			（废弃，请用别的名称）
-67		uncompress		zlib解压函数
+87		crc32			CRC32校验函数		（2014-5废弃，请用别的名称）
+120		crc32_combine		CRC32校验函数		（2014-5废弃，请用别的名称）
+120		get_crc_table		CRC32校验函数		（2014-5废弃，请用别的名称）
+67		uncompress		zlib解压函数		（2014-5废弃，请用别的名称）
 120		zlibVersion		zlib库版本号
 

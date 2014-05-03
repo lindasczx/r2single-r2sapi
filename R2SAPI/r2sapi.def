@@ -121,18 +121,21 @@ SM3_Update
 ;///////////////////////////////////////////
 
 ;// zlib模块
-compress
-compress2
-compressBound
-crc32
 CRC32		=crc32
-crc32_combine
 CRC32_Combine	=crc32_combine
 CRC32_Combine64	=crc32_combine64
 CRC32_GetTable	=get_crc_table
-;crc32_combine64
-get_crc_table
-uncompress
+ZlibCompress	=compress
+ZlibCompress2	=compress2
+ZlibCompressBound	=compressBound
+ZlibUncompress	=uncompress
+compress	;// 废弃
+compress2	;// 废弃
+compressBound	;// 废弃
+crc32		;// 废弃
+crc32_combine	;// 废弃
+get_crc_table	;// 废弃
+uncompress	;// 废弃
 ;zError
 ;zlibCompileFlags
 zlibVersion

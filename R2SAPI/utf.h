@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <windows.h>
+#include "r2sapi.h"
 
 #ifdef __cplusplus
 extern "C"{
@@ -38,24 +39,24 @@ typedef int * LPLSTR;
 typedef const int * LPCLSTR;
 
 // API有具体实现的函数
-unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto);
-int WINAPI cpConvertEncoding(unsigned int nTrCode, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
-int WINAPI cpTrCodeSupported(unsigned int nTrCode);
-int WINAPI GB18030ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-int WINAPI UTF16ToGB18030(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
-int WINAPI UTF7ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-int WINAPI UTF16ToUTF7(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
+unsigned int API cpMakeTrCode(unsigned short cpfrom, unsigned short cpto);
+int API cpConvertEncoding(unsigned int nTrCode, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);
+int API cpTrCodeSupported(unsigned int nTrCode);
+int API GB18030ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF16ToGB18030(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
+int API UTF7ToUTF16(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF16ToUTF7(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
 // API包装函数
-int WINAPI UTF16BEToUTF16(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-int WINAPI UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-int WINAPI UTF8ToUTF16LE(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-int WINAPI UTF8ToUTF32LE(LPCSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-int WINAPI UTF16LEToUTF8(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
-int WINAPI UTF16LEToUTF32LE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-int WINAPI UTF16LEToUTF32BE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
-int WINAPI UTF32LEToUTF8(LPCLSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
-int WINAPI UTF32LEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
-int WINAPI UTF32BEToUTF16LE(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF16BEToUTF16(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF8ToUTF16LE(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF8ToUTF32LE(LPCSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF16LEToUTF8(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
+int API UTF16LEToUTF32LE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF16LEToUTF32BE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
+int API UTF32LEToUTF8(LPCLSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest);
+int API UTF32LEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
+int API UTF32BEToUTF16LE(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest);
 // 内部函数
 size_t lcslen(LPCLSTR lpSrcStr);
 int CopyString(int nSize, LPCVOID lpSrcStr, int cchSrc, LPVOID lpDestStr, int cchDest);

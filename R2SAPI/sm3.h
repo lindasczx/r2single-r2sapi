@@ -66,10 +66,11 @@ void sm3( const unsigned char *input, int ilen,
 
 //////// r2sapi½Ó¿Ú
 #include <stddef.h>
-int __stdcall SM3_Init(SM3_CTX *c);
-int __stdcall SM3_Update(SM3_CTX *c, const void *data, size_t len);
-int __stdcall SM3_Final(unsigned char *md, SM3_CTX *c);
-unsigned char * __stdcall SM3(const unsigned char *d, size_t n, unsigned char *md);
+#include "r2sapi.h"
+int API SM3_Init(SM3_CTX *c);
+int API SM3_Update(SM3_CTX *c, const void *data, size_t len);
+int API SM3_Final(unsigned char *md, SM3_CTX *c);
+unsigned char * API SM3(const void *d, size_t n, unsigned char *md);
 
 
 #ifdef __cplusplus
