@@ -30,14 +30,14 @@
 //#include "zutil.h"      /* for STDC and FAR definitions */
 #include <stddef.h>
 #include <windows.h>
+#include "crc32.h"
 #define OF(args) args
 #define Z_NULL NULL
-#define ZEXPORT WINAPI
+#define ZEXPORT API
 #define ZSWAP32(q) (((q) >> 24 & 0xff) | ((q) >> 8 & 0xff00) | (((q) & 0xff00) << 8) | (((q) & 0xff) << 24))
 typedef unsigned int z_crc_t;
 typedef int z_off_t;
 typedef __int64 z_off64_t;
-#include "crc32.h"
 
 #define local static
 

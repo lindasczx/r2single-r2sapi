@@ -1,6 +1,7 @@
 #include <openssl/sha.h>
+#include "r2sapi.h"
 
-int __stdcall SHA512_224_Init(SHA512_CTX *c)
+int API SHA512_224_Init(SHA512_CTX *c)
 {
 	c->h[0] = U64(0x8C3D37C819544DA2);
 	c->h[1] = U64(0x73E1996689DCD4D6);
@@ -16,7 +17,7 @@ int __stdcall SHA512_224_Init(SHA512_CTX *c)
         return 1;
 }
 
-int __stdcall SHA512_256_Init(SHA512_CTX *c)
+int API SHA512_256_Init(SHA512_CTX *c)
 {
 	c->h[0] = U64(0x22312194FC2BF72C);
 	c->h[1] = U64(0x9F555FA3C84C64C2);
@@ -32,27 +33,27 @@ int __stdcall SHA512_256_Init(SHA512_CTX *c)
         return 1;
 }
 
-int __stdcall SHA512_224_Final (unsigned char *md, SHA512_CTX *c)
+int API SHA512_224_Final (unsigned char *md, SHA512_CTX *c)
 {
 	return SHA512_Final(md, c);
 }
 
-int __stdcall SHA512_256_Final (unsigned char *md, SHA512_CTX *c)
+int API SHA512_256_Final (unsigned char *md, SHA512_CTX *c)
 {
 	return SHA512_Final(md, c);
 }
 
-int __stdcall SHA512_224_Update (SHA512_CTX *c, const void *data, size_t len)
+int API SHA512_224_Update (SHA512_CTX *c, const void *data, size_t len)
 {
 	return SHA512_Update(c, data, len);
 }
 
-int __stdcall SHA512_256_Update (SHA512_CTX *c, const void *data, size_t len)
+int API SHA512_256_Update (SHA512_CTX *c, const void *data, size_t len)
 {
 	return SHA512_Update(c, data, len);
 }
 
-unsigned char * __stdcall SHA512_224(const unsigned char *d, size_t n, unsigned char *md)
+unsigned char * API SHA512_224(const void *d, size_t n, unsigned char *md)
 {
 	SHA512_CTX c;
 	static unsigned char m[SHA224_DIGEST_LENGTH];
@@ -64,7 +65,7 @@ unsigned char * __stdcall SHA512_224(const unsigned char *d, size_t n, unsigned 
 	return (md);
 }
 
-unsigned char * __stdcall SHA512_256(const unsigned char *d, size_t n, unsigned char *md)
+unsigned char * API SHA512_256(const void *d, size_t n, unsigned char *md)
 {
 	SHA512_CTX c;
 	static unsigned char m[SHA256_DIGEST_LENGTH];

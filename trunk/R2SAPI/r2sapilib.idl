@@ -331,20 +331,20 @@ library R2SAPILib
 //////// 4. 压缩解压
 ///////////////////////////////////////////
 ////	zlib模块
-		[entry("compress")]
-			long __stdcall Compress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
-		[entry("compress2")]
-			long __stdcall Compress2([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen, [in]long Level);
-		[entry("compressBound")]
-			long __stdcall CompressBound([in]long lSrcLen);
 		[entry("CRC32")]
 			long __stdcall CRC32([in]long CRC, [in]void* pBuf, [in]long lBufLen);
 		[entry("CRC32_Combine")]
 			long __stdcall CRC32_Combine([in]long CRC1, [in]long CRC2, [in]long Len2);
 		[entry("CRC32_Combine64")]
 			long __stdcall CRC32_Combine64([in]long CRC1, [in]long CRC2, [in]long Len2Lo, [in]long Len2Hi);
-		[entry("uncompress")]
-			long __stdcall Uncompress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
+		[entry("ZlibCompress")]
+			long __stdcall ZlibCompress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
+		[entry("ZlibCompress2")]
+			long __stdcall ZlibCompress2([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen, [in]long Level);
+		[entry("ZlibCompressBound")]
+			long __stdcall ZlibCompressBound([in]long lSrcLen);
+		[entry("ZlibUncompress")]
+			long __stdcall ZlibUncompress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
 ////	CRC64.c
 		[entry("CRC64")]
 			Int64 __stdcall CRC64([in]long CRCLo, [in]long CRCHi, [in]void* pBuf, [in]long lBufLenLo, [in]long lBufLenHi);

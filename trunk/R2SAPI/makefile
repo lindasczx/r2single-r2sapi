@@ -29,7 +29,7 @@ RM:=		rm
 
 CFLAGS:=	-O3 -I. -D_USRDLL
 CXXFLAGS:=	-O3 -I. -D_USRDLL
-LINKFLAGS:=	-s -lstdc++ -Wl,--subsystem,console:4.0 --image-base 0x65000000 -Wl,--insert-timestamp
+LINKFLAGS:=	-s -Wl,--subsystem,console:4.0 --image-base 0x65000000 -Wl,--insert-timestamp
 MIDLFLAGS:=	
 ifneq ($(NO_MSVC_SDK), FALSE)
 MIDLFLAGS:=	-I include
@@ -41,33 +41,38 @@ ifneq ($(COMPILE_FROM_PUBLIC), FALSE)
 IMPOBJ:=	$(IMPOBJ) private/xmlparser.o private/fileio.o private/lzssdec.o private/lzssenc.o
 endif
 
-CSRC:=		stdc.c
-CSRC+=		sha512-t.c
-CSRC+=		utf.c
-CSRC+=		utf7.c
-CSRC+=		md6_compress.c
-CSRC+=		md6_mode.c
-CSRC+=		md6.c
-CSRC+=		sm3.c
+CSRC:=		r2sapi.c
+CSRC+=		blake2.c
+CSRC+=		blake2s.c
+CSRC+=		blake2sp.c
 CSRC+=		crc32.c
 CSRC+=		crc64.c
+CSRC+=		getcpuid.c
+CSRC+=		md6.c
+CSRC+=		md6_compress.c
+CSRC+=		md6_mode.c
+CSRC+=		sha512-t.c
+CSRC+=		sm3.c
+CSRC+=		stdc.c
+CSRC+=		utf.c
+CSRC+=		utf7.c
+CSRCSSE:=	blake2s_sse.c
+CXXSRC:=	
+CXXSRCSSE:=	
 ifeq ($(COMPILE_FROM_PUBLIC), FALSE)
 CSRC+=		../../../xmlparser.c
 CSRC+=		../r2pak/lzssdec.c
 CSRC+=		../r2pak/lzssenc.c
-endif
-CXXSRC:=	r2sapi.cpp
-CXXSRC+=	blake2.cpp
-CXXSRC+=	blake2s.cpp
-ifeq ($(COMPILE_FROM_PUBLIC), FALSE)
 CXXSRC+=	../r2pak/fileio.cpp
 endif
 
 COBJ:=		$(CSRC:%.c=%.o)
+COBJSSE:=	$(CSRCSSE:%.c=%.o)
 CXXOBJ:=	$(CXXSRC:%.cpp=%.o)
+CXXOBJSSE:=	$(CXXSRCSSE:%.cpp=%.o)
 
 RES:=		r2sapi.res
-LINKOBJ:=	$(COBJ) $(CXXOBJ) $(RES)
+LINKOBJ:=	$(COBJ) $(COBJSSE) $(CXXOBJ) $(CXXOBJSSE) $(RES)
 TYPELIB:=	r2sapilib.tlb
 DEFFILE:=	r2sapi.def
 OUTLIB:=	bin/r2sapi.lib
@@ -95,7 +100,13 @@ $(TYPELIB): r2sapilib.idl
 
 $(COBJ): $(CSRC)
 
+$(COBJSSE): $(CSRCSSE)
+$(COBJSSE): CFLAGS += -msse2
+
 $(CXXOBJ): $(CXXSRC)
+
+$(CXXOBJSSE): $(CXXSRCSSE)
+$(CXXOBJSSE): CXXFLAGS += -msse2
 
 %.o:%.c
 	$(CC) -o $@ $(CFLAGS) -c $<

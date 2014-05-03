@@ -183,7 +183,7 @@ static const unsigned char UTF1_U[256] = {
 //
 ////////////////////////////////////////////////////////////////////////////
 
-unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto) {
+unsigned int API cpMakeTrCode(unsigned short cpfrom, unsigned short cpto) {
 	return MAKETRCODE(cpfrom, cpto);
 }
 
@@ -195,7 +195,7 @@ unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto) {
 //
 ////////////////////////////////////////////////////////////////////////////
 
-int WINAPI cpTrCodeSupported(unsigned int nTrCode){
+int API cpTrCodeSupported(unsigned int nTrCode){
 	switch(nTrCode){
 		case MAKETRCODE(cpUTF8, cpUTF16LE):
 		case MAKETRCODE(cpUTF8, cpUTF16BE):
@@ -281,7 +281,7 @@ int WINAPI cpTrCodeSupported(unsigned int nTrCode){
 //  转换字符串编码
 //
 ////////////////////////////////////////////////////////////////////////////
-int WINAPI cpConvertEncoding(
+int API cpConvertEncoding(
 	unsigned int nTrCode,
 	LPCVOID lpSrcStr,
 	int cchSrc,
@@ -1676,7 +1676,7 @@ int UTF16ToCESU8(
 //
 ////////////////////////////////////////////////////////////////////////////
 
-int WINAPI UTF16BEToUTF16(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest) {
+int API UTF16BEToUTF16(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest) {
 	if ( (cchSrc == 0) || (cchDest < 0) || (lpSrcStr == NULL) ||
 		((cchDest != 0) && ((lpDestStr == NULL) || (lpSrcStr == lpDestStr))) )
 	{
@@ -1686,7 +1686,7 @@ int WINAPI UTF16BEToUTF16(LPCWSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cc
 	return SwapByte(2, lpSrcStr, cchSrc, lpDestStr, cchDest);
 }
 
-int WINAPI UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest) {
+int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest) {
 	if ( (cchSrc == 0) || (cchDest < 0) || (lpSrcStr == NULL) ||
 		((cchDest != 0) && ((lpDestStr == NULL) || (lpSrcStr == lpDestStr))) )
 	{
@@ -1696,7 +1696,7 @@ int WINAPI UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cc
 	return SwapByte(4, lpSrcStr, cchSrc, lpDestStr, cchDest);
 }
 
-int WINAPI UTF8ToUTF16LE(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest) {
+int API UTF8ToUTF16LE(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest) {
 	if ( (cchSrc == 0) || (cchDest < 0) || (lpSrcStr == NULL) ||
 		((cchDest != 0) && ((lpDestStr == NULL) || (lpSrcStr == (LPSTR)lpDestStr))) )
 	{
@@ -1706,7 +1706,7 @@ int WINAPI UTF8ToUTF16LE(LPCSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchD
 	return UTF8ToUTF16(lpSrcStr, cchSrc, lpDestStr, cchDest, FALSE);
 }
 
-int WINAPI UTF8ToUTF32LE(LPCSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest) {
+int API UTF8ToUTF32LE(LPCSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest) {
 	if ( (cchSrc == 0) || (cchDest < 0) || (lpSrcStr == NULL) ||
 		((cchDest != 0) && ((lpDestStr == NULL) || (lpSrcStr == (LPSTR)lpDestStr))) )
 	{
@@ -1716,7 +1716,7 @@ int WINAPI UTF8ToUTF32LE(LPCSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchD
 	return UTF8ToUTF32(lpSrcStr, cchSrc, lpDestStr, cchDest, FALSE);
 }
 
-int WINAPI UTF16LEToUTF8(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest) {
+int API UTF16LEToUTF8(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest) {
 	if ( (cchSrc == 0) || (cchDest < 0) || (lpSrcStr == NULL) ||
 		((cchDest != 0) && ((lpDestStr == NULL) || (lpSrcStr == (LPWSTR)lpDestStr))) )
 	{
@@ -1726,7 +1726,7 @@ int WINAPI UTF16LEToUTF8(LPCWSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchD
 	return UTF16ToUTF8(lpSrcStr, cchSrc, lpDestStr, cchDest, FALSE);
 }
 
-int WINAPI UTF16LEToUTF32LE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest) {
+int API UTF16LEToUTF32LE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest) {
 	if ( (cchSrc == 0) || (cchDest < 0) || (lpSrcStr == NULL) ||
 		((cchDest != 0) && ((lpDestStr == NULL) || (lpSrcStr == (LPWSTR)lpDestStr))) )
 	{
@@ -1736,7 +1736,7 @@ int WINAPI UTF16LEToUTF32LE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int 
 	return UTF16ToUTF32(lpSrcStr, cchSrc, lpDestStr, cchDest, FALSE, FALSE);
 }
 
-int WINAPI UTF16LEToUTF32BE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest) {
+int API UTF16LEToUTF32BE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest) {
 	if ( (cchSrc == 0) || (cchDest < 0) || (lpSrcStr == NULL) ||
 		((cchDest != 0) && ((lpDestStr == NULL) || (lpSrcStr == (LPWSTR)lpDestStr))) )
 	{
@@ -1746,7 +1746,7 @@ int WINAPI UTF16LEToUTF32BE(LPCWSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int 
 	return UTF16ToUTF32(lpSrcStr, cchSrc, lpDestStr, cchDest, FALSE, TRUE);
 }
 
-int WINAPI UTF32LEToUTF8(LPCLSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest) {
+int API UTF32LEToUTF8(LPCLSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest) {
 	if ( (cchSrc == 0) || (cchDest < 0) || (lpSrcStr == NULL) ||
 		((cchDest != 0) && ((lpDestStr == NULL) || (lpSrcStr == (LPLSTR)lpDestStr))) )
 	{
@@ -1756,7 +1756,7 @@ int WINAPI UTF32LEToUTF8(LPCLSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchD
 	return UTF32ToUTF8(lpSrcStr, cchSrc, lpDestStr, cchDest, FALSE);
 }
 
-int WINAPI UTF32LEToUTF16LE(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest) {
+int API UTF32LEToUTF16LE(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest) {
 	if ( (cchSrc == 0) || (cchDest < 0) || (lpSrcStr == NULL) ||
 		((cchDest != 0) && ((lpDestStr == NULL) || (lpSrcStr == (LPLSTR)lpDestStr))) )
 	{
@@ -1766,7 +1766,7 @@ int WINAPI UTF32LEToUTF16LE(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int 
 	return UTF32ToUTF16(lpSrcStr, cchSrc, lpDestStr, cchDest, FALSE, FALSE);
 }
 
-int WINAPI UTF32BEToUTF16LE(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest) {
+int API UTF32BEToUTF16LE(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDest) {
 	if ( (cchSrc == 0) || (cchDest < 0) || (lpSrcStr == NULL) ||
 		((cchDest != 0) && ((lpDestStr == NULL) || (lpSrcStr == (LPLSTR)lpDestStr))) )
 	{
@@ -1784,7 +1784,7 @@ int WINAPI UTF32BEToUTF16LE(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int 
 //
 ////////////////////////////////////////////////////////////////////////////
 
-int WINAPI GB18030ToUTF16(
+int API GB18030ToUTF16(
 	LPCSTR lpSrcStr,
 	int cchSrc,
 	LPWSTR lpDestStr,
@@ -1808,7 +1808,7 @@ int WINAPI GB18030ToUTF16(
 //
 ////////////////////////////////////////////////////////////////////////////
 
-int WINAPI UTF16ToGB18030(
+int API UTF16ToGB18030(
 	LPCWSTR lpSrcStr,
 	int cchSrc,
 	LPSTR lpDestStr,

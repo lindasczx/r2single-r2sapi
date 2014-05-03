@@ -81,7 +81,7 @@ CONST char nBitBase64[] = {
 //
 ////////////////////////////////////////////////////////////////////////////
 
-int WINAPI UTF7ToUTF16(
+int API UTF7ToUTF16(
     LPCSTR lpSrcStr,
     int cchSrc,
     LPWSTR lpDestStr,
@@ -255,7 +255,7 @@ int WINAPI UTF7ToUTF16(
 //
 ////////////////////////////////////////////////////////////////////////////
 
-int WINAPI UTF16ToUTF7(
+int API UTF16ToUTF7(
     LPCWSTR lpSrcStr,
     int cchSrc,
     LPSTR lpDestStr,

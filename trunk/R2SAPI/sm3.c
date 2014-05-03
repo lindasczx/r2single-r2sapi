@@ -337,7 +337,7 @@ int __stdcall SM3_Init(SM3_CTX *c)
 
 int __stdcall SM3_Update(SM3_CTX *c, const void *data, size_t len)
 {
-	sm3_update(c, (unsigned char *)data, len);
+	sm3_update(c, (const unsigned char *)data, len);
 	return 1;
 }
 
@@ -347,9 +347,9 @@ int __stdcall SM3_Final(unsigned char *md, SM3_CTX *c)
 	return 1;
 }
 
-unsigned char * __stdcall SM3(const unsigned char *d, size_t n, unsigned char *md)
+unsigned char * __stdcall SM3(const void *d, size_t n, unsigned char *md)
 {
-	sm3(d, n, md);
+	sm3((const unsigned char *)d, n, md);
 	return md;
 }
 
