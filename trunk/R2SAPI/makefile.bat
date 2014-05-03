@@ -11,6 +11,7 @@ echo #define APIVER %ver% >build.h
 
 make clean
 ar -x libz.a
+del crc32.o
 make
 pause
 make cleanobj
