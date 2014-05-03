@@ -1,11 +1,11 @@
-/* crc64.c -- compute the CRC-64/XZ of a data stream
+/* crc32.c -- compute the CRC-32 of a data stream
  * Copyright (C) 1995-2006, 2010, 2011, 2012 Mark Adler
  * Copyright (C) 2007-2009 Lasse Collin
  * Copyright (C) 2014 Linda Zhang
  *
  * Thanks to Lasse Collin <lasse.collin@tukaani.org> for his contribution of faster CRC methods:
- * using the slice-by-four algorithm instead of slice-by-eight to avoid increasing CPU cache usage.
- * This results in about 1.1x increase in speed on a Intel Core 2 Duo using gcc -O3.
+ * using the slice-by-eight algorithm instead of slice-by-four to increase speed on i686 and later.
+ * This results in about 1.3x increase in speed on a Intel Core 2 Duo using gcc -O3.
  */
 
 /* @(#) $Id$ */
@@ -14,10 +14,10 @@
   Note on the use of DYNAMIC_CRC_TABLE: there is no mutex or semaphore
   protection on the static variables used to control the first-use generation
   of the crc tables.  Therefore, if you #define DYNAMIC_CRC_TABLE, you should
-  first call get_crc64_table() to initialize the tables before allowing more than
-  one thread to use crc64().
+  first call get_crc_table() to initialize the tables before allowing more than
+  one thread to use crc32().
 
-  DYNAMIC_CRC_TABLE and MAKECRCH can be #defined to write out crc64.h.
+  DYNAMIC_CRC_TABLE and MAKECRCH can be #defined to write out crc32.h.
  */
 
 #ifdef MAKECRCH
@@ -33,36 +33,34 @@
 #define OF(args) args
 #define Z_NULL NULL
 #define ZEXPORT WINAPI
-#define ZSWAP64(q) (((q) >> 56 & 0xff) | ((q) >> 40 & 0xff00) | ((q) >> 24 & 0xff0000) | ((q) >> 8 & 0xff000000) | \
-                   (((q) & 0xff000000) << 8) | (((q) & 0xff0000) << 24) | (((q) & 0xff00) << 40) | (((q) & 0xff) << 56))
-//#define ZSWAP64(q) (((q) >> 56 & 0xff) | (((q) >> 48 & 0xff) << 8) | (((q) >> 40 & 0xff) << 16) | (((q) >> 32 & 0xff) << 24) | \
-                   (((q) >> 24 & 0xff) << 32) | (((q) >> 16 & 0xff) << 40) | (((q) >> 8 & 0xff) << 48) | (((q) & 0xff) << 56))
-typedef unsigned __int64 z_crc_t;
+#define ZSWAP32(q) (((q) >> 24 & 0xff) | ((q) >> 8 & 0xff00) | (((q) & 0xff00) << 8) | (((q) & 0xff) << 24))
+typedef unsigned int z_crc_t;
+typedef int z_off_t;
 typedef __int64 z_off64_t;
-#include "crc64.h"
+#include "crc32.h"
 
 #define local static
 
-/* Definitions for doing the crc 8 data bytes at a time. */
-#if !defined(NOBYFOUR)
-#  define BYFOUR
+/* Definitions for doing the crc four data bytes at a time. */
+#if !defined(NOBYEIGHT)
+#  define BYEIGHT
 #endif
-#ifdef BYFOUR
-   local z_crc_t crc64_little OF((z_crc_t, const unsigned char FAR *, unsigned __int64));
-   local z_crc_t crc64_big OF((z_crc_t, const unsigned char FAR *, unsigned __int64));
+#ifdef BYEIGHT
+   local z_crc_t crc32_little OF((z_crc_t, const unsigned char FAR *, unsigned));
+   local z_crc_t crc32_big OF((z_crc_t, const unsigned char FAR *, unsigned));
 #  if defined(BIGENDIAN) || defined(MAKECRCH)
-#    define TBLS 8
+#    define TBLS 16
 #  else
-#    define TBLS 4
+#    define TBLS 8
 #  endif /* BIGENDIAN */
 #else
 #  define TBLS 1
-#endif /* BYFOUR */
+#endif /* BYEIGHT */
 
 /* Local functions for crc concatenation */
 local z_crc_t gf2_matrix_times OF((z_crc_t *mat, z_crc_t vec));
 local void gf2_matrix_square OF((z_crc_t *square, z_crc_t *mat));
-local z_crc_t crc64_combine_ OF((z_crc_t crc1, z_crc_t crc2, z_off64_t len2));
+local z_crc_t crc32_combine_ OF((z_crc_t crc1, z_crc_t crc2, z_off64_t len2));
 
 
 #ifdef DYNAMIC_CRC_TABLE
@@ -74,22 +72,22 @@ local void make_crc_table OF((void));
    local void write_table OF((FILE *, const z_crc_t FAR *));
 #endif /* MAKECRCH */
 /*
-  Generate tables for a byte-wise 64-bit CRC calculation on the polynomial:
-  x^64+x^62+x^57+x^55+x^54+x^53+x^52+x^47+x^46+x^45+x^40+x^39+x^38+x^37+x^35+x^33+x^32+x^31+x^29+x^27+x^24+x^23+x^22+x^21+x^19+x^17+x^13+x^12+x^10+x^9+x^7+x^4+x+1.
+  Generate tables for a byte-wise 32-bit CRC calculation on the polynomial:
+  x^32+x^26+x^23+x^22+x^16+x^12+x^11+x^10+x^8+x^7+x^5+x^4+x^2+x+1.
 
   Polynomials over GF(2) are represented in binary, one bit per coefficient,
   with the lowest powers in the most significant bit.  Then adding polynomials
   is just exclusive-or, and multiplying a polynomial by x is a right shift by
   one.  If we call the above polynomial p, and represent a byte as the
   polynomial q, also with the lowest power in the most significant bit (so the
-  byte 0xb1 is the polynomial x^7+x^3+x+1), then the CRC is (q*x^64) mod p,
+  byte 0xb1 is the polynomial x^7+x^3+x+1), then the CRC is (q*x^32) mod p,
   where a mod b means the remainder after dividing a by b.
 
   This calculation is done using the shift-register method of multiplying and
   taking the remainder.  The register is initialized to zero, and for each
-  incoming bit, x^64 is added mod p to the register if the bit is a one (where
-  x^64 mod p is p+x^64 = x^62+...+1), and the register is multiplied mod p by
-  x (which is shifting right by one and adding x^64 mod p if the bit shifted
+  incoming bit, x^32 is added mod p to the register if the bit is a one (where
+  x^32 mod p is p+x^32 = x^26+...+1), and the register is multiplied mod p by
+  x (which is shifting right by one and adding x^32 mod p if the bit shifted
   out is a one).  We start with the highest power (least significant bit) of
   q and repeat for all eight bits of q.
 
@@ -104,9 +102,9 @@ local void make_crc_table()
     z_crc_t c;
     int n, k;
     z_crc_t poly;                       /* polynomial exclusive-or pattern */
-    /* terms of polynomial defining this crc (except x^64): */
+    /* terms of polynomial defining this crc (except x^32): */
     static volatile int first = 1;      /* flag to limit concurrent making */
-    static const unsigned char p[] = {62,57,55,54,53,52,47,46,45,40,39,38,37,35,33,32,31,29,27,24,23,22,21,19,17,13,12,10,9,7,4,1,0};
+    static const unsigned char p[] = {0,1,2,4,5,7,8,10,11,12,16,22,23,26};
 
     /* See if another task is already doing this (not thread-safe, but better
        than nothing -- significantly reduces duration of vulnerability in
@@ -114,10 +112,10 @@ local void make_crc_table()
     if (first) {
         first = 0;
 
-        /* make exclusive-or pattern from polynomial (0x42f0e1eba9ea3693ULL) */
+        /* make exclusive-or pattern from polynomial (0xedb88320UL) */
         poly = 0;
         for (n = 0; n < (int)(sizeof(p)/sizeof(unsigned char)); n++)
-            poly |= (z_crc_t)1 << (63 - p[n]);
+            poly |= (z_crc_t)1 << (31 - p[n]);
 
         /* generate a crc for every 8-bit value */
         for (n = 0; n < 256; n++) {
@@ -127,19 +125,19 @@ local void make_crc_table()
             crc_table[0][n] = c;
         }
 
-#ifdef BYFOUR
-        /* generate crc for each value followed by one, two, and three zeros,
+#ifdef BYEIGHT
+        /* generate crc for each value followed by one, two, ..., seven zeros,
            and then the byte reversal of those as well as the first table */
         for (n = 0; n < 256; n++) {
             c = crc_table[0][n];
-            crc_table[4][n] = ZSWAP64(c);
-            for (k = 1; k < 4; k++) {
+            crc_table[8][n] = ZSWAP32(c);
+            for (k = 1; k < 8; k++) {
                 c = crc_table[0][c & 0xff] ^ (c >> 8);
                 crc_table[k][n] = c;
-                crc_table[k + 4][n] = ZSWAP64(c);
+                crc_table[k + 8][n] = ZSWAP32(c);
             }
         }
-#endif /* BYFOUR */
+#endif /* BYEIGHT */
 
         crc_table_empty = 0;
     }
@@ -150,31 +148,31 @@ local void make_crc_table()
     }
 
 #ifdef MAKECRCH
-    /* write out CRC tables to crc64.h */
+    /* write out CRC tables to crc32.h */
     {
         FILE *out;
 
-        out = fopen("crc64_table.h", "w");
+        out = fopen("crc32_table.h", "w");
         if (out == NULL) return;
-        fprintf(out, "/* crc64_table.h -- tables for rapid CRC-64/XZ calculation\n");
-        fprintf(out, " * Generated automatically by crc64.c\n */\n\n");
+        fprintf(out, "/* crc32_table.h -- tables for rapid CRC calculation\n");
+        fprintf(out, " * Generated automatically by crc32.c\n */\n\n");
         fprintf(out, "local const z_crc_t FAR ");
         fprintf(out, "crc_table[TBLS][256] =\n{\n  {\n");
         write_table(out, crc_table[0]);
-#  ifdef BYFOUR
-        fprintf(out, "#ifdef BYFOUR\n");
-        for (k = 1; k < 4; k++) {
+#  ifdef BYEIGHT
+        fprintf(out, "#ifdef BYEIGHT\n");
+        for (k = 1; k < 8; k++) {
             fprintf(out, "  },\n  {\n");
             write_table(out, crc_table[k]);
         }
         fprintf(out, "#ifdef BIGENDIAN\n");
-        for (k = 4; k < 8; k++) {
+        for (k = 8; k < 16; k++) {
             fprintf(out, "  },\n  {\n");
             write_table(out, crc_table[k]);
         }
         fprintf(out, "#endif\n");
         fprintf(out, "#endif\n");
-#  endif /* BYFOUR */
+#  endif /* BYEIGHT */
         fprintf(out, "  }\n};\n");
         fclose(out);
     }
@@ -189,23 +187,23 @@ local void write_table(out, table)
     int n;
 
     for (n = 0; n < 256; n++)
-        fprintf(out, "%s0x%016I64xULL%s", n % 4 ? "" : "    ",
-                (z_crc_t)(table[n]),
-                n == 255 ? "\n" : (n % 4 == 3 ? ",\n" : ", "));
+        fprintf(out, "%s0x%08lxUL%s", n % 5 ? "" : "    ",
+                (unsigned long)(table[n]),
+                n == 255 ? "\n" : (n % 5 == 4 ? ",\n" : ", "));
 }
 #endif /* MAKECRCH */
 
 #else /* !DYNAMIC_CRC_TABLE */
 /* ========================================================================
- * Tables of CRC-64s of all single-byte values, made by make_crc_table().
+ * Tables of CRC-32s of all single-byte values, made by make_crc_table().
  */
-#include "crc64_table.h"
+#include "crc32_table.h"
 #endif /* DYNAMIC_CRC_TABLE */
 
 /* =========================================================================
- * This function can be used by asm versions of crc64()
+ * This function can be used by asm versions of crc32()
  */
-const z_crc_t FAR * ZEXPORT get_crc64_table()
+const z_crc_t FAR * ZEXPORT get_crc_table()
 {
 #ifdef DYNAMIC_CRC_TABLE
     if (crc_table_empty)
@@ -219,30 +217,30 @@ const z_crc_t FAR * ZEXPORT get_crc64_table()
 #define DO8 DO1; DO1; DO1; DO1; DO1; DO1; DO1; DO1
 
 /* ========================================================================= */
-z_crc_t ZEXPORT crc64(crc, buf, len)
+z_crc_t ZEXPORT crc32(crc, buf, len)
     z_crc_t crc;
     const unsigned char FAR *buf;
-    unsigned __int64 len;
+    unsigned int len;
 {
-    if (buf == Z_NULL) return 0ULL;
+    if (buf == Z_NULL) return 0UL;
 
 #ifdef DYNAMIC_CRC_TABLE
     if (crc_table_empty)
         make_crc_table();
 #endif /* DYNAMIC_CRC_TABLE */
 
-#ifdef BYFOUR
+#ifdef BYEIGHT
     if (sizeof(void *) == sizeof(ptrdiff_t)) {
         z_crc_t endian;
 
         endian = 1;
         if (*((unsigned char *)(&endian)))
-            return crc64_little(crc, buf, len);
+            return crc32_little(crc, buf, len);
         else
-            return crc64_big(crc, buf, len);
+            return crc32_big(crc, buf, len);
     }
-#endif /* BYFOUR */
-    crc = crc ^ 0xffffffffffffffffULL;
+#endif /* BYEIGHT */
+    crc = crc ^ 0xffffffffUL;
     while (len >= 8) {
         DO8;
         len -= 8;
@@ -250,43 +248,46 @@ z_crc_t ZEXPORT crc64(crc, buf, len)
     if (len) do {
         DO1;
     } while (--len);
-    crc = crc ^ 0xffffffffffffffffULL;
-    return crc;
+    return crc ^ 0xffffffffUL;
 }
 
-#ifdef BYFOUR
+#ifdef BYEIGHT
 
 /* ========================================================================= */
-#define DOLIT4 { \
-	register unsigned int t = c ^ *(unsigned int *)(buf); \
+#define DOLIT8 { \
+	c ^= *(z_crc_t *)(buf); \
+	buf += 4; \
+        c = crc_table[7][c & 0xff] ^ crc_table[6][c >> 8 & 0xff] ^ \
+            crc_table[5][c >> 16 & 0xff] ^ crc_table[4][c >> 24]; \
+	register z_crc_t t = *(z_crc_t *)(buf); \
 	buf += 4; \
         c = crc_table[3][t & 0xff] ^ crc_table[2][t >> 8 & 0xff] ^ \
-            c >> 32 ^ \
+            c ^ \
 	    crc_table[1][t >> 16 & 0xff] ^ crc_table[0][t >> 24]; }
-#define DOLIT32 DOLIT4; DOLIT4; DOLIT4; DOLIT4; DOLIT4; DOLIT4; DOLIT4; DOLIT4
+#define DOLIT64 DOLIT8; DOLIT8; DOLIT8; DOLIT8; DOLIT8; DOLIT8; DOLIT8; DOLIT8
 
 /* ========================================================================= */
-local z_crc_t crc64_little(crc, buf, len)
+local z_crc_t crc32_little(crc, buf, len)
     z_crc_t crc;
     const unsigned char FAR *buf;
-    unsigned __int64 len;
+    unsigned int len;
 {
     register z_crc_t c;
 
     c = (z_crc_t)crc;
     c = ~c;
-    while (len && ((ptrdiff_t)buf & 3)) {
+    while (len && ((ptrdiff_t)buf & 7)) {
         c = crc_table[0][(c ^ *buf++) & 0xff] ^ (c >> 8);
         len--;
     }
 
-    while (len >= 32) {
-        DOLIT32;
-        len -= 32;
+    while (len >= 64) {
+        DOLIT64;
+        len -= 64;
     }
-    while (len >= 4) {
-        DOLIT4;
-        len -= 4;
+    while (len >= 8) {
+        DOLIT8;
+        len -= 8;
     }
 
     if (len) do {
@@ -297,47 +298,51 @@ local z_crc_t crc64_little(crc, buf, len)
 }
 
 /* ========================================================================= */
-#define DOBIG4 { \
-	register unsigned int t = c >> 32 ^ *(unsigned int *)(buf); \
+#define DOBIG8 { \
+	c ^= *(z_crc_t *)(buf); \
 	buf += 4; \
-        c = crc_table[4][t & 0xff] ^ crc_table[5][t >> 8 & 0xff] ^ \
-            c << 32 ^ \
-	    crc_table[6][t >> 16 & 0xff] ^ crc_table[7][t >> 24]; }
-#define DOBIG32 DOBIG4; DOBIG4; DOBIG4; DOBIG4; DOBIG4; DOBIG4; DOBIG4; DOBIG4
+        c = crc_table[12][c & 0xff] ^ crc_table[13][c >> 8 & 0xff] ^ \
+            crc_table[14][c >> 16 & 0xff] ^ crc_table[15][c >> 24]; \
+	register z_crc_t t = *(z_crc_t *)(buf); \
+	buf += 4; \
+        c = crc_table[8][t & 0xff] ^ crc_table[9][t >> 8 & 0xff] ^ \
+            c ^ \
+	    crc_table[10][t >> 16 & 0xff] ^ crc_table[11][t >> 24]; }
+#define DOBIG64 DOBIG8; DOBIG8; DOBIG8; DOBIG8; DOBIG8; DOBIG8; DOBIG8; DOBIG8
 
 /* ========================================================================= */
-local z_crc_t crc64_big(crc, buf, len)
+local z_crc_t crc32_big(crc, buf, len)
     z_crc_t crc;
     const unsigned char FAR *buf;
-    unsigned __int64 len;
+    unsigned int len;
 {
     register z_crc_t c;
 
-    c = ZSWAP64((z_crc_t)crc);
+    c = ZSWAP32((z_crc_t)crc);
     c = ~c;
-    while (len && ((ptrdiff_t)buf & 3)) {
-        c = crc_table[4][(c >> 56) ^ *buf++] ^ (c << 8);
+    while (len && ((ptrdiff_t)buf & 7)) {
+        c = crc_table[8][(c >> 24) ^ *buf++] ^ (c << 8);
         len--;
     }
 
-    while (len >= 32) {
-        DOBIG32;
-        len -= 32;
+    while (len >= 64) {
+        DOBIG64;
+        len -= 64;
     }
-    while (len >= 4) {
-        DOBIG4;
-        len -= 4;
+    while (len >= 8) {
+        DOBIG8;
+        len -= 8;
     }
     if (len) do {
-        c = crc_table[4][(c >> 56) ^ *buf++] ^ (c << 8);
+        c = crc_table[8][(c >> 24) ^ *buf++] ^ (c << 8);
     } while (--len);
     c = ~c;
-    return (z_crc_t)(ZSWAP64(c));
+    return (z_crc_t)(ZSWAP32(c));
 }
 
-#endif /* BYFOUR */
+#endif /* BYEIGHT */
 
-#define GF2_DIM 64      /* dimension of GF(2) vectors (length of CRC) */
+#define GF2_DIM 32      /* dimension of GF(2) vectors (length of CRC) */
 
 /* ========================================================================= */
 local z_crc_t gf2_matrix_times(mat, vec)
@@ -368,7 +373,7 @@ local void gf2_matrix_square(square, mat)
 }
 
 /* ========================================================================= */
-local z_crc_t crc64_combine_(crc1, crc2, len2)
+local z_crc_t crc32_combine_(crc1, crc2, len2)
     z_crc_t crc1;
     z_crc_t crc2;
     z_off64_t len2;
@@ -383,7 +388,7 @@ local z_crc_t crc64_combine_(crc1, crc2, len2)
         return crc1;
 
     /* put operator for one zero bit in odd */
-    odd[0] = 0xC96C5795D7870F42ULL; //0x42f0e1eba9ea3693ULL;          /* CRC-64 polynomial */
+    odd[0] = 0xedb88320UL;          /* CRC-32 polynomial */
     row = 1;
     for (n = 1; n < GF2_DIM; n++) {
         odd[n] = row;
@@ -424,11 +429,18 @@ local z_crc_t crc64_combine_(crc1, crc2, len2)
 }
 
 /* ========================================================================= */
-z_crc_t ZEXPORT crc64_combine(crc1, crc2, len2)
+z_crc_t ZEXPORT crc32_combine(crc1, crc2, len2)
+    z_crc_t crc1;
+    z_crc_t crc2;
+    z_off_t len2;
+{
+    return crc32_combine_(crc1, crc2, len2);
+}
+
+z_crc_t ZEXPORT crc32_combine64(crc1, crc2, len2)
     z_crc_t crc1;
     z_crc_t crc2;
     z_off64_t len2;
 {
-    return crc64_combine_(crc1, crc2, len2);
+    return crc32_combine_(crc1, crc2, len2);
 }
-

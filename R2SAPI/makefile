@@ -36,7 +36,7 @@ MIDLFLAGS:=	-I include
 endif
 #SBFLAGS:=	-Wl,--add-stdcall-alias
 IMPLIB:=	libcrypto.a libz.a c_g18030.lib
-IMPOBJ:=	compress.o uncompr.o crc32.o
+IMPOBJ:=	compress.o uncompr.o
 ifneq ($(COMPILE_FROM_PUBLIC), FALSE)
 IMPOBJ:=	$(IMPOBJ) private/xmlparser.o private/fileio.o private/lzssdec.o private/lzssenc.o
 endif
@@ -49,6 +49,7 @@ CSRC+=		md6_compress.c
 CSRC+=		md6_mode.c
 CSRC+=		md6.c
 CSRC+=		sm3.c
+CSRC+=		crc32.c
 CSRC+=		crc64.c
 ifeq ($(COMPILE_FROM_PUBLIC), FALSE)
 CSRC+=		../../../xmlparser.c
