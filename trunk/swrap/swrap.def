@@ -1,0 +1,46 @@
+LIBRARY swrap
+EXPORTS
+
+_AIL_allocate_sample_handle@4	=AllocateSampleHandle
+_AIL_close_digital_driver@4	=mss32._AIL_close_digital_driver@4
+_AIL_close_stream@4		=CloseStream
+_AIL_digital_latency@4		=mss32._AIL_digital_latency@4
+_AIL_open_digital_driver@16	=mss32._AIL_open_digital_driver@16
+_AIL_open_stream@12		=OpenStream
+_AIL_pause_stream@8		=PauseStream
+_AIL_release_sample_handle@4	=ReleaseSampleHandle
+_AIL_resume_sample@4		=ResumeSample
+_AIL_sample_ms_position@12	=GetSampleMsPosition
+_AIL_sample_playback_rate@4	=GetSamplePlaybackRate
+_AIL_sample_status@4		=GetSampleStatus
+_AIL_service_stream@8		=mss32._AIL_service_stream@8
+_AIL_set_DirectSound_HWND@8	=SetDirectSoundHwnd
+_AIL_set_file_callbacks@16	=SetFileCallbacks
+_AIL_set_named_sample_file@20	=SetNamedSampleFile
+_AIL_set_preference@8		=SetPreference
+_AIL_set_redist_directory@4	=mss32._AIL_set_redist_directory@4
+_AIL_set_sample_loop_count@8	=SetSampleLoopCount
+_AIL_set_sample_ms_position@8	=SetSampleMsPosition
+_AIL_set_sample_playback_rate@8	=SetSamplePlaybackRate
+_AIL_set_sample_volume_levels@12=SetSampleVolume
+_AIL_set_stream_loop_count@8	=SetStreamLoopCount
+_AIL_set_stream_ms_position@8	=SetStreamMsPosition
+_AIL_set_stream_playback_rate@8	=SetStreamPlaybackRate
+;_AIL_set_stream_sample_handle@4=mss32._AIL_set_stream_sample_handle@4
+_AIL_set_stream_volume_levels@12=SetStreamVolume
+_AIL_shutdown@0			=Shutdown
+_AIL_start_sample@4		=StartSample
+_AIL_start_stream@4		=StartStream
+_AIL_startup@0			=mss32._AIL_startup@0
+_AIL_stop_sample@4		=StopSample
+_AIL_stream_info@20		=GetStreamInfo
+_AIL_stream_ms_position@12	=GetStreamMsPosition
+_AIL_stream_playback_rate@4	=GetStreamPlaybackRate
+_AIL_stream_status@4		=mss32._AIL_stream_status@4
+
+;RIB_register_interface		=mss32.RIB_register_interface
+;RIB_unregister_interface	=mss32.RIB_unregister_interface
+;_AIL_MMX_available@0		=mss32._AIL_MMX_available@0
+;_AIL_mem_alloc_lock@4		=mss32._AIL_mem_alloc_lock@4
+;_AIL_mem_free_lock@4		=mss32._AIL_mem_free_lock@4
+
