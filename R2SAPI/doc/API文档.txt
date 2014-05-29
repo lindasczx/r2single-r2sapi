@@ -10,11 +10,11 @@
 284		CRC64			CRC64校验函数
 284		CRC64_Combine		CRC64校验函数（多线程）
 284		CRC64_GetTable		CRC64校验函数
-65	274	GetFileFromPakA		从PAK文件中读取一个文件
-129	274	GetFileFromPakW		从PAK文件中读取一个文件
-272	275	LzssCompress		LZSS压缩函数
-275	276	LzssCompress2		LZSS压缩函数（可变压缩级别，暂时与固定压缩级别一致）
-272	274	LzssDecompress		LZSS解压函数
+65	276	GetFileFromPakA		从PAK文件中读取一个文件
+129	276	GetFileFromPakW		从PAK文件中读取一个文件
+272	276	LzssCompress		LZSS压缩函数
+276	324	LzssCompress2		LZSS压缩函数（可变压缩级别）
+272	276	LzssDecompress		LZSS解压函数
 164		MD4			MD4散列函数
 164		MD4_Final		MD4散列函数
 164		MD4_Init		MD4散列函数
