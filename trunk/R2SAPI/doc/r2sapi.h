@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.37.0.318
+	1.37.0.326
 --*/
 
 #ifndef R2SAPI_H_
@@ -42,6 +42,23 @@ typedef const int * LPCLSTR;
 
 #define MAKETRCODE(a,b) ( (uint32_t)( (((uint32_t)(uint16_t)a)<<16) | ((uint32_t)(uint16_t)b) ) )
 //unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto);
+
+typedef struct {
+	unsigned int Type;
+	size_t Offset;
+	size_t CompressedSize;
+	size_t Size;
+	wchar_t FileName[MAX_PATH];
+} ENUMPAKFILEW;
+typedef struct {
+	unsigned int Type;
+	size_t Offset;
+	size_t CompressedSize;
+	size_t Size;
+	char FileName[MAX_PATH];
+} ENUMPAKFILEA;
+typedef int (API ENUMPAKPROCW)(const ENUMPAKFILEW *, const void *);
+typedef int (API ENUMPAKPROCA)(const ENUMPAKFILEA *, const void *);
 
 #define MD4_LBLOCK 16
 typedef struct MD4state_st
@@ -152,37 +169,39 @@ int API _();
 ///////////////////////////////////////////
 
 ////westpak
-long API GetFileFromPakA(void* pBuf, long ulBufLen, LPCSTR pszFn, LPCSTR pszFnWant);
-long API GetFileFromPakW(void* pBuf, long ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
-void API LzssCompress(const void* pDataBuffer, unsigned long ulDataBytes, void* pOutputBuffer, unsigned long* ulOutputBytes);
-void API LzssCompress2(const void* pDataBuffer, unsigned long ulDataBytes, void* pOutputBuffer, unsigned long* ulOutputBytes, int CompressLevel);
-void API LzssDecompress(const void* pDataBuffer, unsigned long ulDataBytes, void* pOutputBuffer, unsigned long ulOutputBytes);
+size_t API EnumFileFromPakA(const char *fn, ENUMPAKPROCA lpEnumFunc, const void *param);
+size_t API EnumFileFromPakW(const wchar_t *fn, ENUMPAKPROCW lpEnumFunc, const void *param);
+size_t API GetFileFromPakA(void* pBuf, size_t ulBufLen, LPCSTR pszFn, LPCSTR pszFnWant);
+size_t API GetFileFromPakW(void* pBuf, size_t ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
+void API LzssCompress(const void* pDataBuffer, size_t ulDataBytes, void* pOutputBuffer, size_t* ulOutputBytes);
+void API LzssCompress2(const void* pDataBuffer, size_t ulDataBytes, void* pOutputBuffer, size_t* ulOutputBytes, int CompressLevel);
+void API LzssDecompress(const void* pDataBuffer, size_t ulDataBytes, void* pOutputBuffer, size_t ulOutputBytes);
 
 ///////////////////////////////////////////
 //////// 2. ½âÎöXML
 ///////////////////////////////////////////
 
 ////xmlparser
-int API XMLPickAttribW(LPWSTR, LPCWSTR, LPCWSTR, long, LPCWSTR);
-int API XMLPickAttribA(LPSTR, LPCSTR, LPCSTR, long, LPCSTR);
-int API XMLPickAttrib2W(LPWSTR, long, LPCWSTR, LPCWSTR, long, LPCWSTR);
-int API XMLPickAttrib2A(LPSTR, long, LPCSTR, LPCSTR, long, LPCSTR);
-int API XMLPickAttribPosW(long*, long*, LPCWSTR, LPCWSTR, long, LPCWSTR);
-int API XMLPickAttribPosA(long*, long*, LPCSTR, LPCSTR, long, LPCSTR);
-int API XMLPickFullTagW(LPWSTR, LPCWSTR, LPCWSTR, long*, long);
-int API XMLPickFullTagA(LPSTR, LPCSTR, LPCSTR, long*, long);
-int API XMLPickFullTag2W(LPWSTR, long, LPCWSTR, LPCWSTR, long*, long);
-int API XMLPickFullTag2A(LPSTR, long, LPCSTR, LPCSTR, long*, long);
-int API XMLPickFullTagPosW(long*, long*, LPCWSTR, LPCWSTR, long*, long);
-int API XMLPickFullTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
-int API XMLPickTagW(LPWSTR, LPCWSTR, LPCWSTR, long);
-int API XMLPickTagA(LPSTR, LPCSTR, LPCSTR, long);
-int API XMLPickTag2W(LPWSTR, LPCWSTR, LPCWSTR, long*, long);
-int API XMLPickTag2A(LPSTR, LPCSTR, LPCSTR, long*, long);
-int API XMLPickTag3W(LPWSTR, long, LPCWSTR, LPCWSTR, long*, long);
-int API XMLPickTag3A(LPSTR, long, LPCSTR, LPCSTR, long*, long);
-int API XMLPickTagPosW(long*, long*, LPCWSTR, LPCWSTR, long*, long);
-int API XMLPickTagPosA(long*, long*, LPCSTR, LPCSTR, long*, long);
+int API XMLPickAttribW(LPWSTR, LPCWSTR, LPCWSTR, size_t, LPCWSTR);
+int API XMLPickAttribA(LPSTR, LPCSTR, LPCSTR, size_t, LPCSTR);
+int API XMLPickAttrib2W(LPWSTR, size_t, LPCWSTR, LPCWSTR, size_t, LPCWSTR);
+int API XMLPickAttrib2A(LPSTR, size_t, LPCSTR, LPCSTR, size_t, LPCSTR);
+int API XMLPickAttribPosW(size_t*, size_t*, LPCWSTR, LPCWSTR, size_t, LPCWSTR);
+int API XMLPickAttribPosA(size_t*, size_t*, LPCSTR, LPCSTR, size_t, LPCSTR);
+int API XMLPickFullTagW(LPWSTR, LPCWSTR, LPCWSTR, size_t*, size_t);
+int API XMLPickFullTagA(LPSTR, LPCSTR, LPCSTR, size_t*, size_t);
+int API XMLPickFullTag2W(LPWSTR, size_t, LPCWSTR, LPCWSTR, size_t*, size_t);
+int API XMLPickFullTag2A(LPSTR, size_t, LPCSTR, LPCSTR, size_t*, size_t);
+int API XMLPickFullTagPosW(size_t*, size_t*, LPCWSTR, LPCWSTR, size_t*, size_t);
+int API XMLPickFullTagPosA(size_t*, size_t*, LPCSTR, LPCSTR, size_t*, size_t);
+int API XMLPickTagW(LPWSTR, LPCWSTR, LPCWSTR, size_t);
+int API XMLPickTagA(LPSTR, LPCSTR, LPCSTR, size_t);
+int API XMLPickTag2W(LPWSTR, LPCWSTR, LPCWSTR, size_t*, size_t);
+int API XMLPickTag2A(LPSTR, LPCSTR, LPCSTR, size_t*, size_t);
+int API XMLPickTag3W(LPWSTR, size_t, LPCWSTR, LPCWSTR, size_t*, size_t);
+int API XMLPickTag3A(LPSTR, size_t, LPCSTR, LPCSTR, size_t*, size_t);
+int API XMLPickTagPosW(size_t*, size_t*, LPCWSTR, LPCWSTR, size_t*, size_t);
+int API XMLPickTagPosA(size_t*, size_t*, LPCSTR, LPCSTR, size_t*, size_t);
 
 ///////////////////////////////////////////
 //////// 3. Hashº¯Êý

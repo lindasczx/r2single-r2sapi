@@ -10,8 +10,10 @@
 284		CRC64			CRC64校验函数
 284		CRC64_Combine		CRC64校验函数（多线程）
 284		CRC64_GetTable		CRC64校验函数
-65	276	GetFileFromPakA		从PAK文件中读取一个文件
-129	276	GetFileFromPakW		从PAK文件中读取一个文件
+327		EnumFileFromPakA	从PAK文件中枚举文件（线程安全）
+327		EnumFileFromPakW	从PAK文件中枚举文件（线程安全）
+65	276	GetFileFromPakA		从PAK文件中读取一个文件（V327起线程安全）
+129	276	GetFileFromPakW		从PAK文件中读取一个文件（V327起线程安全）
 272	276	LzssCompress		LZSS压缩函数
 276	324	LzssCompress2		LZSS压缩函数（可变压缩级别）
 272	276	LzssDecompress		LZSS解压函数
