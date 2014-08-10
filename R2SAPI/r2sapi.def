@@ -8,6 +8,8 @@ _
 ;///////////////////////////////////////////
 
 ;// westpak模块
+EnumFileFromPakA
+EnumFileFromPakW
 GetFileFromPakA
 GetFileFromPakW
 LzssCompress	=lzsscompress

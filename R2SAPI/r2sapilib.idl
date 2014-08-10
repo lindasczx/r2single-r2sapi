@@ -44,10 +44,19 @@ library R2SAPILib
 		const long  cpGB18030 = 0x100;
 	};
 
+	const long MAX_PATH = 260;
+
 	typedef struct Int64
 	{
 		long Lo, Hi;
 	} Int64;
+	typedef struct ENUMPAKFILE{
+		long Type;
+		long Offset;
+		long CompressedSize;
+		long Size;
+		short FileName[MAX_PATH];
+	} ENUMPAKFILE;
 	typedef struct BLAKE2S_CTX
 	{
 		unsigned char UBuf[240];
@@ -163,8 +172,10 @@ library R2SAPILib
 //////// 1. R2Beat PAK文件格式相关
 ///////////////////////////////////////////
 ////	westpak模块
+		[entry("EnumFileFromPakW")]
+			long __stdcall EnumFileFromPak([in,string]LPCWSTR PakFileName, [in]long lpEnumFunc, [in]long Param);
 		[entry("GetFileFromPakW")]
-			long __stdcall GetFileFromPak([in,out]void* pBuf, [in]long ulBufLen, [in,string]LPCWSTR pszFn, [in,string]LPCWSTR pszFnWant);
+			long __stdcall GetFileFromPak([in,out]void* pBuffer, [in]long ulBufLen, [in,string]LPCWSTR PakFileName, [in,string]LPCWSTR FileWant);
 		[entry("LzssCompress")]
 			void __stdcall LzssCompress([in,out]void* pDataBuffer, [in]long ulDataBytes, [in,out]void* pOutputBuffer, [in,out]long* ulOutputBytes);
 		[entry("LzssCompress2")]
