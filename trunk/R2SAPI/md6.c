@@ -14,7 +14,7 @@ int API MD6_Update(MD6_CTX *c, const void *data, size_t len)
 	return md6_update(c, (unsigned char *)data, len*8);
 }
 
-int API MD6_Final(unsigned char *md, MD6_CTX *c)
+int API MD6_Final(MD6_CTX *c, unsigned char *md)
 {
 	return md6_final(c, md);
 }

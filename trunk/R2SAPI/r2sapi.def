@@ -87,6 +87,10 @@ SHA512		=stdc_SHA512
 SHA512_Final	=stdc_SHA512_Final
 SHA512_Init	=stdc_SHA512_Init
 SHA512_Update	=stdc_SHA512_Update
+WHIRLPOOL	=stdc_WHIRLPOOL
+WHIRLPOOL_Final	=stdc_WHIRLPOOL_Final
+WHIRLPOOL_Init	=stdc_WHIRLPOOL_Init
+WHIRLPOOL_Update=stdc_WHIRLPOOL_Update
 
 ;// 增补NIST Hash函数
 SHA512_224

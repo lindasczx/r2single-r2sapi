@@ -2,9 +2,10 @@
 #include "getcpuid.h"
 #include <windows.h>
 
-SIMD_VERSION _SIMD_Version;
+SIMD_VERSION SIMD_Version = {0};
 
-SIMD_VERSION GetSIMDVersion() {
+void GetSIMDVersion() {
+	memset(&SIMD_Version, 0, sizeof(SIMD_Version));
 	unsigned int CPUInfo[4][4] = {0};
 	unsigned int idcount, idcount2;
 	getcpuid(CPUInfo[0], 0);
@@ -18,28 +19,31 @@ SIMD_VERSION GetSIMDVersion() {
 	if (idcount >= 1)
 		getcpuid(CPUInfo[1], 1);
 	if (CPUInfo[3][1] & 0x20)
-		return SIMD_AVX2;
+		SIMD_Version.AVX2 = 1;
 	if (CPUInfo[1][2] & 0x10000000)
-		return SIMD_AVX;
+		SIMD_Version.AVX = 1;
 	if (CPUInfo[2][2] & 0x800)
-		return SIMD_XOP;
+		SIMD_Version.XOP = 1;
 	if (CPUInfo[1][2] & 0x100000)
-		return SIMD_SSE42;
+		SIMD_Version.SSE42 = 1;
 	if (CPUInfo[1][2] & 0x80000)
-		return SIMD_SSE41;
+		SIMD_Version.SSE41 = 1;
 	if (CPUInfo[1][2] & 0x200)
-		return SIMD_SSE3S;
+		SIMD_Version.SSE3S = 1;
 	if (CPUInfo[1][2] & 0x1)
-		return SIMD_SSE3;
+		SIMD_Version.SSE3 = 1;
 	if (CPUInfo[1][3] & 0x4000000)
-		return SIMD_SSE2;
+		SIMD_Version.SSE2 = 1;
 	if (CPUInfo[1][3] & 0x2000000)
-		return SIMD_SSE;
+		SIMD_Version.SSE = 1;
 	if (CPUInfo[1][3] & 0x800000)
-		return SIMD_MMX;
+		SIMD_Version.MMX = 1;
 	if (CPUInfo[2][3] & 0x800000)
-		return SIMD_MMX;
-	return SIMD_NONE;
+		SIMD_Version.MMX = 1;
+
+	extern unsigned int OPENSSL_ia32cap_P[2];
+	OPENSSL_ia32cap_P[0] = CPUInfo[1][3] | (CPUInfo[2][3] & 0x800000);
+	OPENSSL_ia32cap_P[1] = CPUInfo[1][2];
 }
 
 BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
@@ -50,7 +54,7 @@ BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
 	case DLL_PROCESS_ATTACH:
 		//if (!IsValidCodePage(54936))	// GB18030
 		//	return FALSE;
-		_SIMD_Version = GetSIMDVersion();
+		GetSIMDVersion();
 		break;
 		
 	case DLL_PROCESS_DETACH:

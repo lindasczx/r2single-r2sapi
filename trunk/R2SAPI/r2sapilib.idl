@@ -1,7 +1,7 @@
 ﻿[
-	version(1.37),
+	version(1.38),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.37 Type Library")
+	helpstring("R2Single API 1.38 Type Library")
 ]
 library R2SAPILib
 {
@@ -72,13 +72,6 @@ library R2SAPILib
 		unsigned char Buf[512];
 		long BufLen;
 	} BLAKE2SP_CTX;
-	typedef struct MD2_CTX
-	{
-		long Num;
-		unsigned char Data[16];
-		long Cksm[16];
-		long State[16];
-	} MD2_CTX;
 	typedef struct MD4_CTX
 	{
 		long A, B, C, D;
@@ -159,6 +152,17 @@ library R2SAPILib
 		long State[8];
 		unsigned char Buffer[64];
 	} SM3_CTX;
+	typedef struct WHIRLPOOL_CTX
+	{
+		//union	{
+		//	unsigned char C[64];
+		//	/* double q is here to ensure 64-bit alignment */
+			double Q[8];
+		//} H;
+		unsigned char Data[64];
+		long BitOff;
+		long BitLen[8];
+	} WHIRLPOOL_CTX;
 
 	[
 		dllname("r2sapi.dll"),
@@ -210,14 +214,6 @@ library R2SAPILib
 //////// 3. Hash函数
 ///////////////////////////////////////////
 ////	openssl模块
-		[entry("MD2")]
-			long __stdcall MD2([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
-		[entry("MD2_Init")]
-			long __stdcall MD2_Init([in,out]MD2_CTX* c);
-		[entry("MD2_Update")]
-			long __stdcall MD2_Update([in,out]MD2_CTX* c, [in]void* pBuffer, [in]long lBufLen);
-		[entry("MD2_Final")]
-			long __stdcall MD2_Final([in,out]void* pResult, [in,out]MD2_CTX* c);
 		[entry("MD4")]
 			long __stdcall MD4([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("MD4_Init")]
@@ -225,7 +221,7 @@ library R2SAPILib
 		[entry("MD4_Update")]
 			long __stdcall MD4_Update([in,out]MD4_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("MD4_Final")]
-			long __stdcall MD4_Final([in,out]void* pResult, [in,out]MD4_CTX* c);
+			long __stdcall MD4_Final([in,out]MD4_CTX* c, [in,out]void* pResult);
 		[entry("MD5")]
 			long __stdcall MD5([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("MD5_Init")]
@@ -233,7 +229,7 @@ library R2SAPILib
 		[entry("MD5_Update")]
 			long __stdcall MD5_Update([in,out]MD5_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("MD5_Final")]
-			long __stdcall MD5_Final([in,out]void* pResult, [in,out]MD5_CTX* c);
+			long __stdcall MD5_Final([in,out]MD5_CTX* c, [in,out]void* pResult);
 		[entry("MDC2")]
 			long __stdcall MDC2([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("MDC2_Init")]
@@ -241,7 +237,7 @@ library R2SAPILib
 		[entry("MDC2_Update")]
 			long __stdcall MDC2_Update([in,out]MDC2_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("MDC2_Final")]
-			long __stdcall MDC2_Final([in,out]void* pResult, [in,out]MDC2_CTX* c);
+			long __stdcall MDC2_Final([in,out]MDC2_CTX* c, [in,out]void* pResult);
 		[entry("RIPEMD160")]
 			long __stdcall RIPEMD160([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("RIPEMD160_Init")]
@@ -249,7 +245,7 @@ library R2SAPILib
 		[entry("RIPEMD160_Update")]
 			long __stdcall RIPEMD160_Update([in,out]RIPEMD160_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("RIPEMD160_Final")]
-			long __stdcall RIPEMD160_Final([in,out]void* pResult, [in,out]RIPEMD160_CTX* c);
+			long __stdcall RIPEMD160_Final([in,out]RIPEMD160_CTX* c, [in,out]void* pResult);
 		[entry("SHA1")]
 			long __stdcall SHA1([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA1_Init")]
@@ -257,7 +253,7 @@ library R2SAPILib
 		[entry("SHA1_Update")]
 			long __stdcall SHA1_Update([in,out]SHA_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA1_Final")]
-			long __stdcall SHA1_Final([in,out]void* pResult, [in,out]SHA_CTX* c);
+			long __stdcall SHA1_Final([in,out]SHA_CTX* c, [in,out]void* pResult);
 		[entry("SHA224")]
 			long __stdcall SHA224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA224_Init")]
@@ -265,7 +261,7 @@ library R2SAPILib
 		[entry("SHA224_Update")]
 			long __stdcall SHA224_Update([in,out]SHA256_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA224_Final")]
-			long __stdcall SHA224_Final([in,out]void* pResult, [in,out]SHA256_CTX* c);
+			long __stdcall SHA224_Final([in,out]SHA256_CTX* c, [in,out]void* pResult);
 		[entry("SHA256")]
 			long __stdcall SHA256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA256_Init")]
@@ -273,7 +269,7 @@ library R2SAPILib
 		[entry("SHA256_Update")]
 			long __stdcall SHA256_Update([in,out]SHA256_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA256_Final")]
-			long __stdcall SHA256_Final([in,out]void* pResult, [in,out]SHA256_CTX* c);
+			long __stdcall SHA256_Final([in,out]SHA256_CTX* c, [in,out]void* pResult);
 		[entry("SHA384")]
 			long __stdcall SHA384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA384_Init")]
@@ -281,7 +277,7 @@ library R2SAPILib
 		[entry("SHA384_Update")]
 			long __stdcall SHA384_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA384_Final")]
-			long __stdcall SHA384_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
+			long __stdcall SHA384_Final([in,out]SHA512_CTX* c, [in,out]void* pResult);
 		[entry("SHA512")]
 			long __stdcall SHA512([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA512_Init")]
@@ -289,7 +285,15 @@ library R2SAPILib
 		[entry("SHA512_Update")]
 			long __stdcall SHA512_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA512_Final")]
-			long __stdcall SHA512_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
+			long __stdcall SHA512_Final([in,out]SHA512_CTX* c, [in,out]void* pResult);
+		[entry("WHIRLPOOL")]
+			long __stdcall WHIRLPOOL([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("WHIRLPOOL_Init")]
+			long __stdcall WHIRLPOOL_Init([in,out]WHIRLPOOL_CTX* c);
+		[entry("WHIRLPOOL_Update")]
+			long __stdcall WHIRLPOOL_Update([in,out]WHIRLPOOL_CTX* c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("WHIRLPOOL_Final")]
+			long __stdcall WHIRLPOOL_Final([in,out]WHIRLPOOL_CTX* c, [in,out]void* pResult);
 ////	增补NIST Hash函数
 		[entry("SHA512_224")]
 			long __stdcall SHA512_224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
@@ -298,7 +302,7 @@ library R2SAPILib
 		[entry("SHA512_224_Update")]
 			long __stdcall SHA512_224_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA512_224_Final")]
-			long __stdcall SHA512_224_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
+			long __stdcall SHA512_224_Final([in,out]SHA512_CTX* c, [in,out]void* pResult);
 		[entry("SHA512_256")]
 			long __stdcall SHA512_256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA512_256_Init")]
@@ -306,7 +310,7 @@ library R2SAPILib
 		[entry("SHA512_256_Update")]
 			long __stdcall SHA512_256_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA512_256_Final")]
-			long __stdcall SHA512_256_Final([in,out]void* pResult, [in,out]SHA512_CTX* c);
+			long __stdcall SHA512_256_Final([in,out]SHA512_CTX* c, [in,out]void* pResult);
 ////	MD6.c
 		[entry("MD6")]
 			long __stdcall MD6([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
@@ -319,7 +323,7 @@ library R2SAPILib
 		[entry("MD6_Update")]
 			long __stdcall MD6_Update([in,out]MD6_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("MD6_Final")]
-			long __stdcall MD6_Final([in,out]void* pResult, [in,out]MD6_CTX* c);
+			long __stdcall MD6_Final([in,out]MD6_CTX* c, [in,out]void* pResult);
 ////	BLAKE2模块
 		[entry("BLAKE2SP")]
 			long __stdcall BLAKE2SP([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
@@ -328,7 +332,7 @@ library R2SAPILib
 		[entry("BLAKE2SP_Update")]
 			long __stdcall BLAKE2SP_Update([in,out]BLAKE2SP_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("BLAKE2SP_Final")]
-			long __stdcall BLAKE2SP_Final([in,out]void* pResult, [in,out]BLAKE2SP_CTX* c);
+			long __stdcall BLAKE2SP_Final([in,out]BLAKE2SP_CTX* c, [in,out]void* pResult);
 ////	国密SM3.c
 		[entry("SM3")]
 			long __stdcall SM3([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
@@ -337,7 +341,7 @@ library R2SAPILib
 		[entry("SM3_Update")]
 			long __stdcall SM3_Update([in,out]SM3_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SM3_Final")]
-			long __stdcall SM3_Final([in,out]void* pResult, [in,out]SM3_CTX* c);
+			long __stdcall SM3_Final([in,out]SM3_CTX* c, [in,out]void* pResult);
 ///////////////////////////////////////////
 //////// 4. 压缩解压
 ///////////////////////////////////////////
