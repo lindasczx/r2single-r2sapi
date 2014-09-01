@@ -51,7 +51,7 @@ void Blake2ThreadDataUpdate(Blake2ThreadData* btd)
   {
 #ifdef USE_SSE
     // We gain 5% in i7 SSE mode by prefetching next data block.
-    if (_SIMD_Version>=SIMD_SSE2 && inlen__ >= 2 * PARALLELISM_DEGREE * BLAKE2S_BLOCKBYTES)
+    if (SIMD_Version.SSE2 && inlen__ >= 2 * PARALLELISM_DEGREE * BLAKE2S_BLOCKBYTES)
       sse_prefetch_L1((char*)(in__ +  PARALLELISM_DEGREE * BLAKE2S_BLOCKBYTES));
 #endif
     blake2s_update( btd->S, in__, BLAKE2S_BLOCKBYTES );

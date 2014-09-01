@@ -341,7 +341,7 @@ int __stdcall SM3_Update(SM3_CTX *c, const void *data, size_t len)
 	return 1;
 }
 
-int __stdcall SM3_Final(unsigned char *md, SM3_CTX *c)
+int __stdcall SM3_Final(SM3_CTX *c, unsigned char *md)
 {
 	sm3_finish(c, md);
 	return 1;

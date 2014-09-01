@@ -4,11 +4,14 @@
 #include <openssl/mdc2.h>
 #include <openssl/ripemd.h>
 #include <openssl/sha.h>
+#include <openssl/whrlpool.h>
 #include "r2sapi.h"
 
 #ifdef  __cplusplus
 extern "C" {
 #endif
+
+unsigned int OPENSSL_ia32cap_P[2];
 
 unsigned long API stdc_SSLeay(void)
 {
@@ -29,7 +32,7 @@ int API stdc_MD4_Update(MD4_CTX *c, const void *data, size_t len)
 {
 	return MD4_Update(c, data, len);
 }
-int API stdc_MD4_Final(unsigned char *md, MD4_CTX *c)
+int API stdc_MD4_Final(MD4_CTX *c, unsigned char *md)
 {
 	return MD4_Final(md, c);
 }
@@ -47,7 +50,7 @@ int API stdc_MD5_Update(MD5_CTX *c, const void *data, size_t len)
 {
 	return MD5_Update(c, data, len);
 }
-int API stdc_MD5_Final(unsigned char *md, MD5_CTX *c)
+int API stdc_MD5_Final(MD5_CTX *c, unsigned char *md)
 {
 	return MD5_Final(md, c);
 }
@@ -65,7 +68,7 @@ int API stdc_MDC2_Update(MDC2_CTX *c, const void *data, size_t len)
 {
 	return MDC2_Update(c, data, len);
 }
-int API stdc_MDC2_Final(unsigned char *md, MDC2_CTX *c)
+int API stdc_MDC2_Final(MDC2_CTX *c, unsigned char *md)
 {
 	return MDC2_Final(md, c);
 }
@@ -83,7 +86,7 @@ int API stdc_RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len)
 {
 	return RIPEMD160_Update(c, data, len);
 }
-int API stdc_RIPEMD160_Final(unsigned char *md, RIPEMD160_CTX *c)
+int API stdc_RIPEMD160_Final(RIPEMD160_CTX *c, unsigned char *md)
 {
 	return RIPEMD160_Final(md, c);
 }
@@ -101,7 +104,7 @@ int API stdc_SHA1_Update(SHA_CTX *c, const void *data, size_t len)
 {
 	return SHA1_Update(c, data, len);
 }
-int API stdc_SHA1_Final(unsigned char *md, SHA_CTX *c)
+int API stdc_SHA1_Final(SHA_CTX *c, unsigned char *md)
 {
 	return SHA1_Final(md, c);
 }
@@ -119,7 +122,7 @@ int API stdc_SHA224_Update(SHA256_CTX *c, const void *data, size_t len)
 {
 	return SHA224_Update(c, data, len);
 }
-int API stdc_SHA224_Final(unsigned char *md, SHA256_CTX *c)
+int API stdc_SHA224_Final(SHA256_CTX *c, unsigned char *md)
 {
 	return SHA224_Final(md, c);
 }
@@ -137,7 +140,7 @@ int API stdc_SHA256_Update(SHA256_CTX *c, const void *data, size_t len)
 {
 	return SHA256_Update(c, data, len);
 }
-int API stdc_SHA256_Final(unsigned char *md, SHA256_CTX *c)
+int API stdc_SHA256_Final(SHA256_CTX *c, unsigned char *md)
 {
 	return SHA256_Final(md, c);
 }
@@ -155,7 +158,7 @@ int API stdc_SHA384_Update(SHA512_CTX *c, const void *data, size_t len)
 {
 	return SHA384_Update(c, data, len);
 }
-int API stdc_SHA384_Final(unsigned char *md, SHA512_CTX *c)
+int API stdc_SHA384_Final(SHA512_CTX *c, unsigned char *md)
 {
 	return SHA384_Final(md, c);
 }
@@ -173,13 +176,31 @@ int API stdc_SHA512_Update(SHA512_CTX *c, const void *data, size_t len)
 {
 	return SHA512_Update(c, data, len);
 }
-int API stdc_SHA512_Final(unsigned char *md, SHA512_CTX *c)
+int API stdc_SHA512_Final(SHA512_CTX *c, unsigned char *md)
 {
 	return SHA512_Final(md, c);
 }
 unsigned char * API stdc_SHA512(const void *d, size_t n, unsigned char *md)
 {
 	return SHA512(d, n, md);
+}
+
+////////////////WHIRLPOOL
+int API stdc_WHIRLPOOL_Init(WHIRLPOOL_CTX *c)
+{
+	return WHIRLPOOL_Init(c);
+}
+int API stdc_WHIRLPOOL_Update(WHIRLPOOL_CTX *c, const void *data, size_t len)
+{
+	return WHIRLPOOL_Update(c, data, len);
+}
+int API stdc_WHIRLPOOL_Final(WHIRLPOOL_CTX *c, unsigned char *md)
+{
+	return WHIRLPOOL_Final(md, c);
+}
+unsigned char * API stdc_WHIRLPOOL(const void *d, size_t n, unsigned char *md)
+{
+	return WHIRLPOOL(d, n, md);
 }
 
 #ifdef  __cplusplus

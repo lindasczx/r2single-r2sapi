@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.37.0.326
+	1.38.0.339
 --*/
 
 #ifndef R2SAPI_H_
@@ -111,6 +111,20 @@ typedef struct SHA512state_st
 	} u;
 	unsigned int num,md_len;
 } SHA512_CTX;
+#define WHIRLPOOL_DIGEST_LENGTH	(512/8)
+#define WHIRLPOOL_BBLOCK	512
+#define WHIRLPOOL_COUNTER	(256/8)
+typedef struct
+{
+	union {
+		unsigned char c[WHIRLPOOL_DIGEST_LENGTH];
+		/* double q is here to ensure 64-bit alignment */
+		double q[WHIRLPOOL_DIGEST_LENGTH/sizeof(double)];
+	} H;
+	unsigned char data[WHIRLPOOL_BBLOCK/8];
+	unsigned int bitoff;
+	size_t bitlen[WHIRLPOOL_COUNTER/sizeof(size_t)];
+} WHIRLPOOL_CTX;
 #define md6_b 64
 #define md6_c 16
 #define md6_k 8
@@ -210,68 +224,72 @@ int API XMLPickTagPosA(size_t*, size_t*, LPCSTR, LPCSTR, size_t*, size_t);
 ////libcrypto
 int API MD4_Init(MD4_CTX *c);
 int API MD4_Update(MD4_CTX *c, const void *data, size_t len);
-int API MD4_Final(unsigned char *md, MD4_CTX *c);
+int API MD4_Final(MD4_CTX *c, unsigned char *md);
 unsigned char * API MD4(const void *d, size_t n, unsigned char *md);
 int API MD5_Init(MD5_CTX *c);
 int API MD5_Update(MD5_CTX *c, const void *data, size_t len);
-int API MD5_Final(unsigned char *md, MD5_CTX *c);
+int API MD5_Final(MD5_CTX *c, unsigned char *md);
 unsigned char * API MD5(const void *d, size_t n, unsigned char *md);
 int API MDC2_Init(MDC2_CTX *c);
 int API MDC2_Update(MDC2_CTX *c, const void *data, size_t len);
-int API MDC2_Final(unsigned char *md, MDC2_CTX *c);
+int API MDC2_Final(MDC2_CTX *c, unsigned char *md);
 unsigned char * API MDC2(const void *d, size_t n, unsigned char *md);
 int API RIPEMD160_Init(RIPEMD160_CTX *c);
 int API RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len);
-int API RIPEMD160_Final(unsigned char *md, RIPEMD160_CTX *c);
+int API RIPEMD160_Final(RIPEMD160_CTX *c, unsigned char *md);
 unsigned char * API RIPEMD160(const void *d, size_t n, unsigned char *md);
 int API SHA1_Init(SHA_CTX *c);
 int API SHA1_Update(SHA_CTX *c, const void *data, size_t len);
-int API SHA1_Final(unsigned char *md, SHA_CTX *c);
+int API SHA1_Final(SHA_CTX *c, unsigned char *md);
 unsigned char * API SHA1(const void *d, size_t n, unsigned char *md);
 int API SHA224_Init(SHA256_CTX *c);
 int API SHA224_Update(SHA256_CTX *c, const void *data, size_t len);
-int API SHA224_Final(unsigned char *md, SHA256_CTX *c);
+int API SHA224_Final(SHA256_CTX *c, unsigned char *md);
 unsigned char * API SHA224(const void *d, size_t n, unsigned char *md);
 int API SHA256_Init(SHA256_CTX *c);
 int API SHA256_Update(SHA256_CTX *c, const void *data, size_t len);
-int API SHA256_Final(unsigned char *md, SHA256_CTX *c);
+int API SHA256_Final(SHA256_CTX *c, unsigned char *md);
 unsigned char * API SHA256(const void *d, size_t n, unsigned char *md);
 int API SHA384_Init(SHA512_CTX *c);
 int API SHA384_Update(SHA512_CTX *c, const void *data, size_t len);
-int API SHA384_Final(unsigned char *md, SHA512_CTX *c);
+int API SHA384_Final(SHA512_CTX *c, unsigned char *md);
 unsigned char * API SHA384(const void *d, size_t n, unsigned char *md);
 int API SHA512_Init(SHA512_CTX *c);
 int API SHA512_Update(SHA512_CTX *c, const void *data, size_t len);
-int API SHA512_Final(unsigned char *md, SHA512_CTX *c);
+int API SHA512_Final(SHA512_CTX *c, unsigned char *md);
 unsigned char * API SHA512(const void *d, size_t n, unsigned char *md);
+int API WHIRLPOOL_Init(WHIRLPOOL_CTX *c);
+int API WHIRLPOOL_Update(WHIRLPOOL_CTX *c, const void *data, size_t len);
+int API WHIRLPOOL_Final(WHIRLPOOL_CTX *c, unsigned char *md);
+unsigned char * API WHIRLPOOL(const void *d, size_t n, unsigned char *md);
 ////nist sha-2 addition
 int API SHA512_224_Init(SHA512_CTX *c);
 int API SHA512_224_Update(SHA512_CTX *c, const void *data, size_t len);
-int API SHA512_224_Final(unsigned char *md, SHA512_CTX *c);
+int API SHA512_224_Final(SHA512_CTX *c, unsigned char *md);
 unsigned char * API SHA512_224(const void *d, size_t n, unsigned char *md);
 int API SHA512_256_Init(SHA512_CTX *c);
 int API SHA512_256_Update(SHA512_CTX *c, const void *data, size_t len);
-int API SHA512_256_Final(unsigned char *md, SHA512_CTX *c);
+int API SHA512_256_Final(SHA512_CTX *c, unsigned char *md);
 unsigned char * API SHA512_256(const void *d, size_t n, unsigned char *md);
 
 ////md6
 int API MD6_Init(MD6_CTX *c);
 int API MD6_Init_Len(MD6_CTX *c, int mdlen);
 int API MD6_Update(MD6_CTX *c, const void *data, size_t len);
-int API MD6_Final(unsigned char *md, MD6_CTX *c);
+int API MD6_Final(MD6_CTX *c, unsigned char *md);
 unsigned char * API MD6(const void *d, size_t n, unsigned char *md);
 unsigned char * API MD6_Len(const void *d, size_t n, unsigned char *md, int mdlen);
 
 ////blake2sp
 int API BLAKE2SP_Init(BLAKE2SP_CTX *c);
 int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
-int API BLAKE2SP_Final(unsigned char *md, BLAKE2SP_CTX *c);
+int API BLAKE2SP_Final(BLAKE2SP_CTX *c, unsigned char *md);
 unsigned char * API BLAKE2SP(const void *d, size_t n, unsigned char *md);
 
 ////¹úÃÜSM3
 int API SM3_Init(SM3_CTX *c);
 int API SM3_Update(SM3_CTX *c, const void *data, size_t len);
-int API SM3_Final(unsigned char *md, SM3_CTX *c);
+int API SM3_Final(SM3_CTX *c, unsigned char *md);
 unsigned char * API SM3(const void *d, size_t n, unsigned char *md);
 
 ///////////////////////////////////////////

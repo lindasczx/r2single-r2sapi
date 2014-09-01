@@ -148,9 +148,9 @@ void blake2s_update( blake2s_state *S, const byte *in, size_t inlen )
 
 #ifdef USE_SSE
 #ifdef _WIN_32 // We use SSSE3 _mm_shuffle_epi8 only in x64 mode.
-			if (_SIMD_Version>=SIMD_SSE2)
+			if (SIMD_Version.SSE2)
 #else
-			if (_SIMD_Version>=SIMD_SSE3S)
+			if (SIMD_Version.SSE3S)
 #endif
 				blake2s_compress_sse( S, S->buf );
 			else

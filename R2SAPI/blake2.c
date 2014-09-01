@@ -16,7 +16,7 @@ int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len)
 	return 0;
 }
 
-int API BLAKE2SP_Final(unsigned char *md, BLAKE2SP_CTX *c)
+int API BLAKE2SP_Final(BLAKE2SP_CTX *c, unsigned char *md)
 {
 	blake2sp_final(c, md);
 	return 0;

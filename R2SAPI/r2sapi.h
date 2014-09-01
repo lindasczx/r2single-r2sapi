@@ -11,21 +11,20 @@ extern "C"{
 
 int API _();
 
-typedef enum {
-	SIMD_NONE,
-	SIMD_MMX,
-	SIMD_SSE,
-	SIMD_SSE2,
-	SIMD_SSE3,
-	SIMD_SSE3S,
-	SIMD_SSE41,
-	SIMD_SSE42,
-	SIMD_AVX,
-	SIMD_AVX2,
-	SIMD_XOP
+typedef struct {
+	unsigned int MMX :1;
+	unsigned int SSE :1;
+	unsigned int SSE2 :1;
+	unsigned int SSE3 :1;
+	unsigned int SSE3S :1;
+	unsigned int SSE41 :1;
+	unsigned int SSE42 :1;
+	unsigned int AVX :1;
+	unsigned int AVX2 :1;
+	unsigned int XOP :1;
 } SIMD_VERSION;
-SIMD_VERSION GetSIMDVersion();
-extern SIMD_VERSION _SIMD_Version;
+void GetSIMDVersion();
+extern SIMD_VERSION SIMD_Version;
 
 #ifdef __cplusplus
 }

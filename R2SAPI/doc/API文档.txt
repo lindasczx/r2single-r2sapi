@@ -1,6 +1,6 @@
 ﻿初版	兼容版	名称			说明
 200		BLAKE2SP		BLAKE2sp散列函数
-200		BLAKE2SP_Final		BLAKE2sp散列函数
+200	339	BLAKE2SP_Final		BLAKE2sp散列函数
 200		BLAKE2SP_Init		BLAKE2sp散列函数
 200		BLAKE2SP_Update		BLAKE2sp散列函数
 284		CRC32			CRC32校验函数
@@ -18,57 +18,57 @@
 276	324	LzssCompress2		LZSS压缩函数（可变压缩级别）
 272	276	LzssDecompress		LZSS解压函数
 164		MD4			MD4散列函数
-164		MD4_Final		MD4散列函数
+164	339	MD4_Final		MD4散列函数
 164		MD4_Init		MD4散列函数
 164		MD4_Update		MD4散列函数
 65		MD5			MD5散列函数
-164		MD5_Final		MD5散列函数
+164	339	MD5_Final		MD5散列函数
 164		MD5_Init		MD5散列函数
 164		MD5_Update		MD5散列函数
 164		MD6			MD6散列函数
-164		MD6_Final		MD6散列函数
+164	339	MD6_Final		MD6散列函数
 164		MD6_Init		MD6散列函数
 164		MD6_Init_Len		MD6散列函数（可变长度）
 164		MD6_Len			MD6散列函数（可变长度）
 164		MD6_Update		MD6散列函数
 164		MDC2			MDC-2散列函数
-164		MDC2_Final		MDC-2散列函数
+164	339	MDC2_Final		MDC-2散列函数
 164		MDC2_Init		MDC-2散列函数
 164		MDC2_Update		MDC-2散列函数
 164		RIPEMD160		RIPEMD-160散列函数
-164		RIPEMD160_Final		RIPEMD-160散列函数
+164	339	RIPEMD160_Final		RIPEMD-160散列函数
 164		RIPEMD160_Init		RIPEMD-160散列函数
 164		RIPEMD160_Update	RIPEMD-160散列函数
 65		SHA1			SHA-1散列函数
-164		SHA1_Final		SHA-1散列函数
+164	339	SHA1_Final		SHA-1散列函数
 164		SHA1_Init		SHA-1散列函数
 164		SHA1_Update		SHA-1散列函数
 255		SHA224			SHA-224散列函数
-255		SHA224_Final		SHA-224散列函数
+255	339	SHA224_Final		SHA-224散列函数
 255		SHA224_Init		SHA-224散列函数
 255		SHA224_Update		SHA-224散列函数
 65		SHA256			SHA-256散列函数
-164		SHA256_Final		SHA-256散列函数
+164	339	SHA256_Final		SHA-256散列函数
 164		SHA256_Init		SHA-256散列函数
 164		SHA256_Update		SHA-256散列函数
 255		SHA384			SHA-384散列函数
-255		SHA384_Final		SHA-384散列函数
+255	339	SHA384_Final		SHA-384散列函数
 255		SHA384_Init		SHA-384散列函数
 255		SHA384_Update		SHA-384散列函数
 65		SHA512			SHA-512散列函数
 255		SHA512_224		SHA-512/224散列函数
-255		SHA512_224_Final	SHA-512/224散列函数
+255	339	SHA512_224_Final	SHA-512/224散列函数
 255		SHA512_224_Init		SHA-512/224散列函数
 255		SHA512_224_Update	SHA-512/224散列函数
 255		SHA512_256		SHA-512/256散列函数
-255		SHA512_256_Final	SHA-512/256散列函数
+255	339	SHA512_256_Final	SHA-512/256散列函数
 255		SHA512_256_Init		SHA-512/256散列函数
 255		SHA512_256_Update	SHA-512/256散列函数
-164		SHA512_Final		SHA-512散列函数
+164	339	SHA512_Final		SHA-512散列函数
 164		SHA512_Init		SHA-512散列函数
 164		SHA512_Update		SHA-512散列函数
 259		SM3			SM3散列函数
-259		SM3_Final		SM3散列函数
+259	339	SM3_Final		SM3散列函数
 259		SM3_Init		SM3散列函数
 259		SM3_Update		SM3散列函数
 84		UTF16BEToUTF16		把字符串从UTF-16BE编码转为UTF-16LE编码（仅VB推荐使用）
@@ -83,6 +83,10 @@
 84		UTF32ToUTF8		把字符串从UTF-32LE编码转为UTF-8编码   （不推荐使用）
 84		UTF8ToUTF16		把字符串从UTF-8编码转为UTF-16LE编码   （仅VB推荐使用）
 84		UTF8ToUTF32		把字符串从UTF-8编码转为UTF-32LE编码   （不推荐使用）
+339		WHIRLPOOL		WHIRLPOOL散列函数
+339		WHIRLPOOL_Final		WHIRLPOOL散列函数
+339		WHIRLPOOL_Init		WHIRLPOOL散列函数
+339		WHIRLPOOL_Update	WHIRLPOOL散列函数
 204		XMLPickAttrib2A		提取一个XML标记的属性（ANSI）	（安全版，推荐使用）
 204		XMLPickAttrib2W		提取一个XML标记的属性（Unicode）（安全版，推荐使用）
 129		XMLPickAttribA		提取一个XML标记的属性（ANSI）	（不推荐使用）
