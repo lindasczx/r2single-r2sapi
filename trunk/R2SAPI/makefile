@@ -35,7 +35,7 @@ ifneq ($(NO_MSVC_SDK), FALSE)
 MIDLFLAGS:=	-I include
 endif
 #SBFLAGS:=	-Wl,--add-stdcall-alias
-IMPLIB:=	libcrypto.a libz.a c_g18030.lib
+IMPLIB:=	-loleaut32 libcrypto.a libz.a c_g18030.lib
 IMPOBJ:=	compress.o uncompr.o
 ifneq ($(COMPILE_FROM_PUBLIC), FALSE)
 IMPOBJ:=	$(IMPOBJ) private/xmlparser.o private/fileio.o private/lzssdec.o private/lzssenc.o
@@ -48,6 +48,9 @@ CSRC+=		blake2sp.c
 CSRC+=		crc32.c
 CSRC+=		crc64.c
 CSRC+=		getcpuid.c
+CSRC+=		i4helper.c
+CSRC+=		i8conv.c
+CSRC+=		i8helper.c
 CSRC+=		md6.c
 CSRC+=		md6_compress.c
 CSRC+=		md6_mode.c

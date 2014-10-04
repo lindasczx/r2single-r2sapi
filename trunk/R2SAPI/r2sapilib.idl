@@ -399,6 +399,144 @@ library R2SAPILib
 			long __stdcall UTF32BEToUTF16([in]void* lpSrcStr, [in]long cchSrc, [in,out,string]LPWSTR lpDestStr, [in]long cchDest);
 		[entry("UTF32BEToUTF32")]
 			long __stdcall UTF32BEToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
+///////////////////////////////////////////
+//////// 6. 大整数操作辅助函数
+///////////////////////////////////////////
+////	i4helper.c
+		[entry("I4Shl")]
+			long __stdcall I4Shl([in]long A, [in]long B);
+		[entry("I4Shr")]
+			long __stdcall I4Shr([in]long A, [in]long B);
+		[entry("I4Rol")]
+			long __stdcall I4Rol([in]long A, [in]long B);
+		[entry("I4Ror")]
+			long __stdcall I4Ror([in]long A, [in]long B);
+		[entry("UI4Mul")]
+			long __stdcall UI4Mul([in]long A, [in]long B);
+		[entry("UI4Div")]
+			long __stdcall UI4Div([in]long A, [in]long B);
+		[entry("UI4Mod")]
+			long __stdcall UI4Mod([in]long A, [in]long B);
+		[entry("UI4Shl")]
+			long __stdcall UI4Shl([in]long A, [in]long B);
+		[entry("UI4Shr")]
+			long __stdcall UI4Shr([in]long A, [in]long B);
+		[entry("UI4Cmp")]
+			long __stdcall UI4Cmp([in]long A, [in]long B);
+////	i8helper.c
+		[entry("I8Add")]
+			Int64 __stdcall I8Add4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("I8Sub")]
+			Int64 __stdcall I8Sub4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("I8Mul")]
+			Int64 __stdcall I8Mul4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("I8Div")]
+			Int64 __stdcall I8Div4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("I8Mod")]
+			Int64 __stdcall I8Mod4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("I8And")]
+			Int64 __stdcall I8And4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("I8Or")]
+			Int64 __stdcall I8Or4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("I8Xor")]
+			Int64 __stdcall I8Xor4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("I8Not")]
+			Int64 __stdcall I8Not4([in]long ALo, [in]long AHi);
+		[entry("I8Shl")]
+			Int64 __stdcall I8Shl4([in]long ALo, [in]long AHi, [in]long B);
+		[entry("I8Shr")]
+			Int64 __stdcall I8Shr4([in]long ALo, [in]long AHi, [in]long B);
+		[entry("I8Rol")]
+			Int64 __stdcall I8Rol4([in]long ALo, [in]long AHi, [in]long B);
+		[entry("I8Ror")]
+			Int64 __stdcall I8Ror4([in]long ALo, [in]long AHi, [in]long B);
+		[entry("I8Cmp")]
+			long __stdcall I8Cmp4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("UI8Mul")]
+			Int64 __stdcall UI8Mul4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("UI8Div")]
+			Int64 __stdcall UI8Div4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("UI8Mod")]
+			Int64 __stdcall UI8Mod4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("UI8Shl")]
+			Int64 __stdcall UI8Shl4([in]long ALo, [in]long AHi, [in]long B);
+		[entry("UI8Shr")]
+			Int64 __stdcall UI8Shr4([in]long ALo, [in]long AHi, [in]long B);
+		[entry("UI8Cmp")]
+			long __stdcall UI8Cmp4([in]long ALo, [in]long AHi, [in]long BLo, [in]long BHi);
+		[entry("I8AddR")]
+			Int64 __stdcall I8Add([in]Int64* A, [in]Int64* B);
+		[entry("I8SubR")]
+			Int64 __stdcall I8Sub([in]Int64* A, [in]Int64* B);
+		[entry("I8MulR")]
+			Int64 __stdcall I8Mul([in]Int64* A, [in]Int64* B);
+		[entry("I8DivR")]
+			Int64 __stdcall I8Div([in]Int64* A, [in]Int64* B);
+		[entry("I8ModR")]
+			Int64 __stdcall I8Mod([in]Int64* A, [in]Int64* B);
+		[entry("I8AndR")]
+			Int64 __stdcall I8And([in]Int64* A, [in]Int64* B);
+		[entry("I8OrR")]
+			Int64 __stdcall I8Or([in]Int64* A, [in]Int64* B);
+		[entry("I8XorR")]
+			Int64 __stdcall I8Xor([in]Int64* A, [in]Int64* B);
+		[entry("I8NotR")]
+			Int64 __stdcall I8Not([in]Int64* A);
+		[entry("I8ShlR")]
+			Int64 __stdcall I8Shl([in]Int64* A, [in]long B);
+		[entry("I8ShrR")]
+			Int64 __stdcall I8Shr([in]Int64* A, [in]long B);
+		[entry("I8RolR")]
+			Int64 __stdcall I8Rol([in]Int64* A, [in]long B);
+		[entry("I8RorR")]
+			Int64 __stdcall I8Ror([in]Int64* A, [in]long B);
+		[entry("I8CmpR")]
+			long __stdcall I8Cmp([in]Int64* A, [in]Int64* B);
+		[entry("UI8MulR")]
+			Int64 __stdcall UI8Mul([in]Int64* A, [in]Int64* B);
+		[entry("UI8DivR")]
+			Int64 __stdcall UI8Div([in]Int64* A, [in]Int64* B);
+		[entry("UI8ModR")]
+			Int64 __stdcall UI8Mod([in]Int64* A, [in]Int64* B);
+		[entry("UI8ShlR")]
+			Int64 __stdcall UI8Shl([in]Int64* A, [in]long B);
+		[entry("UI8ShrR")]
+			Int64 __stdcall UI8Shr([in]Int64* A, [in]long B);
+		[entry("UI8CmpR")]
+			long __stdcall UI8Cmp([in]Int64* A, [in]Int64* B);
+////	i8conv.c
+		[entry("I8R8")]
+			double __stdcall I8R84([in]long ALo, [in]long AHi);
+		[entry("UI8R8")]
+			double __stdcall UI8R84([in]long ALo, [in]long AHi);
+		[entry("R8I8")]
+			Int64 __stdcall R8I8([in]double A);
+		[entry("R8UI8")]
+			Int64 __stdcall R8UI8([in]double A);
+		[entry("I8Bstr")]
+			BSTR __stdcall I8Str4([in]long ALo, [in]long AHi);
+		[entry("UI8Bstr")]
+			BSTR __stdcall UI8Str4([in]long ALo, [in]long AHi);
+		[entry("I8BstrHex")]
+			BSTR __stdcall I8Hex4([in]long ALo, [in]long AHi);
+		[entry("I8BstrOct")]
+			BSTR __stdcall I8Oct4([in]long ALo, [in]long AHi);
+		[entry("BstrI8")]
+			Int64 __stdcall StrI8([in]BSTR A);
+		[entry("BstrUI8")]
+			Int64 __stdcall StrUI8([in]BSTR A);
+		[entry("I8R8R")]
+			double __stdcall I8R8([in]Int64* A);
+		[entry("UI8R8R")]
+			double __stdcall UI8R8([in]Int64* A);
+		[entry("I8BstrR")]
+			BSTR __stdcall I8Str([in]Int64* A);
+		[entry("UI8BstrR")]
+			BSTR __stdcall UI8Str([in]Int64* A);
+		[entry("I8BstrHexR")]
+			BSTR __stdcall I8Hex([in]Int64* A);
+		[entry("I8BstrOctR")]
+			BSTR __stdcall I8Oct([in]Int64* A);
 
 	};
 

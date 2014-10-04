@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.38.0.339
+	1.38.2.363
 --*/
 
 #ifndef R2SAPI_H_
@@ -333,7 +333,22 @@ int API UTF32BEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDe
 int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
 
 ///////////////////////////////////////////
-//////// 6. 不再使用的旧函数
+//////// 6. 大整数操作辅助函数
+///////////////////////////////////////////
+////本模块很多函数C/C++等语言原生支持，因此不列
+
+////i4helper
+int API I4Rol(int, int);
+int API I4Ror(int, int);
+
+////i8helper
+__int64 API I8Rol(__int64, int);
+__int64 API I8Ror(__int64, int);
+__int64 API I8RolR(__int64 *, int);
+__int64 API I8RorR(__int64 *, int);
+
+///////////////////////////////////////////
+//////// 7. 不再使用的旧函数
 ///////////////////////////////////////////
 
 #define crc32(crc, buf, len)					CRC32((crc), (buf), (len))
