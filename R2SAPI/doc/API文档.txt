@@ -3,6 +3,8 @@
 200	339	BLAKE2SP_Final		BLAKE2sp散列函数
 200		BLAKE2SP_Init		BLAKE2sp散列函数
 200		BLAKE2SP_Update		BLAKE2sp散列函数
+363		BstrI8			字符串转为64位整数
+363		BstrUI8			字符串转为64位无符号整数
 284		CRC32			CRC32校验函数
 284		CRC32_Combine		CRC32校验函数（多线程）
 284		CRC32_Combine64		CRC32校验函数（多线程）
@@ -14,6 +16,46 @@
 327		EnumFileFromPakW	从PAK文件中枚举文件（线程安全）
 65	276	GetFileFromPakA		从PAK文件中读取一个文件（V327起线程安全）
 129	276	GetFileFromPakW		从PAK文件中读取一个文件（V327起线程安全）
+352	353	I4Rol			32位整数循环左移
+352	353	I4Ror			32位整数循环右移
+352		I4Shl			32位整数左移
+352		I4Shr			32位整数算术右移
+352		I8Add			64位整数相加（ByVal版）
+352		I8AddR			64位整数相加（ByRef版）
+352		I8And			64位整数位与（ByVal版）
+352		I8AndR			64位整数位与（ByRef版）
+363		I8Bstr			64位整数转为字符串（ByVal版）
+363		I8BstrHex		64位整数转为16进制字符串（ByVal版）
+363		I8BstrHexR		64位整数转为16进制字符串（ByRef版）
+363		I8BstrOct		64位整数转为8进制字符串（ByVal版）
+363		I8BstrOctR		64位整数转为8进制字符串（ByRef版）
+363		I8BstrR			64位整数转为字符串（ByRef版）
+352		I8Cmp			64位整数比较（ByVal版）
+352		I8CmpR			64位整数比较（ByRef版）
+352		I8Div			64位整数相除（ByVal版）
+352		I8DivR			64位整数相除（ByRef版）
+352		I8Mod			64位整数求余（ByVal版）
+352		I8ModR			64位整数求余（ByRef版）
+352		I8Mul			64位整数相乘（ByVal版）
+352		I8MulR			64位整数相乘（ByRef版）
+352		I8Not			64位整数取反（ByVal版）
+352		I8NotR			64位整数取反（ByRef版）
+352		I8Or			64位整数位或（ByVal版）
+352		I8OrR			64位整数位或（ByRef版）
+352		I8R8			64位整数转为双精度浮点数（ByVal版）
+352		I8R8R			64位整数转为双精度浮点数（ByRef版）
+352	353	I8Rol			64位整数循环左移（ByVal版）
+352		I8RolR			64位整数循环左移（ByRef版）
+352	353	I8Ror			64位整数循环右移（ByVal版）
+352		I8RorR			64位整数循环右移（ByRef版）
+352		I8Shl			64位整数左移（ByVal版）
+352		I8ShlR			64位整数左移（ByRef版）
+352		I8Shr			64位整数算术右移（ByVal版）
+352		I8ShrR			64位整数算术右移（ByRef版）
+352		I8Sub			64位整数相减（ByVal版）
+352		I8SubR			64位整数相减（ByRef版）
+352		I8Xor			64位整数位异或（ByVal版）
+352		I8XorR			64位整数位异或（ByRef版）
 272	276	LzssCompress		LZSS压缩函数
 276	324	LzssCompress2		LZSS压缩函数（可变压缩级别）
 272	276	LzssDecompress		LZSS解压函数
@@ -35,6 +77,8 @@
 164	339	MDC2_Final		MDC-2散列函数
 164		MDC2_Init		MDC-2散列函数
 164		MDC2_Update		MDC-2散列函数
+352		R8I8			双精度浮点数转为64位整数
+352		R8UI8			双精度浮点数转为无符号64位整数
 164		RIPEMD160		RIPEMD-160散列函数
 164	339	RIPEMD160_Final		RIPEMD-160散列函数
 164		RIPEMD160_Init		RIPEMD-160散列函数
@@ -71,6 +115,28 @@
 259	339	SM3_Final		SM3散列函数
 259		SM3_Init		SM3散列函数
 259		SM3_Update		SM3散列函数
+352		UI4Cmp			32位无符号整数比较
+352		UI4Div			32位无符号整数相除
+352		UI4Mod			32位无符号整数求余
+352		UI4Mul			32位无符号整数相乘
+352		UI4Shl			32位无符号整数左移
+352		UI4Shr			32位整数逻辑右移
+363		UI8Bstr			64位无符号整数转为字符串（ByVal版）
+363		UI8BstrR		64位无符号整数转为字符串（ByRef版）
+352		UI8Cmp			64位无符号整数比较（ByVal版）
+352		UI8CmpR			64位无符号整数比较（ByRef版）
+352		UI8Div			64位无符号整数相除（ByVal版）
+352		UI8DivR			64位无符号整数相除（ByRef版）
+352		UI8Mod			64位无符号整数求余（ByVal版）
+352		UI8ModR			64位无符号整数求余（ByRef版）
+352		UI8Mul			64位无符号整数相乘（ByVal版）
+352		UI8MulR			64位无符号整数相乘（ByRef版）
+352		UI8R8			64位无符号整数转为双精度浮点数（ByVal版）
+352		UI8R8R			64位无符号整数转为双精度浮点数（ByRef版）
+352		UI8Shl			64位无符号整数左移（ByVal版）
+352		UI8ShlR			64位无符号整数左移（ByRef版）
+352		UI8Shr			64位整数逻辑右移（ByVal版）
+352		UI8ShrR			64位整数逻辑右移（ByRef版）
 84		UTF16BEToUTF16		把字符串从UTF-16BE编码转为UTF-16LE编码（仅VB推荐使用）
 84		UTF16ToUTF16BE		把字符串从UTF-16LE编码转为UTF-16BE编码（仅VB推荐使用）
 84		UTF16ToUTF32		把字符串从UTF-16LE编码转为UTF-32LE编码（仅VB推荐使用）

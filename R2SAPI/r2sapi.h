@@ -7,7 +7,8 @@
 extern "C"{
 #endif
 
-#define API __attribute__((force_align_arg_pointer)) __stdcall
+#define API __stdcall
+#define API_ALIGN16 __attribute__((force_align_arg_pointer)) __stdcall
 
 int API _();
 
