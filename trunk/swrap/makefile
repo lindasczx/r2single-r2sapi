@@ -1,34 +1,88 @@
-# Makefile for MinGW32 GCC make/nmake
+# 编译要求：	Windows
+#		GCC
+#		GNU Binutils
+#		GNU Make
+#
+# 测试平台：	Windows XP SP3
+#		MinGW 4.0.0 (GCC 4.8.1 + Binutils 2.24 + Make 3.82)
 #
 
-CC = cl
-RC = windres
-LINK=link
-OUTDIR=Release/
-RES  = $(OUTDIR)swrap.res
-OBJ  = $(OUTDIR)swrap.obj $(OUTDIR)soundwrapper.obj $(RES)
-LINKOBJ  = $(OUTDIR)swrap.obj $(OUTDIR)soundwrapper.obj $(RES)
-LIBS = /dll /nologo /def:swrap.def kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib shlwapi.lib bass.lib mss32.lib msvcrt60.lib
-INCS =
-BIN  = $(OUTDIR)swrap.dll
-CFLAGS = -c -DBUILDING_DLL=1 $(INCS) /Fo$(OUTDIR) /O2 /MD
-CXXFLAGS = -c -DBUILDING_DLL=1 $(INCS) /Fo$(OUTDIR) /O2 /MD
-RM = rm -f
-DEFFILE=
-STATICLIB=
+ifneq ($(NO_MSVC_SDK), FALSE)
+export PATH:=	tool;$(PATH)
+endif
 
-.PHONY: clean all
-all: $(BIN)
+CC:=		gcc
+CXX:=		g++
+RC:=		windres
+LINK:=		dllwrap
+LIB:=		lib
+MIDL:=		midl
+RM:=		rm
+
+OUTDIR:=	Release/
+CFLAGS:=	-O3 -I.
+CXXFLAGS:=	-O3 -I.
+LINKFLAGS:=	-s -Wl,--subsystem,console:4.0 --image-base 0x62e40000 -Wl,--insert-timestamp
+#SBFLAGS:=	-Wl,--add-stdcall-alias
+IMPLIB:=	bass.lib mss32.lib
+IMPOBJ:=	
+
+CSRC:=		
+CSRCSSE:=	
+CXXSRC:=	swrap.cpp
+CXXSRC+=	soundwrapper.cpp
+CXXSRCSSE:=	
+
+COBJ:=		$(CSRC:%.c=%.o)
+COBJSSE:=	$(CSRCSSE:%.c=%.o)
+CXXOBJ:=	$(CXXSRC:%.cpp=%.o)
+CXXOBJSSE:=	$(CXXSRCSSE:%.cpp=%.o)
+
+RES:=		$(OUTDIR)swrap.res
+LINKOBJ:=	$(COBJ) $(COBJSSE) $(CXXOBJ) $(CXXOBJSSE) $(RES)
+DEFFILE:=	swrap.def
+#OUTLIB:=	$(OUTDIR)swrap.lib
+BIN:=		$(OUTDIR)swrap.dll
+DEBUGBIN:=	$(OUTDIR)swrapd.dll
+
+.PHONY: all clean cleanobj
+
+all:	$(BIN)
+
+debug:	$(DEBUGBIN)
+debug:	CFLAGS += -DDEBUG
+debug:	CXXFLAGS += -DDEBUG
+
 clean:
-	$(RM) $(OBJ) $(BIN) $(DEFFILE) $(STATICLIB)
-clean-obj:
-	$(RM) $(OBJ)
+	$(RM) $(BIN) $(DEBUGBIN) $(LINKOBJ) *.o
+
+cleanobj:
+	$(RM) $(LINKOBJ) *.o
+
 $(BIN): $(LINKOBJ)
-	$(LINK) /OUT:$(BIN) $(LIBS) $(LINKOBJ)
-$(OUTDIR)swrap.obj: swrap.cpp
-	$(CC) swrap.cpp $(CFLAGS)
-$(OUTDIR)soundwrapper.obj: soundwrapper.cpp
-	$(CC) soundwrapper.cpp $(CXXFLAGS)
-$(OUTDIR)swrap.res: swrap.rc 
-	$(RC) -i swrap.rc --input-format=rc -o $(OUTDIR)swrap.res -O coff 
+	$(LINK) -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE) $(LINKFLAGS)
+#	$(LIB) /nologo /def:$(DEFFILE) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) /out:$(OUTLIB)
+
+$(DEBUGBIN): $(LINKOBJ)
+	$(LINK) -o $(DEBUGBIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE) $(LINKFLAGS)
+
+$(RES): swrap.rc
+	$(RC) $< -o $(RES) -O coff
+
+$(COBJ): $(CSRC)
+
+$(COBJSSE): $(CSRCSSE)
+$(COBJSSE): CFLAGS += -msse2
+
+$(CXXOBJ): $(CXXSRC)
+
+$(CXXOBJSSE): $(CXXSRCSSE)
+$(CXXOBJSSE): CXXFLAGS += -msse2
+
+%.o:%.c
+	$(CC) -o $@ $(CFLAGS) -c $<
+
+%.o:%.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -c $<
+
 
