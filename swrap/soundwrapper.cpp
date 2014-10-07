@@ -54,6 +54,7 @@ inline void DelHandle(Handle* handle){
 	//handle->type = -1;
 	//handle->value = 0;
 	free(handle);
+	if (handle == lasthandle) lasthandle = NULL;	// 应gfis而做的特殊情况处理，防止对lasthandle进行double free
 #ifdef DEBUG
 	handlecount--;
 #endif
@@ -158,6 +159,8 @@ void API Shutdown(void) {
 #ifdef DEBUG
 	printd("Shutdown\n");
 #endif
+	if (lasthandle && lasthandle->value == 0)	// 应gfis而做的特殊情况处理，释放已分配却未使用的handle
+		DelHandle(lasthandle);
 	AIL_shutdown();
 #ifdef DEBUG
 	printd("MSS shut down\n");
@@ -242,9 +245,12 @@ int API SetNamedSampleFile(Handle* hSample, const char* file_type_suffix, const 
 //	}else{
 		if (FileType(file_type_suffix)==H_MSS) {
 			h = (int)AIL_allocate_sample_handle( (MSS::HDIGDRIVER)::hDig );
-			AssignHandle(hSample, H_MSS, h);
-			r = AIL_set_named_sample_file( (MSS::HSAMPLE)h, file_type_suffix, file_image, file_size, block );
-			//return AIL_set_named_sample_file( (MSS::HSAMPLE)FindHandle(hSample), file_type_suffix, file_image, file_size, block );
+			if (h) {
+				AssignHandle(hSample, H_MSS, h);
+				r = AIL_set_named_sample_file( (MSS::HSAMPLE)h, file_type_suffix, file_image, file_size, block );
+			} else {
+				r = 0;
+			}
 		}else{
 			//h=FindHandle(hSample);
 			//AIL_release_sample_handle( (MSS::HSAMPLE)h );
@@ -424,7 +430,11 @@ Handle* API OpenStream(int hDig, char const* FileName, int Stream_Mem) {
 	Handle *handle;
 	if (FileType(FileName) == H_MSS) {
 		h = (int)AIL_open_stream( (MSS::HDIGDRIVER)hDig, FileName, Stream_Mem );
-		handle = AddHandle(H_MSS, h);;
+		if (h) {
+			handle = AddHandle(H_MSS, h);
+		} else {
+			handle = NULL;
+		}
 	} else {
 		if (fopenproc==NULL || fcloseproc==NULL || fseekproc==NULL || freadproc==NULL){
 			h = BASS_StreamCreateFile( 0, FileName, 0, 0, 0 );
@@ -435,7 +445,11 @@ Handle* API OpenStream(int hDig, char const* FileName, int Stream_Mem) {
 			r = fopenproc(FileName, (unsigned long*)&userhandle);
 			if (r) {
 				h = BASS_StreamCreateFileUser( STREAMFILE_NOBUFFER, 0, &fileprocs, userhandle );
-				handle = AddHandle(H_BASS, h);
+				if (h) {
+					handle = AddHandle(H_BASS, h);
+				} else {
+					handle = NULL;
+				}
 			} else {
 				handle = NULL;
 			}
