@@ -174,8 +174,8 @@
 120		XMLPickTagPosW		提取一个XML标记的内容（Unicode）（位置版，推荐使用）
 65		XMLPickTagW		提取一个XML标记的内容（Unicode）（简化版，不推荐使用）
 318		ZlibCompress		zlib压缩函数
-318		ZlibCompress2		zlib压缩函数
-318		ZlibCompressBound	zlib压缩函数
+318		ZlibCompress2		zlib压缩函数（可变压缩级别）
+318		ZlibCompressBound	计算zlib压缩后数据大小上限
 318		ZlibUncompress		zlib解压函数
 1		_			R2SAPI库版本号
 70		compress		zlib压缩函数		（2014-5废弃，请用别的名称）

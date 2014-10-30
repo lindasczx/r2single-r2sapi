@@ -5,8 +5,8 @@
 ]
 library R2SAPILib
 {
-//	importlib("stdole32.tlb");
-//	importlib("stdole2.tlb");
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
 
 	[
 		helpstring("R2Single API Constants")
@@ -197,19 +197,19 @@ library R2SAPILib
 		[entry("XMLPickAttribPosW")]
 			long __stdcall XMLPickAttribPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos, [in,string]LPCWSTR Attrib);
 		[entry("XMLPickFullTagW")]
-			long __stdcall XMLPickFullTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+			long __stdcall XMLPickFullTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out,defaultvalue(0)]long* NextPtr, [in,defaultvalue(1)]long Pos);
 		[entry("XMLPickFullTag2W")]
-			long __stdcall XMLPickFullTag2W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+			long __stdcall XMLPickFullTag2W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out,defaultvalue(0)]long* NextPtr, [in,defaultvalue(1)]long Pos);
 		[entry("XMLPickFullTagPosW")]
-			long __stdcall XMLPickFullTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+			long __stdcall XMLPickFullTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out,defaultvalue(0)]long* NextPtr, [in,defaultvalue(1)]long Pos);
 		[entry("XMLPickTagW")]
-			long __stdcall XMLPickTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in]long Pos);
+			long __stdcall XMLPickTagW([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,defaultvalue(1)]long Pos);
 		[entry("XMLPickTag2W")]
-			long __stdcall XMLPickTag2W([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+			long __stdcall XMLPickTag2W([in,out,string]LPWSTR StrTo, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out,defaultvalue(0)]long* NextPtr, [in,defaultvalue(1)]long Pos);
 		[entry("XMLPickTag3W")]
-			long __stdcall XMLPickTag3W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+			long __stdcall XMLPickTag3W([in,out,string]LPWSTR StrTo, [in]long Size, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out,defaultvalue(0)]long* NextPtr, [in,defaultvalue(1)]long Pos);
 		[entry("XMLPickTagPosW")]
-			long __stdcall XMLPickTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out]long* NextPtr, [in]long Pos);
+			long __stdcall XMLPickTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out,defaultvalue(0)]long* NextPtr, [in,defaultvalue(1)]long Pos);
 ///////////////////////////////////////////
 //////// 3. Hash函数
 ///////////////////////////////////////////

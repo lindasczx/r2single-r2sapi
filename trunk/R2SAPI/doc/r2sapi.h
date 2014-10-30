@@ -1,9 +1,9 @@
-/*++
+ï»¿/*++
 Module Name:
 	r2sapi.h
 
 Version:
-	1.38.2.363
+	1.38.3.371
 --*/
 
 #ifndef R2SAPI_H_
@@ -179,7 +179,7 @@ int API _();
 #define R2SAPIVer (_())
 
 ///////////////////////////////////////////
-//////// 1. R2Beat PAKÎÄ¼ş¸ñÊ½Ïà¹Ø
+//////// 1. R2Beat PAKæ–‡ä»¶æ ¼å¼ç›¸å…³
 ///////////////////////////////////////////
 
 ////westpak
@@ -189,10 +189,10 @@ size_t API GetFileFromPakA(void* pBuf, size_t ulBufLen, LPCSTR pszFn, LPCSTR psz
 size_t API GetFileFromPakW(void* pBuf, size_t ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
 void API LzssCompress(const void* pDataBuffer, size_t ulDataBytes, void* pOutputBuffer, size_t* ulOutputBytes);
 void API LzssCompress2(const void* pDataBuffer, size_t ulDataBytes, void* pOutputBuffer, size_t* ulOutputBytes, int CompressLevel);
-void API LzssDecompress(const void* pDataBuffer, size_t ulDataBytes, void* pOutputBuffer, size_t ulOutputBytes);
+size_t API LzssDecompress(const void* pDataBuffer, size_t ulDataBytes, void* pOutputBuffer, size_t ulOutputBytes);
 
 ///////////////////////////////////////////
-//////// 2. ½âÎöXML
+//////// 2. è§£æXML
 ///////////////////////////////////////////
 
 ////xmlparser
@@ -218,7 +218,7 @@ int API XMLPickTagPosW(size_t*, size_t*, LPCWSTR, LPCWSTR, size_t*, size_t);
 int API XMLPickTagPosA(size_t*, size_t*, LPCSTR, LPCSTR, size_t*, size_t);
 
 ///////////////////////////////////////////
-//////// 3. Hashº¯Êı
+//////// 3. Hashå‡½æ•°
 ///////////////////////////////////////////
 
 ////libcrypto
@@ -286,14 +286,14 @@ int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
 int API BLAKE2SP_Final(BLAKE2SP_CTX *c, unsigned char *md);
 unsigned char * API BLAKE2SP(const void *d, size_t n, unsigned char *md);
 
-////¹úÃÜSM3
+////å›½å¯†SM3
 int API SM3_Init(SM3_CTX *c);
 int API SM3_Update(SM3_CTX *c, const void *data, size_t len);
 int API SM3_Final(SM3_CTX *c, unsigned char *md);
 unsigned char * API SM3(const void *d, size_t n, unsigned char *md);
 
 ///////////////////////////////////////////
-//////// 4. Ñ¹Ëõ½âÑ¹
+//////// 4. å‹ç¼©è§£å‹
 ///////////////////////////////////////////
 
 ////zlib
@@ -313,7 +313,7 @@ uint64_t API CRC64_Combine(uint64_t crc1, uint64_t crc2, int64_t len2);
 const uint64_t * API CRC64_GetTable(void);
 
 ///////////////////////////////////////////
-//////// 5. ×Ö·û±àÂë×ª»»
+//////// 5. å­—ç¬¦ç¼–ç è½¬æ¢
 ///////////////////////////////////////////
 
 ////utf
@@ -333,9 +333,9 @@ int API UTF32BEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDe
 int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
 
 ///////////////////////////////////////////
-//////// 6. ´óÕûÊı²Ù×÷¸¨Öúº¯Êı
+//////// 6. å¤§æ•´æ•°æ“ä½œè¾…åŠ©å‡½æ•°
 ///////////////////////////////////////////
-////±¾Ä£¿éºÜ¶àº¯ÊıC/C++µÈÓïÑÔÔ­ÉúÖ§³Ö£¬Òò´Ë²»ÁĞ
+////æœ¬æ¨¡å—å¾ˆå¤šå‡½æ•°C/C++ç­‰è¯­è¨€åŸç”Ÿæ”¯æŒï¼Œå› æ­¤ä¸åˆ—
 
 ////i4helper
 int API I4Rol(int, int);
@@ -348,7 +348,7 @@ __int64 API I8RolR(__int64 *, int);
 __int64 API I8RorR(__int64 *, int);
 
 ///////////////////////////////////////////
-//////// 7. ²»ÔÙÊ¹ÓÃµÄ¾Éº¯Êı
+//////// 7. ä¸å†ä½¿ç”¨çš„æ—§å‡½æ•°
 ///////////////////////////////////////////
 
 #define crc32(crc, buf, len)					CRC32((crc), (buf), (len))
