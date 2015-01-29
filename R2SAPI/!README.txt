@@ -9,7 +9,7 @@ Hash函数
 
 
 本程序使用以下外部类库:
-openssl   1.0.1j	Win95+
+openssl   1.0.2		Win95+
 westpak   1.8.0.70	Win95+
 xmlparser 1.0.60.140	Win95+
 zlib      1.2.8		Win95+

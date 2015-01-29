@@ -7,7 +7,7 @@
 #		如果忽略可选项，请自己改makefile
 #
 # 测试平台：	Windows XP SP3
-#		MinGW-W64-builds-4.2.0 (i686-4.9.1-release-win32-dwarf-rt_v3-rev1)
+#		MinGW-W64-builds-4.2.0 (i686-4.9.2-release-win32-dwarf-rt_v3-rev1)
 #		MSVC 2010 SP1 (cl + lib + link 10.0.40219.1)
 #		WinSDK 7.1 (midl + midlc 7.0.555.1)
 #
