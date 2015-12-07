@@ -9,8 +9,8 @@ Hash函数		Win95+
 
 
 本程序使用以下外部类库:
-openssl   1.0.2d	Win95+
-westpak   1.8.0.70	Win95+
+openssl   1.0.2e	Win95+
+westpak   1.8.0.74	Win95+
 xmlparser 1.0.61.141	Win95+
 zlib      1.2.8		Win95+
 
