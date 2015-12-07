@@ -46,6 +46,8 @@ void GetSIMDVersion() {
 	OPENSSL_ia32cap_P[1] = CPUInfo[1][2];
 }
 
+void OPENSSL_cpuid_setup(void){};
+
 BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
                        DWORD reason        /* Reason this function is being called. */ ,
                        LPVOID reserved     /* Not used. */ )

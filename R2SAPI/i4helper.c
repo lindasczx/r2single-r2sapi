@@ -1,19 +1,21 @@
 #include "r2sapi.h"
 
+#include <stdint.h>
+
 #define BITCOUNT 32
 
-int API I4Shl(int a, int b);
-int API I4Shr(int a, int b);
-int API I4Rol(int a, int b);
-int API I4Ror(int a, int b);
-unsigned int API UI4Mul(unsigned int a, unsigned int b);
-unsigned int API UI4Div(unsigned int a, unsigned int b);
-unsigned int API UI4Mod(unsigned int a, unsigned int b);
-unsigned int API UI4Shl(unsigned int a, int b);
-unsigned int API UI4Shr(unsigned int a, int b);
-int API UI4Cmp(unsigned int a, unsigned int b);
+int32_t API I4Shl(int32_t a, int b);
+int32_t API I4Shr(int32_t a, int b);
+int32_t API I4Rol(int32_t a, int b);
+int32_t API I4Ror(int32_t a, int b);
+uint32_t API UI4Mul(uint32_t a, uint32_t b);
+uint32_t API UI4Div(uint32_t a, uint32_t b);
+uint32_t API UI4Mod(uint32_t a, uint32_t b);
+uint32_t API UI4Shl(uint32_t a, int b);
+uint32_t API UI4Shr(uint32_t a, int b);
+int API UI4Cmp(uint32_t a, uint32_t b);
 
-int API I4Shl(int a, int b) {
+int32_t API I4Shl(int32_t a, int b) {
 	if (b < 0)
 		return I4Shr(a, -b);
 	else if (b >= BITCOUNT)
@@ -22,7 +24,7 @@ int API I4Shl(int a, int b) {
 		return a << b;
 }
 
-int API I4Shr(int a, int b) {
+int32_t API I4Shr(int32_t a, int b) {
 	if (b < 0)
 		return I4Shl(a, -b);
 	else if (b >= BITCOUNT)
@@ -34,31 +36,31 @@ int API I4Shr(int a, int b) {
 		return a >> b;
 }
 
-int API I4Rol(int p, int b) {
-	unsigned int a = (unsigned int)p;
+int32_t API I4Rol(int32_t p, int b) {
+	uint32_t a = (uint32_t)p;
 	b &= BITCOUNT - 1;
 	return a << b | a >> BITCOUNT - b;
 }
 
-int API I4Ror(int p, int b) {
-	unsigned int a = (unsigned int)p;
+int32_t API I4Ror(int32_t p, int b) {
+	uint32_t a = (uint32_t)p;
 	b &= BITCOUNT - 1;
 	return a >> b | a << BITCOUNT - b;
 }
 
-unsigned int API UI4Mul(unsigned int a, unsigned int b) {
+uint32_t API UI4Mul(uint32_t a, uint32_t b) {
 	return a * b;
 }
 
-unsigned int API UI4Div(unsigned int a, unsigned int b) {
+uint32_t API UI4Div(uint32_t a, uint32_t b) {
 	return a / b;
 }
 
-unsigned int API UI4Mod(unsigned int a, unsigned int b) {
+uint32_t API UI4Mod(uint32_t a, uint32_t b) {
 	return a % b;
 }
 
-unsigned int API UI4Shl(unsigned int a, int b) {
+uint32_t API UI4Shl(uint32_t a, int b) {
 	if (b < 0)
 		return UI4Shr(a, -b);
 	else if (b >= BITCOUNT)
@@ -67,7 +69,7 @@ unsigned int API UI4Shl(unsigned int a, int b) {
 		return a << b;
 }
 
-unsigned int API UI4Shr(unsigned int a, int b) {
+uint32_t API UI4Shr(uint32_t a, int b) {
 	if (b < 0)
 		return UI4Shl(a, -b);
 	else if (b >= BITCOUNT)
@@ -76,7 +78,7 @@ unsigned int API UI4Shr(unsigned int a, int b) {
 		return a >> b;
 }
 
-int API UI4Cmp(unsigned int a, unsigned int b) {
+int API UI4Cmp(uint32_t a, uint32_t b) {
 	if (a > b)
 		return 1;
 	else if (a == b)

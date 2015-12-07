@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.38.3.371
+	1.38.3.377
 --*/
 
 #ifndef R2SAPI_H_
@@ -342,10 +342,10 @@ int API I4Rol(int, int);
 int API I4Ror(int, int);
 
 ////i8helper
-__int64 API I8Rol(__int64, int);
-__int64 API I8Ror(__int64, int);
-__int64 API I8RolR(__int64 *, int);
-__int64 API I8RorR(__int64 *, int);
+int64_t API I8Rol(int64_t, int);
+int64_t API I8Ror(int64_t, int);
+int64_t API I8RolR(int64_t *, int);
+int64_t API I8RorR(int64_t *, int);
 
 ///////////////////////////////////////////
 //////// 7. 不再使用的旧函数

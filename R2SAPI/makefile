@@ -1,15 +1,17 @@
 # 编译要求：	Windows
 #		GCC
-#		GNU Binutils
+#		GNU Binutils 2.24以上 (除了2.25.0以外均可)
 #		GNU Make
 #		MSVC 7.0以上 (cl + lib + link，可选，工具包另有提供)
 #		Windows SDK (midl + midlc + 头文件，可选，工具包另有提供)
 #		如果忽略可选项，请自己改makefile
 #
-# 测试平台：	Windows XP SP3
-#		MinGW-W64-builds-4.2.0 (i686-4.9.2-release-win32-dwarf-rt_v3-rev1)
+# 测试平台：	Windows 7 SP1
+#		MinGW-W64套件 (i686-5.2.0-release-win32-sjlj-rt_v4-rev1)
 #		MSVC 2010 SP1 (cl + lib + link 10.0.40219.1)
 #		WinSDK 7.1 (midl + midlc 7.0.555.1)
+#
+# 运行平台：	Windows XP以上 (Windows 2000需要安装GB18030支持和msvcrt.dll 7.0版)
 #
 # 若编译出错，顾名思义把下面两个变量改成TRUE即可
 COMPILE_FROM_PUBLIC:=FALSE
@@ -29,7 +31,7 @@ RM:=		rm
 
 CFLAGS:=	-O3 -I. -D_USRDLL
 CXXFLAGS:=	-O3 -I. -D_USRDLL
-LINKFLAGS:=	-s -Wl,--subsystem,console:4.0 --image-base 0x65000000 -Wl,--insert-timestamp
+LINKFLAGS:=	-s -Wl,--subsystem,console:5.1 --image-base 0x65000000 -Wl,--insert-timestamp
 MIDLFLAGS:=	
 ifneq ($(NO_MSVC_SDK), FALSE)
 MIDLFLAGS:=	-I include
