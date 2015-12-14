@@ -1,4 +1,5 @@
-﻿LIBRARY R2SAPI
+﻿
+LIBRARY R2SAPI
 EXPORTS
 
 _
@@ -12,9 +13,9 @@ EnumFileFromPakA
 EnumFileFromPakW
 GetFileFromPakA
 GetFileFromPakW
-LzssCompress	=lzsscompress
-LzssCompress2	=lzsscompress2
-LzssDecompress	=lzssdecompress
+LzssCompress		=lzsscompress
+LzssCompress2		=lzsscompress2
+LzssDecompress		=lzssdecompress
 
 ;///////////////////////////////////////////
 ;//////// 2. 解析XML
@@ -47,60 +48,82 @@ XMLPickTagPosW
 ;///////////////////////////////////////////
 
 ;// openssl模块
-MD4		=stdc_MD4
-MD4_Final	=stdc_MD4_Final
-MD4_Init	=stdc_MD4_Init
-MD4_Update	=stdc_MD4_Update
-MD5		=stdc_MD5
-MD5_Final	=stdc_MD5_Final
-MD5_Init	=stdc_MD5_Init
-MD5_Update	=stdc_MD5_Update
-MDC2		=stdc_MDC2
-MDC2_Final	=stdc_MDC2_Final
-MDC2_Init	=stdc_MDC2_Init
-MDC2_Update	=stdc_MDC2_Update
-RIPEMD160	=stdc_RIPEMD160
-RIPEMD160_Final	=stdc_RIPEMD160_Final
-RIPEMD160_Init	=stdc_RIPEMD160_Init
-RIPEMD160_Update=stdc_RIPEMD160_Update
-;SHA		=stdc_SHA
-;SHA_Final	=stdc_SHA_Final
-;SHA_Init	=stdc_SHA_Init
-;SHA_Update	=stdc_SHA_Update
-SHA1		=stdc_SHA1
-SHA1_Final	=stdc_SHA1_Final
-SHA1_Init	=stdc_SHA1_Init
-SHA1_Update	=stdc_SHA1_Update
-SHA224		=stdc_SHA224
-SHA224_Final	=stdc_SHA224_Final
-SHA224_Init	=stdc_SHA224_Init
-SHA224_Update	=stdc_SHA224_Update
-SHA256		=stdc_SHA256
-SHA256_Final	=stdc_SHA256_Final
-SHA256_Init	=stdc_SHA256_Init
-SHA256_Update	=stdc_SHA256_Update
-SHA384		=stdc_SHA384
-SHA384_Final	=stdc_SHA384_Final
-SHA384_Init	=stdc_SHA384_Init
-SHA384_Update	=stdc_SHA384_Update
-SHA512		=stdc_SHA512
-SHA512_Final	=stdc_SHA512_Final
-SHA512_Init	=stdc_SHA512_Init
-SHA512_Update	=stdc_SHA512_Update
-WHIRLPOOL	=stdc_WHIRLPOOL
-WHIRLPOOL_Final	=stdc_WHIRLPOOL_Final
-WHIRLPOOL_Init	=stdc_WHIRLPOOL_Init
-WHIRLPOOL_Update=stdc_WHIRLPOOL_Update
+MD4			=stdc_MD4
+MD4_Final		=stdc_MD4_Final
+MD4_Init		=stdc_MD4_Init
+MD4_Update		=stdc_MD4_Update
+MD5			=stdc_MD5
+MD5_Final		=stdc_MD5_Final
+MD5_Init		=stdc_MD5_Init
+MD5_Update		=stdc_MD5_Update
+MDC2			=stdc_MDC2
+MDC2_Final		=stdc_MDC2_Final
+MDC2_Init		=stdc_MDC2_Init
+MDC2_Update		=stdc_MDC2_Update
+RIPEMD160		=stdc_RIPEMD160
+RIPEMD160_Final		=stdc_RIPEMD160_Final
+RIPEMD160_Init		=stdc_RIPEMD160_Init
+RIPEMD160_Update	=stdc_RIPEMD160_Update
+SHA1			=stdc_SHA1
+SHA1_Final		=stdc_SHA1_Final
+SHA1_Init		=stdc_SHA1_Init
+SHA1_Update		=stdc_SHA1_Update
+SHA224			=stdc_SHA224
+SHA224_Final		=stdc_SHA256_Final
+SHA224_Init		=stdc_SHA224_Init
+SHA224_Update		=stdc_SHA256_Update
+SHA256			=stdc_SHA256
+SHA256_Final		=stdc_SHA256_Final
+SHA256_Init		=stdc_SHA256_Init
+SHA256_Update		=stdc_SHA256_Update
+SHA384			=stdc_SHA384
+SHA384_Final		=stdc_SHA512_Final
+SHA384_Init		=stdc_SHA384_Init
+SHA384_Update		=stdc_SHA512_Update
+SHA512			=stdc_SHA512
+SHA512_Final		=stdc_SHA512_Final
+SHA512_Init		=stdc_SHA512_Init
+SHA512_Update		=stdc_SHA512_Update
+WHIRLPOOL		=stdc_WHIRLPOOL
+WHIRLPOOL_Final		=stdc_WHIRLPOOL_Final
+WHIRLPOOL_Init		=stdc_WHIRLPOOL_Init
+WHIRLPOOL_Update	=stdc_WHIRLPOOL_Update
 
 ;// 增补NIST Hash函数
 SHA512_224
-SHA512_224_Final
+SHA512_224_Final	=stdc_SHA512_Final
 SHA512_224_Init
-SHA512_224_Update
+SHA512_224_Update	=stdc_SHA512_Update
 SHA512_256
-SHA512_256_Final
+SHA512_256_Final	=stdc_SHA512_Final
 SHA512_256_Init
-SHA512_256_Update
+SHA512_256_Update	=stdc_SHA512_Update
+
+;// nettle模块
+SHA3_224
+SHA3_224_Final
+SHA3_224_Init
+SHA3_224_Update
+SHA3_256
+SHA3_256_Final
+SHA3_256_Init
+SHA3_256_Update
+SHA3_384
+SHA3_384_Final
+SHA3_384_Init
+SHA3_384_Update
+SHA3_512
+SHA3_512_Final
+SHA3_512_Init
+SHA3_512_Update
+SHAKE128
+SHAKE128_Final
+SHAKE128_Init
+SHAKE128_Update
+SHAKE256
+SHAKE256_Final
+SHAKE256_Init
+SHAKE256_Update
 
 ;// MD6.c
 MD6
@@ -127,29 +150,27 @@ SM3_Update
 ;///////////////////////////////////////////
 
 ;// zlib模块
-CRC32		=crc32
-CRC32_Combine	=crc32_combine
-CRC32_Combine64	=crc32_combine64
-CRC32_GetTable	=get_crc_table
-ZlibCompress	=compress
-ZlibCompress2	=compress2
+CRC32			=crc32
+CRC32_Combine		=crc32_combine
+CRC32_Combine64		=crc32_combine64
+CRC32_GetTable		=get_crc_table
+ZlibCompress		=compress
+ZlibCompress2		=compress2
 ZlibCompressBound	=compressBound
-ZlibUncompress	=uncompress
-compress	;// 废弃
-compress2	;// 废弃
-compressBound	;// 废弃
-crc32		;// 废弃
-crc32_combine	;// 废弃
-get_crc_table	;// 废弃
-uncompress	;// 废弃
-;zError
-;zlibCompileFlags
-zlibVersion
+ZlibUncompress		=uncompress
+compress		;// 废弃
+compress2		;// 废弃
+compressBound		;// 废弃
+crc32			;// 废弃
+crc32_combine		;// 废弃
+get_crc_table		;// 废弃
+uncompress		;// 废弃
+zlibVersion		;// 废弃
 
 ;// CRC64.c
-CRC64		=crc64
-CRC64_Combine	=crc64_combine
-CRC64_GetTable	=get_crc64_table
+CRC64			=crc64
+CRC64_Combine		=crc64_combine
+CRC64_GetTable		=get_crc64_table
 
 ;///////////////////////////////////////////
 ;//////// 5. 字符编码转换
@@ -159,17 +180,17 @@ CRC64_GetTable	=get_crc64_table
 cpConvertEncoding
 cpMakeTrCode
 cpTrCodeSupported
-UTF8ToUTF16	=UTF8ToUTF16LE
-UTF8ToUTF32	=UTF8ToUTF32LE
-UTF16ToUTF8	=UTF16LEToUTF8
-UTF16ToUTF16BE	=UTF16BEToUTF16
-UTF16ToUTF32	=UTF16LEToUTF32LE
-UTF16ToUTF32BE	=UTF16LEToUTF32BE
+UTF8ToUTF16		=UTF8ToUTF16LE
+UTF8ToUTF32		=UTF8ToUTF32LE
+UTF16ToUTF8		=UTF16LEToUTF8
+UTF16ToUTF16BE		=UTF16BEToUTF16
+UTF16ToUTF32		=UTF16LEToUTF32LE
+UTF16ToUTF32BE		=UTF16LEToUTF32BE
 UTF16BEToUTF16
-UTF32ToUTF8	=UTF32LEToUTF8
-UTF32ToUTF16	=UTF32LEToUTF16LE
-UTF32ToUTF32BE	=UTF32BEToUTF32
-UTF32BEToUTF16	=UTF32BEToUTF16LE
+UTF32ToUTF8		=UTF32LEToUTF8
+UTF32ToUTF16		=UTF32LEToUTF16LE
+UTF32ToUTF32BE		=UTF32BEToUTF32
+UTF32BEToUTF16		=UTF32BEToUTF16LE
 UTF32BEToUTF32
 
 ;///////////////////////////////////////////

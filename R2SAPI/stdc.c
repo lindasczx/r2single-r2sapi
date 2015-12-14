@@ -12,195 +12,216 @@ extern "C" {
 #endif
 
 unsigned int OPENSSL_ia32cap_P[2];
+void OPENSSL_cpuid_setup(void){};
 
-unsigned long API stdc_SSLeay(void)
-{
-	return SSLeay();
-}
-
-const char * API stdc_SSLeay_version(int t)
-{
-	return SSLeay_version(t);
-}
+//unsigned long API stdc_SSLeay(void)
+//{
+//	return SSLeay();
+//}
+//
+//const char * API stdc_SSLeay_version(int t)
+//{
+//	return SSLeay_version(t);
+//}
 
 ////////////////MD4
 int API stdc_MD4_Init(MD4_CTX *c)
 {
-	return MD4_Init(c);
+	MD4_Init(c);
+	return 0;
 }
 int API stdc_MD4_Update(MD4_CTX *c, const void *data, size_t len)
 {
-	return MD4_Update(c, data, len);
+	MD4_Update(c, data, len);
+	return 0;
 }
 int API stdc_MD4_Final(MD4_CTX *c, unsigned char *md)
 {
-	return MD4_Final(md, c);
+	MD4_Final(md, c);
+	return 0;
 }
 unsigned char * API stdc_MD4(const void *d, size_t n, unsigned char *md)
 {
-	return MD4(d, n, md);
+	MD4(d, n, md);
+	return 0;
 }
 
 ////////////////MD5
 int API stdc_MD5_Init(MD5_CTX *c)
 {
-	return MD5_Init(c);
+	MD5_Init(c);
+	return 0;
 }
 int API stdc_MD5_Update(MD5_CTX *c, const void *data, size_t len)
 {
-	return MD5_Update(c, data, len);
+	MD5_Update(c, data, len);
+	return 0;
 }
 int API stdc_MD5_Final(MD5_CTX *c, unsigned char *md)
 {
-	return MD5_Final(md, c);
+	MD5_Final(md, c);
+	return 0;
 }
 unsigned char * API stdc_MD5(const void *d, size_t n, unsigned char *md)
 {
-	return MD5(d, n, md);
+	MD5(d, n, md);
+	return 0;
 }
 
 ////////////////MDC-2
 int API stdc_MDC2_Init(MDC2_CTX *c)
 {
-	return MDC2_Init(c);
+	MDC2_Init(c);
+	return 0;
 }
 int API stdc_MDC2_Update(MDC2_CTX *c, const void *data, size_t len)
 {
-	return MDC2_Update(c, data, len);
+	MDC2_Update(c, data, len);
+	return 0;
 }
 int API stdc_MDC2_Final(MDC2_CTX *c, unsigned char *md)
 {
-	return MDC2_Final(md, c);
+	MDC2_Final(md, c);
+	return 0;
 }
 unsigned char * API stdc_MDC2(const void *d, size_t n, unsigned char *md)
 {
-	return MDC2(d, n, md);
+	MDC2(d, n, md);
+	return 0;
 }
 
 ////////////////RIPEMD160
 int API stdc_RIPEMD160_Init(RIPEMD160_CTX *c)
 {
-	return RIPEMD160_Init(c);
+	RIPEMD160_Init(c);
+	return 0;
 }
 int API stdc_RIPEMD160_Update(RIPEMD160_CTX *c, const void *data, size_t len)
 {
-	return RIPEMD160_Update(c, data, len);
+	RIPEMD160_Update(c, data, len);
+	return 0;
 }
 int API stdc_RIPEMD160_Final(RIPEMD160_CTX *c, unsigned char *md)
 {
-	return RIPEMD160_Final(md, c);
+	RIPEMD160_Final(md, c);
+	return 0;
 }
 unsigned char * API stdc_RIPEMD160(const void *d, size_t n, unsigned char *md)
 {
-	return RIPEMD160(d, n, md);
+	RIPEMD160(d, n, md);
+	return 0;
 }
 
 ////////////////SHA-1
 int API stdc_SHA1_Init(SHA_CTX *c)
 {
-	return SHA1_Init(c);
+	SHA1_Init(c);
+	return 0;
 }
 int API stdc_SHA1_Update(SHA_CTX *c, const void *data, size_t len)
 {
-	return SHA1_Update(c, data, len);
+	SHA1_Update(c, data, len);
+	return 0;
 }
 int API stdc_SHA1_Final(SHA_CTX *c, unsigned char *md)
 {
-	return SHA1_Final(md, c);
+	SHA1_Final(md, c);
+	return 0;
 }
 unsigned char * API stdc_SHA1(const void *d, size_t n, unsigned char *md)
 {
-	return SHA1(d, n, md);
+	SHA1(d, n, md);
+	return 0;
 }
 
 ////////////////SHA-224
 int API stdc_SHA224_Init(SHA256_CTX *c)
 {
-	return SHA224_Init(c);
-}
-int API stdc_SHA224_Update(SHA256_CTX *c, const void *data, size_t len)
-{
-	return SHA224_Update(c, data, len);
-}
-int API stdc_SHA224_Final(SHA256_CTX *c, unsigned char *md)
-{
-	return SHA224_Final(md, c);
+	SHA224_Init(c);
+	return 0;
 }
 unsigned char * API stdc_SHA224(const void *d, size_t n, unsigned char *md)
 {
-	return SHA224(d, n, md);
+	SHA224(d, n, md);
+	return 0;
 }
 
 ////////////////SHA-256
 int API stdc_SHA256_Init(SHA256_CTX *c)
 {
-	return SHA256_Init(c);
+	SHA256_Init(c);
+	return 0;
 }
 int API stdc_SHA256_Update(SHA256_CTX *c, const void *data, size_t len)
 {
-	return SHA256_Update(c, data, len);
+	SHA256_Update(c, data, len);
+	return 0;
 }
 int API stdc_SHA256_Final(SHA256_CTX *c, unsigned char *md)
 {
-	return SHA256_Final(md, c);
+	SHA256_Final(md, c);
+	return 0;
 }
 unsigned char * API stdc_SHA256(const void *d, size_t n, unsigned char *md)
 {
-	return SHA256(d, n, md);
+	SHA256(d, n, md);
+	return 0;
 }
 
 ////////////////SHA-384
 int API stdc_SHA384_Init(SHA512_CTX *c)
 {
-	return SHA384_Init(c);
-}
-int API stdc_SHA384_Update(SHA512_CTX *c, const void *data, size_t len)
-{
-	return SHA384_Update(c, data, len);
-}
-int API stdc_SHA384_Final(SHA512_CTX *c, unsigned char *md)
-{
-	return SHA384_Final(md, c);
+	SHA384_Init(c);
+	return 0;
 }
 unsigned char * API stdc_SHA384(const void *d, size_t n, unsigned char *md)
 {
-	return SHA384(d, n, md);
+	SHA384(d, n, md);
+	return 0;
 }
 
 ////////////////SHA-512
 int API stdc_SHA512_Init(SHA512_CTX *c)
 {
-	return SHA512_Init(c);
+	SHA512_Init(c);
+	return 0;
 }
 int API stdc_SHA512_Update(SHA512_CTX *c, const void *data, size_t len)
 {
-	return SHA512_Update(c, data, len);
+	SHA512_Update(c, data, len);
+	return 0;
 }
 int API stdc_SHA512_Final(SHA512_CTX *c, unsigned char *md)
 {
-	return SHA512_Final(md, c);
+	SHA512_Final(md, c);
+	return 0;
 }
 unsigned char * API stdc_SHA512(const void *d, size_t n, unsigned char *md)
 {
-	return SHA512(d, n, md);
+	SHA512(d, n, md);
+	return 0;
 }
 
 ////////////////WHIRLPOOL
 int API stdc_WHIRLPOOL_Init(WHIRLPOOL_CTX *c)
 {
-	return WHIRLPOOL_Init(c);
+	WHIRLPOOL_Init(c);
+	return 0;
 }
 int API stdc_WHIRLPOOL_Update(WHIRLPOOL_CTX *c, const void *data, size_t len)
 {
-	return WHIRLPOOL_Update(c, data, len);
+	WHIRLPOOL_Update(c, data, len);
+	return 0;
 }
 int API stdc_WHIRLPOOL_Final(WHIRLPOOL_CTX *c, unsigned char *md)
 {
-	return WHIRLPOOL_Final(md, c);
+	WHIRLPOOL_Final(md, c);
+	return 0;
 }
 unsigned char * API stdc_WHIRLPOOL(const void *d, size_t n, unsigned char *md)
 {
-	return WHIRLPOOL(d, n, md);
+	WHIRLPOOL(d, n, md);
+	return 0;
 }
 
 #ifdef  __cplusplus

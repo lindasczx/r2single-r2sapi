@@ -1,7 +1,7 @@
 [
-	version(1.38),
+	version(1.41),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.38 Type Library")
+	helpstring("R2Single API 1.41 Type Library")
 ]
 library R2SAPILib
 {
@@ -146,6 +146,13 @@ library R2SAPILib
 		//} U;
 		long Num, MD_Len;
 	} SHA512_CTX;
+	typedef struct SHA3_CTX
+	{
+		//long long State[25];
+		long State[50];
+		long Index;
+		unsigned char Block[168];
+	} SHA3_CTX;
 	typedef struct SM3_CTX
 	{
 		long Total[2];
@@ -311,15 +318,60 @@ library R2SAPILib
 			long __stdcall SHA512_256_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("SHA512_256_Final")]
 			long __stdcall SHA512_256_Final([in,out]SHA512_CTX* c, [in,out]void* pResult);
+////	nettle模块
+		[entry("SHA3_224_Init")]
+			long __stdcall SHA3_224_Init([in,out]SHA3_CTX *c);
+		[entry("SHA3_224_Update")]
+			long __stdcall SHA3_224_Update([in,out]SHA3_CTX *c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA3_224_Final")]
+			long __stdcall SHA3_224_Final([in,out]SHA3_CTX *c, [in,out]void* pResult);
+		[entry("SHA3_224")]
+			long __stdcall SHA3_224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA3_256_Init")]
+			long __stdcall SHA3_256_Init([in,out]SHA3_CTX *c);
+		[entry("SHA3_256_Update")]
+			long __stdcall SHA3_256_Update([in,out]SHA3_CTX *c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA3_256_Final")]
+			long __stdcall SHA3_256_Final([in,out]SHA3_CTX *c, [in,out]void* pResult);
+		[entry("SHA3_256")]
+			long __stdcall SHA3_256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA3_384_Init")]
+			long __stdcall SHA3_384_Init([in,out]SHA3_CTX *c);
+		[entry("SHA3_384_Update")]
+			long __stdcall SHA3_384_Update([in,out]SHA3_CTX *c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA3_384_Final")]
+			long __stdcall SHA3_384_Final([in,out]SHA3_CTX *c, [in,out]void* pResult);
+		[entry("SHA3_384")]
+			long __stdcall SHA3_384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHA3_512_Init")]
+			long __stdcall SHA3_512_Init([in,out]SHA3_CTX *c);
+		[entry("SHA3_512_Update")]
+			long __stdcall SHA3_512_Update([in,out]SHA3_CTX *c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHA3_512_Final")]
+			long __stdcall SHA3_512_Final([in,out]SHA3_CTX *c, [in,out]void* pResult);
+		[entry("SHA3_512")]
+			long __stdcall SHA3_512([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
+		[entry("SHAKE128_Init")]
+			long __stdcall SHAKE128_Init([in,out]SHA3_CTX *c);
+		[entry("SHAKE128_Update")]
+			long __stdcall SHAKE128_Update([in,out]SHA3_CTX *c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHAKE128_Final")]
+			long __stdcall SHAKE128_Final([in,out]SHA3_CTX *c, [in,out]void* pResult, [in,defaultvalue(256)]long lResultLen);
+		[entry("SHAKE128")]
+			long __stdcall SHAKE128([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult, [in,defaultvalue(256)]long lResultLen);
+		[entry("SHAKE256_Init")]
+			long __stdcall SHAKE256_Init([in,out]SHA3_CTX *c);
+		[entry("SHAKE256_Update")]
+			long __stdcall SHAKE256_Update([in,out]SHA3_CTX *c, [in]void* pBuffer, [in]long lBufLen);
+		[entry("SHAKE256_Final")]
+			long __stdcall SHAKE256_Final([in,out]SHA3_CTX *c, [in,out]void* pResult, [in,defaultvalue(512)]long lResultLen);
+		[entry("SHAKE256")]
+			long __stdcall SHAKE256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult, [in,defaultvalue(512)]long lResultLen);
 ////	MD6.c
-		[entry("MD6")]
-			long __stdcall MD6([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("MD6_Len")]
-			long __stdcall MD6_Len([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult, [in]long lResultLen);
-		[entry("MD6_Init")]
-			long __stdcall MD6_Init([in,out]MD6_CTX* c);
+			long __stdcall MD6([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult, [in,defaultvalue(128)]long lResultLen);
 		[entry("MD6_Init_Len")]
-			long __stdcall MD6_Init_Len([in,out]MD6_CTX* c, [in]long lResultLen);
+			long __stdcall MD6_Init([in,out]MD6_CTX* c, [in,defaultvalue(128)]long lResultLen);
 		[entry("MD6_Update")]
 			long __stdcall MD6_Update([in,out]MD6_CTX* c, [in]void* pBuffer, [in]long lBufLen);
 		[entry("MD6_Final")]

@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.38.3.377
+	1.41.0.403
 --*/
 
 #ifndef R2SAPI_H_
@@ -25,6 +25,9 @@ typedef wchar_t * LPWSTR;
 typedef const wchar_t * LPCWSTR;
 typedef int * LPLSTR;
 typedef const int * LPCLSTR;
+#ifndef MAX_PATH
+#define MAX_PATH 260
+#endif
 
 #define cpINVALID   (-1)
 #define cpUTF8      1
@@ -111,6 +114,14 @@ typedef struct SHA512state_st
 	} u;
 	unsigned int num,md_len;
 } SHA512_CTX;
+#define SHA3_STATE_LENGTH 25
+#define SHA3_MAX_BLOCK_SIZE 168
+typedef struct sha3_ctx
+{
+	uint64_t state[SHA3_STATE_LENGTH];
+	unsigned int index;
+	uint8_t block[SHA3_MAX_BLOCK_SIZE];
+} SHA3_CTX;
 #define WHIRLPOOL_DIGEST_LENGTH	(512/8)
 #define WHIRLPOOL_BBLOCK	512
 #define WHIRLPOOL_COUNTER	(256/8)
@@ -272,6 +283,32 @@ int API SHA512_256_Update(SHA512_CTX *c, const void *data, size_t len);
 int API SHA512_256_Final(SHA512_CTX *c, unsigned char *md);
 unsigned char * API SHA512_256(const void *d, size_t n, unsigned char *md);
 
+////nettle
+int API SHA3_224_Init(SHA3_CTX *c);
+int API SHA3_224_Update(SHA3_CTX *c, const void *data, size_t len);
+int API SHA3_224_Final(SHA3_CTX *c, unsigned char *md);
+unsigned char * API SHA3_224(const void *d, size_t n, unsigned char *md);
+int API SHA3_256_Init(SHA3_CTX *c);
+int API SHA3_256_Update(SHA3_CTX *c, const void *data, size_t len);
+int API SHA3_256_Final(SHA3_CTX *c, unsigned char *md);
+unsigned char * API SHA3_256(const void *d, size_t n, unsigned char *md);
+int API SHA3_384_Init(SHA3_CTX *c);
+int API SHA3_384_Update(SHA3_CTX *c, const void *data, size_t len);
+int API SHA3_384_Final(SHA3_CTX *c, unsigned char *md);
+unsigned char * API SHA3_384(const void *d, size_t n, unsigned char *md);
+int API SHA3_512_Init(SHA3_CTX *c);
+int API SHA3_512_Update(SHA3_CTX *c, const void *data, size_t len);
+int API SHA3_512_Final(SHA3_CTX *c, unsigned char *md);
+unsigned char * API SHA3_512(const void *d, size_t n, unsigned char *md);
+int API SHAKE128_Init(SHA3_CTX *c);
+int API SHAKE128_Update(SHA3_CTX *c, const void *data, size_t len);
+int API SHAKE128_Final(SHA3_CTX *c, unsigned char *md, size_t mdlen);
+unsigned char * API SHAKE128(const void *d, size_t n, unsigned char *md, size_t mdlen);
+int API SHAKE256_Init(SHA3_CTX *c);
+int API SHAKE256_Update(SHA3_CTX *c, const void *data, size_t len);
+int API SHAKE256_Final(SHA3_CTX *c, unsigned char *md, size_t mdlen);
+unsigned char * API SHAKE256(const void *d, size_t n, unsigned char *md, size_t mdlen);
+
 ////md6
 int API MD6_Init(MD6_CTX *c);
 int API MD6_Init_Len(MD6_CTX *c, int mdlen);
@@ -305,7 +342,6 @@ int API ZlibCompress(void *dest, unsigned int *destLen, const void *source, unsi
 int API ZlibCompress2(void *dest, unsigned int *destLen, const void *source, unsigned int sourceLen, int level);
 unsigned int API ZlibCompressBound(unsigned int sourceLen);
 int API ZlibUncompress(void *dest, unsigned int *destLen, const void *source, unsigned int sourceLen);
-const char * API zlibVersion(void);
 
 ////crc64
 uint64_t API CRC64(uint64_t crc, const void *buf, uint64_t len);
@@ -358,6 +394,7 @@ int64_t API I8RorR(int64_t *, int);
 #define compress2(dest, destLen, source, sourceLen, level)	ZlibCompress2((dest), (destLen), (source), (sourceLen), (level))
 #define compressBound(sourceLen)				ZlibCompressBound(sourceLen)
 #define uncompress(dest, destLen, source, sourceLen)		ZlibUncompress((dest), (destLen), (source), (sourceLen))
+const char * API zlibVersion(void);
 
 #ifdef __cplusplus
 }

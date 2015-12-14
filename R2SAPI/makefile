@@ -23,21 +23,22 @@ endif
 
 CC:=		gcc
 CXX:=		g++
+ASM:=		as
 RC:=		windres
 LINK:=		dllwrap
 LIB:=		lib
 MIDL:=		midl
 RM:=		rm
 
-CFLAGS:=	-O3 -I. -D_USRDLL
-CXXFLAGS:=	-O3 -I. -D_USRDLL
+CFLAGS:=	-O3 -I. -D_USRDLL -DL_ENDIAN -DDSO_WIN32 -march=i686 -Wall -DMD5_ASM -DRMD160_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DWHIRLPOOL_ASM
+CXXFLAGS:=	-O3 -I. -D_USRDLL -DL_ENDIAN -DDSO_WIN32 -march=i686 -Wall -DMD5_ASM -DRMD160_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DWHIRLPOOL_ASM
 LINKFLAGS:=	-s -Wl,--subsystem,console:5.1 --image-base 0x65000000 -Wl,--insert-timestamp
 MIDLFLAGS:=	
 ifneq ($(NO_MSVC_SDK), FALSE)
 MIDLFLAGS:=	-I include
 endif
 #SBFLAGS:=	-Wl,--add-stdcall-alias
-IMPLIB:=	-loleaut32 libcrypto.a libz.a c_g18030.lib
+IMPLIB:=	-loleaut32 libz.a c_g18030.lib
 IMPOBJ:=	compress.o uncompr.o
 ifneq ($(COMPILE_FROM_PUBLIC), FALSE)
 IMPOBJ:=	$(IMPOBJ) private/xmlparser.o private/fileio.o private/lzssdec.o private/lzssenc.o
@@ -56,6 +57,33 @@ CSRC+=		i8helper.c
 CSRC+=		md6.c
 CSRC+=		md6_compress.c
 CSRC+=		md6_mode.c
+CSRC+=		nettle/memxor.c
+CSRC+=		nettle/sha3.c
+CSRC+=		nettle/sha3-224.c
+CSRC+=		nettle/sha3-256.c
+CSRC+=		nettle/sha3-384.c
+CSRC+=		nettle/sha3-512.c
+CSRC+=		nettle/sha3-permute.c
+CSRC+=		nettle/shake128.c
+CSRC+=		nettle/shake256.c
+CSRC+=		nettle/write-le64.c
+CSRC+=		openssl/md4_dgst.c
+CSRC+=		openssl/md4_one.c
+CSRC+=		openssl/md5_dgst.c
+CSRC+=		openssl/md5_one.c
+CSRC+=		openssl/mdc2dgst.c
+CSRC+=		openssl/mdc2_one.c
+CSRC+=		openssl/mem_clr.c
+CSRC+=		openssl/rmd_dgst.c
+CSRC+=		openssl/rmd_one.c
+CSRC+=		openssl/set_key.c
+CSRC+=		openssl/sha1dgst.c
+CSRC+=		openssl/sha1_one.c
+CSRC+=		openssl/sha256.c
+CSRC+=		openssl/sha512.c
+CSRC+=		openssl/wp_block.c
+CSRC+=		openssl/wp_dgst.c
+CSRC+=		sha3.c
 CSRC+=		sha512-t.c
 CSRC+=		sm3.c
 CSRC+=		stdc.c
@@ -70,14 +98,23 @@ CSRC+=		../r2pak/lzssdec.c
 CSRC+=		../r2pak/lzssenc.c
 CXXSRC+=	../r2pak/fileio.cpp
 endif
+ASMSRC:=	openssl/des-586.s
+ASMSRC+=	openssl/md5-586.s
+ASMSRC+=	openssl/rmd-586.s
+ASMSRC+=	openssl/sha1-586.s
+ASMSRC+=	openssl/sha256-586.s
+ASMSRC+=	openssl/sha512-586.s
+ASMSRC+=	openssl/wp-mmx.s
+#ASMSRC+=	openssl/x86cpuid.s
 
 COBJ:=		$(CSRC:%.c=%.o)
 COBJSSE:=	$(CSRCSSE:%.c=%.o)
 CXXOBJ:=	$(CXXSRC:%.cpp=%.o)
 CXXOBJSSE:=	$(CXXSRCSSE:%.cpp=%.o)
+ASMOBJ:=	$(ASMSRC:%.s=%.o)
 
 RES:=		r2sapi.res
-LINKOBJ:=	$(COBJ) $(COBJSSE) $(CXXOBJ) $(CXXOBJSSE) $(RES)
+LINKOBJ:=	$(COBJ) $(COBJSSE) $(CXXOBJ) $(CXXOBJSSE) $(ASMOBJ) $(RES)
 TYPELIB:=	r2sapilib.tlb
 DEFFILE:=	r2sapi.def
 OUTLIB:=	bin/r2sapi.lib
@@ -118,4 +155,7 @@ $(CXXOBJSSE): CXXFLAGS += -msse2
 
 %.o:%.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -c $<
+
+%.o:%.s
+	$(ASM) -o $@ $<
 

@@ -14,7 +14,7 @@ int API SHA512_224_Init(SHA512_CTX *c)
 
         c->Nl = 0;      c->Nh = 0;
         c->num = 0;     c->md_len = SHA224_DIGEST_LENGTH;
-        return 1;
+        return 0;
 }
 
 int API SHA512_256_Init(SHA512_CTX *c)
@@ -30,27 +30,7 @@ int API SHA512_256_Init(SHA512_CTX *c)
 
         c->Nl = 0;      c->Nh = 0;
         c->num = 0;     c->md_len = SHA256_DIGEST_LENGTH;
-        return 1;
-}
-
-int API SHA512_224_Final (unsigned char *md, SHA512_CTX *c)
-{
-	return SHA512_Final(md, c);
-}
-
-int API SHA512_256_Final (unsigned char *md, SHA512_CTX *c)
-{
-	return SHA512_Final(md, c);
-}
-
-int API SHA512_224_Update (SHA512_CTX *c, const void *data, size_t len)
-{
-	return SHA512_Update(c, data, len);
-}
-
-int API SHA512_256_Update (SHA512_CTX *c, const void *data, size_t len)
-{
-	return SHA512_Update(c, data, len);
+        return 0;
 }
 
 unsigned char * API SHA512_224(const void *d, size_t n, unsigned char *md)

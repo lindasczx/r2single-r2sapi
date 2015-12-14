@@ -332,19 +332,19 @@ void sm3( const unsigned char *input, int ilen,
 int __stdcall SM3_Init(SM3_CTX *c)
 {
 	sm3_starts(c);
-	return 1;
+	return 0;
 }
 
 int __stdcall SM3_Update(SM3_CTX *c, const void *data, size_t len)
 {
 	sm3_update(c, (const unsigned char *)data, len);
-	return 1;
+	return 0;
 }
 
 int __stdcall SM3_Final(SM3_CTX *c, unsigned char *md)
 {
 	sm3_finish(c, md);
-	return 1;
+	return 0;
 }
 
 unsigned char * __stdcall SM3(const void *d, size_t n, unsigned char *md)
