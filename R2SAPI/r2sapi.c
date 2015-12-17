@@ -38,11 +38,9 @@ void GetSIMDVersion() {
 		SIMD_Version.SSE = 1;
 	if (CPUInfo[1][3] & 0x800000)
 		SIMD_Version.MMX = 1;
-	if (CPUInfo[2][3] & 0x800000)
-		SIMD_Version.MMX = 1;
 
 	extern unsigned int OPENSSL_ia32cap_P[2];
-	OPENSSL_ia32cap_P[0] = CPUInfo[1][3] | (CPUInfo[2][3] & 0x800000);
+	OPENSSL_ia32cap_P[0] = CPUInfo[1][3];
 	OPENSSL_ia32cap_P[1] = CPUInfo[1][2];
 }
 

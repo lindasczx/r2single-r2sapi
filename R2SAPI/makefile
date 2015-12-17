@@ -30,16 +30,16 @@ LIB:=		lib
 MIDL:=		midl
 RM:=		rm
 
-CFLAGS:=	-O3 -I. -D_USRDLL -DL_ENDIAN -DDSO_WIN32 -march=i686 -Wall -DMD5_ASM -DRMD160_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DWHIRLPOOL_ASM
-CXXFLAGS:=	-O3 -I. -D_USRDLL -DL_ENDIAN -DDSO_WIN32 -march=i686 -Wall -DMD5_ASM -DRMD160_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DWHIRLPOOL_ASM
+CFLAGS:=	-O3 -I. -march=i686 -Wall -D_USRDLL -DL_ENDIAN -DDSO_WIN32 -DMD5_ASM -DRMD160_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DWHIRLPOOL_ASM -DZLIB_WINAPI -DASMV -DASMINF -D_LARGEFILE64_SOURCE -D_LFS64_LARGEFILE
+CXXFLAGS:=	-O3 -I. -march=i686 -Wall -D_USRDLL -DL_ENDIAN -DDSO_WIN32 -DMD5_ASM -DRMD160_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DWHIRLPOOL_ASM -DZLIB_WINAPI -DASMV -DASMINF -D_LARGEFILE64_SOURCE -D_LFS64_LARGEFILE
 LINKFLAGS:=	-s -Wl,--subsystem,console:5.1 --image-base 0x65000000 -Wl,--insert-timestamp
 MIDLFLAGS:=	
 ifneq ($(NO_MSVC_SDK), FALSE)
 MIDLFLAGS:=	-I include
 endif
 #SBFLAGS:=	-Wl,--add-stdcall-alias
-IMPLIB:=	-loleaut32 libz.a c_g18030.lib
-IMPOBJ:=	compress.o uncompr.o
+IMPLIB:=	-loleaut32 c_g18030.lib
+IMPOBJ:=	
 ifneq ($(COMPILE_FROM_PUBLIC), FALSE)
 IMPOBJ:=	$(IMPOBJ) private/xmlparser.o private/fileio.o private/lzssdec.o private/lzssenc.o
 endif
@@ -89,15 +89,17 @@ CSRC+=		sm3.c
 CSRC+=		stdc.c
 CSRC+=		utf.c
 CSRC+=		utf7.c
+CSRC+=		zlib/adler32.c
+CSRC+=		zlib/compress.c
+CSRC+=		zlib/deflate.c
+CSRC+=		zlib/inflate.c
+CSRC+=		zlib/inftrees.c
+CSRC+=		zlib/trees.c
+CSRC+=		zlib/uncompr.c
+CSRC+=		zlib/zutil.c
 CSRCSSE:=	blake2s_sse.c
 CXXSRC:=	
 CXXSRCSSE:=	
-ifeq ($(COMPILE_FROM_PUBLIC), FALSE)
-CSRC+=		../../../xmlparser.c
-CSRC+=		../r2pak/lzssdec.c
-CSRC+=		../r2pak/lzssenc.c
-CXXSRC+=	../r2pak/fileio.cpp
-endif
 ASMSRC:=	openssl/des-586.s
 ASMSRC+=	openssl/md5-586.s
 ASMSRC+=	openssl/rmd-586.s
@@ -105,13 +107,21 @@ ASMSRC+=	openssl/sha1-586.s
 ASMSRC+=	openssl/sha256-586.s
 ASMSRC+=	openssl/sha512-586.s
 ASMSRC+=	openssl/wp-mmx.s
-#ASMSRC+=	openssl/x86cpuid.s
+ASMSRC+=	zlib/inffast.S
+ASMSRC+=	zlib/match.S
+ifeq ($(COMPILE_FROM_PUBLIC), FALSE)
+CSRC+=		../../../xmlparser.c
+CSRC+=		../r2pak/lzssdec.c
+CSRC+=		../r2pak/lzssenc.c
+CXXSRC+=	../r2pak/fileio.cpp
+endif
 
 COBJ:=		$(CSRC:%.c=%.o)
 COBJSSE:=	$(CSRCSSE:%.c=%.o)
 CXXOBJ:=	$(CXXSRC:%.cpp=%.o)
 CXXOBJSSE:=	$(CXXSRCSSE:%.cpp=%.o)
 ASMOBJ:=	$(ASMSRC:%.s=%.o)
+ASMOBJ:=	$(ASMOBJ:%.S=%.o)
 
 RES:=		r2sapi.res
 LINKOBJ:=	$(COBJ) $(COBJSSE) $(CXXOBJ) $(CXXOBJSSE) $(ASMOBJ) $(RES)
@@ -157,5 +167,8 @@ $(CXXOBJSSE): CXXFLAGS += -msse2
 	$(CXX) -o $@ $(CXXFLAGS) -c $<
 
 %.o:%.s
-	$(ASM) -o $@ $<
+	$(CC) -o $@ -c $<
+
+%.o:%.S
+	$(CC) -o $@ -c $<
 
