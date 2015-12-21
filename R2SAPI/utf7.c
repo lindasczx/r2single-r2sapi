@@ -87,7 +87,7 @@ int API UTF7ToUTF16(
     LPWSTR lpDestStr,
     int cchDest)
 {
-    LPCSTR pUTF7 = lpSrcStr;
+    const unsigned char *pUTF7 = (const unsigned char *)lpSrcStr;
     BOOL fShift = FALSE;
     DWORD dwBit = 0;              // 32-bit buffer to hold temporary bits
     int iPos = 0;                 // 6-bit position pointer in the buffer

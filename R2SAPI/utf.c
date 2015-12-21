@@ -561,7 +561,7 @@ int SwapByte(
 	int nTB = 0;				// # trail bytes to follow
 	LPCSTR pUTF8 = lpSrcStr;
 	unsigned char I8;
-	int utf32;
+	int utf32 = 0;
 	int cchProcessed = 0;
 
 	while (cchSrc--) {
@@ -819,7 +819,7 @@ int SwapByte(
 	int nTB = 0;				// # trail bytes to follow
 	LPCSTR pUTF8 = lpSrcStr;
 	unsigned char I8;
-	int utf32;
+	int utf32 = 0;
 	int cchProcessed = 0;
 
 	while (cchSrc--) {
@@ -1002,7 +1002,6 @@ int SwapByte(
 	int cchSrc,
 	int* scalar)
 {
-	int nTB = 0;				// # trail bytes to follow
 	LPCSTR pUTF8 = lpSrcStr;
 	unsigned char I8;
 	int utf32;
