@@ -34,15 +34,19 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "ZX Inc.\0"
             VALUE "FileDescription",
-#ifdef _DEBUG
-			"R2Single Runtime Library DLL (Debug Version)\0"
+#ifdef _WIN64
+			"R2Single Runtime Library DLL (x64)\0"
 #else
 			"R2Single Runtime Library DLL\0"
 #endif
             VALUE "FileVersion", FILEVERSTR
             VALUE "InternalName", "r2sapi\0"
-            VALUE "LegalCopyright", "(C)版权所有 2008-2014 ZX Inc.\0"
+            VALUE "LegalCopyright", "(C)版权所有 2008-2016 ZX Inc.\0"
+#ifdef _WIN64
+            VALUE "OriginalFilename", "r2sapi64.dll\0"
+#else
             VALUE "OriginalFilename", "r2sapi.dll\0"
+#endif
             VALUE "ProductName", "R2Single Runtime Library DLL\0"
             VALUE "ProductVersion", PRODUCTVERSTR
         END

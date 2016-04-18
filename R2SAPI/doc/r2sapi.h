@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.41.0.403
+	1.41.0.424
 --*/
 
 #ifndef R2SAPI_H_
@@ -387,6 +387,7 @@ int64_t API I8RorR(int64_t *, int);
 //////// 7. 不再使用的旧函数
 ///////////////////////////////////////////
 
+#ifndef _WIN64
 #define crc32(crc, buf, len)					CRC32((crc), (buf), (len))
 #define crc32_combine(crc1, crc2, len2)				CRC32_Combine((crc1), (crc2), (len2))
 #define get_crc_table()						CRC32_GetTable()
@@ -395,6 +396,7 @@ int64_t API I8RorR(int64_t *, int);
 #define compressBound(sourceLen)				ZlibCompressBound(sourceLen)
 #define uncompress(dest, destLen, source, sourceLen)		ZlibUncompress((dest), (destLen), (source), (sourceLen))
 const char * API zlibVersion(void);
+#endif
 
 #ifdef __cplusplus
 }

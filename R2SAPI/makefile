@@ -7,20 +7,28 @@
 #		如果忽略可选项，请自己改makefile
 #
 # 测试平台：	Windows 7 SP1
-#		MinGW-W64套件 (i686-5.2.0-release-win32-sjlj-rt_v4-rev1)
+#		MinGW-W64 32位套件 (i686-5.3.0-release-win32-sjlj-rt_v4-rev0)
+#		MinGW-W64 64位套件 (x86_64-5.3.0-release-win32-seh-rt_v4-rev0)
 #		MSVC 2010 SP1 (cl + lib + link 10.0.40219.1)
 #		WinSDK 7.1 (midl + midlc 7.0.555.1)
 #
-# 运行平台：	Windows XP以上 (Windows 2000需要安装GB18030支持和msvcrt.dll 7.0版)
+# 运行平台：	32位版：Windows XP以上 (Windows 2000需要安装GB18030支持和msvcrt.dll 7.0版)
+#		x64版：所有基于x64的Windows系统
 #
-# 若编译出错，顾名思义把下面两个变量改成TRUE即可
+# 若编译出错，顾名思义把下面两个变量改成TRUE即可。
+# 编译64位版本时，请确保下面的各种带64的程序能够运行，否则请修改相应变量。
 COMPILE_FROM_PUBLIC:=FALSE
 NO_MSVC_SDK:=	FALSE
 
 ifneq ($(NO_MSVC_SDK), FALSE)
-export PATH:=	tool;$(PATH)
+ifneq ($(BUILDAMD64), 1)
+export PATH:=	tool;tool/x86;$(PATH)
+else
+export PATH:=	tool;tool/amd64;$(PATH)
+endif
 endif
 
+ifneq ($(BUILDAMD64), 1)
 CC:=		gcc
 CXX:=		g++
 ASM:=		as
@@ -28,27 +36,60 @@ RC:=		windres
 LINK:=		dllwrap
 LIB:=		lib
 MIDL:=		midl
+else
+CC:=		gcc64
+CXX:=		g++64
+ASM:=		as64
+RC:=		windres64
+LINK:=		dllwrap64
+LIB:=		lib64
+MIDL:=		midl
+endif
 RM:=		rm
+CP:=		cp
 
-GCCFLAGS:=	-O3 -I. -march=i686 -D_USRDLL -DL_ENDIAN -DDSO_WIN32 -DMD5_ASM -DRMD160_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DWHIRLPOOL_ASM -DZLIB_WINAPI -DASMV -D_LARGEFILE64_SOURCE -D_LFS64_LARGEFILE -Wall -Wno-unknown-pragmas -Wno-parentheses -Wno-comments
-CFLAGS:=	$(GCCFLAGS)
-CXXFLAGS:=	$(GCCFLAGS)
+GCCFLAGS:=	-O3 -I. -D_USRDLL -DL_ENDIAN -DDSO_WIN32 -DMD5_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DWHIRLPOOL_ASM -DZLIB_WINAPI -DASMV -D_LARGEFILE64_SOURCE -D_LFS64_LARGEFILE -Wall -Wno-unknown-pragmas -Wno-parentheses -Wno-comments
+X86FLAGS:=	-m32 -march=i686 -DRMD160_ASM
+AMD64FLAGS:=	-m64
+ifneq ($(BUILDAMD64), 1)
+CFLAGS:=	$(GCCFLAGS) $(X86FLAGS)
+CXXFLAGS:=	$(GCCFLAGS) $(X86FLAGS)
+ASMFLAGS:=	
+else
+CFLAGS:=	$(GCCFLAGS) $(AMD64FLAGS)
+CXXFLAGS:=	$(GCCFLAGS) $(AMD64FLAGS)
+ASMFLAGS:=	-DNO_UNDERLINE
+endif
 LINKFLAGS:=	-s -Wl,--subsystem,console:5.1 --image-base 0x65000000 -Wl,--insert-timestamp -Wl,--enable-stdcall-fixup
 MIDLFLAGS:=	
 ifneq ($(NO_MSVC_SDK), FALSE)
 MIDLFLAGS:=	-I include
 endif
-#SBFLAGS:=	-Wl,--add-stdcall-alias
-IMPLIB:=	-loleaut32 c_g18030.lib
+
+ifneq ($(BUILDAMD64), 1)
+IMPLIB:=	-loleaut32 x86/c_g18030.lib
+else
+IMPLIB:=	-loleaut32 amd64/c_g18030.lib
+endif
+
 IMPOBJ:=	
 ifneq ($(COMPILE_FROM_PUBLIC), FALSE)
-IMPOBJ:=	$(IMPOBJ) private/xmlparser.o private/fileio.o private/lzssdec.o private/lzssenc.o
+ifneq ($(BUILDAMD64), 1)
+IMPOBJ:=	$(IMPOBJ) x86/private/xmlparser.o x86/private/fileio.o x86/private/lzssdec.o x86/private/lzssenc.o
+else
+IMPOBJ:=	$(IMPOBJ) amd64/private/xmlparser.o amd64/private/fileio.o amd64/private/lzssdec.o amd64/private/lzssenc.o
+endif
 endif
 
 CSRC:=		r2sapi.c
+CSRCSSE:=
+CXXSRC:=	
+CXXSRCSSE:=	
+ASMSRC:=
 CSRC+=		blake2.c
 CSRC+=		blake2s.c
 CSRC+=		blake2sp.c
+CSRCSSE+=	blake2s_sse.c
 CSRC+=		crc32.c
 CSRC+=		crc64.c
 CSRC+=		getcpuid.c
@@ -64,7 +105,6 @@ CSRC+=		nettle/sha3-224.c
 CSRC+=		nettle/sha3-256.c
 CSRC+=		nettle/sha3-384.c
 CSRC+=		nettle/sha3-512.c
-CSRC+=		nettle/sha3-permute.c
 CSRC+=		nettle/shake128.c
 CSRC+=		nettle/shake256.c
 CSRC+=		nettle/write-le64.c
@@ -82,7 +122,6 @@ CSRC+=		openssl/sha1dgst.c
 CSRC+=		openssl/sha1_one.c
 CSRC+=		openssl/sha256.c
 CSRC+=		openssl/sha512.c
-CSRC+=		openssl/wp_block.c
 CSRC+=		openssl/wp_dgst.c
 CSRC+=		sha3.c
 CSRC+=		sha512-t.c
@@ -99,17 +138,27 @@ CSRC+=		zlib/inftrees.c
 CSRC+=		zlib/trees.c
 CSRC+=		zlib/uncompr.c
 CSRC+=		zlib/zutil.c
-CSRCSSE:=	blake2s_sse.c
-CXXSRC:=	
-CXXSRCSSE:=	
-ASMSRC:=	openssl/des-586.s
+ifneq ($(BUILDAMD64), 1)
+CSRC+=		nettle/sha3-permute.c
+ASMSRC+=	openssl/des-586.s
 ASMSRC+=	openssl/md5-586.s
 ASMSRC+=	openssl/rmd-586.s
 ASMSRC+=	openssl/sha1-586.s
 ASMSRC+=	openssl/sha256-586.s
 ASMSRC+=	openssl/sha512-586.s
+CSRC+=		openssl/wp_block.c
 ASMSRC+=	openssl/wp-mmx.s
 ASMSRC+=	zlib/match.S
+else
+ASMSRC+=	nettle/sha3-permute-amd64.s
+CSRC+=		openssl/des_enc.c
+ASMSRC+=	openssl/md5-x86_64.s
+ASMSRC+=	openssl/sha1-x86_64.s
+ASMSRC+=	openssl/sha256-x86_64.s
+ASMSRC+=	openssl/sha512-x86_64.s
+ASMSRC+=	openssl/wp-x86_64.s
+ASMSRC+=	zlib/amd64-match.S
+endif
 ifeq ($(COMPILE_FROM_PUBLIC), FALSE)
 CSRC+=		../../../xmlparser.c
 CSRC+=		../r2pak/lzssdec.c
@@ -127,23 +176,33 @@ ASMOBJ:=	$(ASMOBJ:%.S=%.o)
 RES:=		r2sapi.res
 LINKOBJ:=	$(COBJ) $(COBJSSE) $(CXXOBJ) $(CXXOBJSSE) $(ASMOBJ) $(RES)
 TYPELIB:=	r2sapilib.tlb
+ifneq ($(BUILDAMD64), 1)
 DEFFILE:=	r2sapi.def
-OUTLIB:=	bin/r2sapi.lib
-BIN:=		bin/r2sapi.dll
+OUTLIB:=	r2sapi.lib
+BIN:=		r2sapi.dll
+else
+DEFFILE:=	r2sapi64.def
+OUTLIB:=	r2sapi64.lib
+BIN:=		r2sapi64.dll
+endif
+DESTDIR:=	bin
 
 .PHONY: all clean cleanobj
 
 all:	$(BIN)
 
 clean:
-	$(RM) $(BIN) $(LINKOBJ) $(TYPELIB) *.o
+	$(RM) $(BIN) $(OUTLIB) $(LINKOBJ) $(TYPELIB) *.o
 
 cleanobj:
 	$(RM) $(LINKOBJ) $(TYPELIB) *.o
 
+install:
+	$(CP) $(BIN) $(OUTLIB) $(DESTDIR)
+
 $(BIN): $(LINKOBJ)
 	$(LINK) -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE) $(LINKFLAGS)
-	$(LIB) /nologo /def:$(DEFFILE) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) /out:$(OUTLIB)
+	$(LIB) /nologo /def:$(DEFFILE) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) /out:$(OUTLIB) /name:$(BIN)
 
 $(RES): r2sapi.rc $(TYPELIB)
 	$(RC) $< -o $(RES) -O coff
@@ -154,12 +213,16 @@ $(TYPELIB): r2sapilib.idl
 $(COBJ): $(CSRC)
 
 $(COBJSSE): $(CSRCSSE)
+ifneq ($(BUILDAMD64), 1)
 $(COBJSSE): CFLAGS += -msse2
+endif
 
 $(CXXOBJ): $(CXXSRC)
 
 $(CXXOBJSSE): $(CXXSRCSSE)
+ifneq ($(BUILDAMD64), 1)
 $(CXXOBJSSE): CXXFLAGS += -msse2
+endif
 
 %.o:%.c
 	$(CC) -o $@ $(CFLAGS) -c $<
@@ -171,5 +234,5 @@ $(CXXOBJSSE): CXXFLAGS += -msse2
 	$(CC) -o $@ -c $<
 
 %.o:%.S
-	$(CC) -o $@ -c $<
+	$(CC) -o $@ $(ASMFLAGS) -c $<
 

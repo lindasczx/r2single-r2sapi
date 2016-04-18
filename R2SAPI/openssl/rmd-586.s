@@ -1,4 +1,4 @@
-.file	"rmd-586.s"
+.file	"asm/rmd-586.s"
 .text
 .globl	_ripemd160_block_asm_data_order
 .def	_ripemd160_block_asm_data_order;	.scl	2;	.type	32;	.endef
