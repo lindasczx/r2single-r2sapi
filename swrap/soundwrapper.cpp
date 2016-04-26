@@ -1,4 +1,8 @@
 #include "soundwrapper.h"
+#include <string.h>
+#include <io.h>
+#include <cmath>
+using namespace std;
 
 int hDig;
 
@@ -89,6 +93,37 @@ int FileType(const char* FileName) {
 #endif
 }
 
+float DirectSoundVolumeToLinearVolume(float v) {
+	if (v <= -10000.0f)
+		return 0;
+	else
+		return pow(10.0f, v * 0.0005f);
+}
+/*
+float DirectSoundVolumeToMssVolume(float v) {
+	if (v <= -10000.0f)
+		return 0;
+	else
+		return exp((v + 200) / 1430);
+}
+
+float LinearVolumeToDirectSoundVolume(float v) {
+	float r;
+	if (v <= 0)
+		return -10000;
+	else
+		r = log10(v) * 2000.0f;
+	if (r < -10000.0f) return -10000; else return r;
+}
+*/
+float MssVolumeToDirectSoundVolume(float v) {
+	// MSS的最低音量是0.0116785098798573025795，低于此数无法播放
+	if (v < 0.0116785098798573025795f)
+		return -10000;
+	else
+		return log(v) * 1430.0f - 200.0f;
+}
+
 //////////////////////////////////////
 // 文件操作回调函数
 //////////////////////////////////////
@@ -109,7 +144,7 @@ DWORD CALLBACK MyFreadProc(void* buffer, DWORD length, void* user){
 }
 
 BOOL CALLBACK MyFseekProc(QWORD offset, void* user){
-	fseekproc((unsigned)user,offset,SEEK_SET);
+	fseekproc((unsigned)user,(int)offset,SEEK_SET);
 	return TRUE;
 }
 
@@ -167,12 +202,12 @@ void API Shutdown(void) {
 #endif
 #ifdef USEBASS
 	FreeBassPlugin();
-//	Win6.0+系统执行这句会挂起,原因未知
-/*	BASS_Free();
+//	以前Win6.0+系统执行这句会挂起，原因未知，但是最新的Win7SP1x64正常
+	BASS_Free();
 	#ifdef DEBUG
 		printd("BASS shut down.\n");
 	#endif
-*/
+
 #endif
 /*
 	ExitProcess(0);
@@ -283,15 +318,15 @@ void API ReleaseSampleHandle(Handle* hSample) {
 	DelHandle(hSample);
 }
 
-void API GetSampleMsPosition(Handle* hSample, long* total_ms, long* current_ms){
+void API GetSampleMsPosition(Handle* hSample, int* total_ms, int* current_ms){
 #ifdef DEBUG
 	printd("GetSampleMsPosition: %p, total, curr\n", hSample);
 #endif
 	if(FindHandleType(hSample)==H_MSS){
 		AIL_sample_ms_position( (MSS::HSAMPLE)FindHandle(hSample), total_ms, current_ms );
 	}else{
-		//*total_ms=(long)( 1000.* BASS_ChannelBytes2Seconds(hStream, BASS_ChannelGetLength(hStream, BASS_POS_BYTE)) );
-		*current_ms=(long)( 1000.* BASS_ChannelBytes2Seconds(FindHandle(hSample),
+		//*total_ms=(int)( 1000.* BASS_ChannelBytes2Seconds(hStream, BASS_ChannelGetLength(hStream, BASS_POS_BYTE)) );
+		*current_ms=(int)( 1000.* BASS_ChannelBytes2Seconds(FindHandle(hSample),
 			BASS_ChannelGetPosition(FindHandle(hSample), BASS_POS_BYTE)) );
 	}
 }
@@ -305,7 +340,7 @@ int API GetSamplePlaybackRate(Handle* hSample) {
 	}else{
 		float freq;
 		BASS_ChannelGetAttribute(FindHandle(hSample), BASS_ATTRIB_FREQ, &freq);
-		return (long)freq;
+		return (int)freq;
 	}
 }
 
@@ -358,14 +393,14 @@ void API SetSampleLoopCount(Handle* hSample, int count) {
 	}
 }
 
-void API SetSampleMsPosition(Handle* hSample, long ms) {
+void API SetSampleMsPosition(Handle* hSample, int ms) {
 #ifdef DEBUG
 	printd("SetSampleMsPosition: %p, %d\n", hSample, ms);
 #endif
 	if(FindHandleType(hSample)==H_MSS){
 		AIL_set_sample_ms_position( (MSS::HSAMPLE)FindHandle(hSample), ms );
 	}else{
-		long bps;
+		int bps;
 		BASS_CHANNELINFO info;
 		BASS_ChannelGetInfo( FindHandle(hSample), &info );
 		bps=info.freq * info.chans;
@@ -381,7 +416,7 @@ void API SetSamplePlaybackRate(Handle* hSample, int rate) {
 	if(FindHandleType(hSample)==H_MSS){
 		AIL_set_sample_playback_rate( (MSS::HSAMPLE)FindHandle(hSample), rate);
 	}else{
-		BASS_ChannelSetAttribute(FindHandle(hSample), BASS_ATTRIB_FREQ, rate);
+		BASS_ChannelSetAttribute(FindHandle(hSample), BASS_ATTRIB_FREQ, (float)rate);
 	}
 }
 
@@ -394,6 +429,7 @@ void API SetSampleVolume(Handle* hSample, float left_level, float right_level) {
 	}else{
 		float vol=(left_level+right_level)*0.5f;
 		float pan=(right_level-left_level);
+		vol = DirectSoundVolumeToLinearVolume(MssVolumeToDirectSoundVolume(vol));
 		BASS_ChannelSetAttribute(FindHandle(hSample), BASS_ATTRIB_VOL, vol);
 		BASS_ChannelSetAttribute(FindHandle(hSample), BASS_ATTRIB_PAN, pan);
 	}
@@ -442,7 +478,7 @@ Handle* API OpenStream(int hDig, char const* FileName, int Stream_Mem) {
 		}else{
 			void *userhandle;
 			BASS_FILEPROCS fileprocs = {MyFcloseProc, MyFlenProc, MyFreadProc, MyFseekProc};
-			r = fopenproc(FileName, (unsigned long*)&userhandle);
+			r = fopenproc(FileName, (unsigned int*)&userhandle);
 			if (r) {
 				h = BASS_StreamCreateFileUser( STREAMFILE_NOBUFFER, 0, &fileprocs, userhandle );
 				if (h) {
@@ -477,15 +513,15 @@ void API GetStreamInfo(Handle* hStream, int* datarate, int* sndtype, int* length
 	return;
 }
 
-void API GetStreamMsPosition(Handle* hStream, long* total_ms, long* current_ms){
+void API GetStreamMsPosition(Handle* hStream, int* total_ms, int* current_ms){
 #ifdef DEBUG
 	printd("GetStreamMsPosition: %p, total, curr\n", hStream);
 #endif
 	if (FindHandleType(hStream)==H_MSS) {
 		AIL_stream_ms_position( (MSS::HSTREAM)FindHandle(hStream), total_ms, current_ms );
 	}else{
-		//*total_ms=(long)( 1000.* BASS_ChannelBytes2Seconds( FindHandle(hStream), BASS_ChannelGetLength(FindHandle(hStream), BASS_POS_BYTE) ) );
-		*current_ms=(long)( 1000.* BASS_ChannelBytes2Seconds( FindHandle(hStream), BASS_ChannelGetPosition(FindHandle(hStream), BASS_POS_BYTE) ) );
+		//*total_ms=(int)( 1000.* BASS_ChannelBytes2Seconds( FindHandle(hStream), BASS_ChannelGetLength(FindHandle(hStream), BASS_POS_BYTE) ) );
+		*current_ms=(int)( 1000.* BASS_ChannelBytes2Seconds( FindHandle(hStream), BASS_ChannelGetPosition(FindHandle(hStream), BASS_POS_BYTE) ) );
 	}
 }
 
@@ -498,7 +534,7 @@ int API GetStreamPlaybackRate(Handle* hStream) {
 	}else{
 		float freq;
 		BASS_ChannelGetAttribute( FindHandle(hStream), BASS_ATTRIB_FREQ, &freq );
-		return (long)freq;
+		return (int)freq;
 	}
 }
 
@@ -528,14 +564,14 @@ void API SetStreamLoopCount(Handle* hStream, int count) {
 	}
 }
 
-void API SetStreamMsPosition(Handle* hStream, long ms) {
+void API SetStreamMsPosition(Handle* hStream, int ms) {
 #ifdef DEBUG
 	printd("SetStreamMsPosition: %p, %d\n", hStream, ms);
 #endif
 	if (FindHandleType(hStream)==H_MSS) {
 		AIL_set_stream_ms_position( (MSS::HSTREAM)FindHandle(hStream), ms );
 	}else{
-		long bps;
+		int bps;
 		BASS_CHANNELINFO info;
 		BASS_ChannelGetInfo( FindHandle(hStream), &info );
 		bps=info.freq * info.chans;
@@ -551,7 +587,7 @@ void API SetStreamPlaybackRate(Handle* hStream, int rate) {
 	if (FindHandleType(hStream)==H_MSS) {
 		AIL_set_stream_playback_rate( (MSS::HSTREAM)FindHandle(hStream), rate );
 	}else{
-		BASS_ChannelSetAttribute( FindHandle(hStream), BASS_ATTRIB_FREQ, rate );
+		BASS_ChannelSetAttribute( FindHandle(hStream), BASS_ATTRIB_FREQ, (float)rate );
 	}
 }
 
@@ -564,6 +600,7 @@ void API SetStreamVolume(Handle* hStream, float left_level, float right_level) {
 	}else{
 		float vol=(left_level+right_level)*0.5f;
 		float pan=(right_level-left_level);
+		vol = DirectSoundVolumeToLinearVolume(MssVolumeToDirectSoundVolume(vol));
 		BASS_ChannelSetAttribute( FindHandle(hStream), BASS_ATTRIB_VOL, vol );
 		BASS_ChannelSetAttribute( FindHandle(hStream), BASS_ATTRIB_PAN, pan );
 	}

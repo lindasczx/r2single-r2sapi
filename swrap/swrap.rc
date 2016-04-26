@@ -53,7 +53,7 @@ BEGIN
 #endif
             VALUE "FileVersion", FILEVERSTR
             VALUE "InternalName", "swrap\0"
-            VALUE "LegalCopyright", "版权所有(C) 2010-2011 ZX Inc.\0"
+            VALUE "LegalCopyright", "版权所有(C) 2010-2016 ZX Inc.\0"
             VALUE "OriginalFilename", "swrap.dll\0"
             VALUE "ProductName", "Sound Engine Wrapper\0"
             VALUE "ProductVersion", PRODUCTVERSTR

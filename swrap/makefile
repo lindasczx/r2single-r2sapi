@@ -1,15 +1,13 @@
 # 编译要求：	Windows
 #		GCC
-#		GNU Binutils
+#		GNU Binutils 2.24以上 (除了2.25.0以外均可)
 #		GNU Make
 #
-# 测试平台：	Windows XP SP3
-#		MinGW 4.0.0 (GCC 4.8.1 + Binutils 2.24 + Make 3.82)
+# 测试平台：	Windows 7 SP1
+#		MinGW-W64 32位套件 (i686-5.3.0-release-win32-sjlj-rt_v4-rev0)
 #
-
-ifneq ($(NO_MSVC_SDK), FALSE)
-export PATH:=	tool;$(PATH)
-endif
+# 运行平台：	所有Windows系统
+#
 
 CC:=		gcc
 CXX:=		g++
@@ -22,8 +20,8 @@ RM:=		rm
 OUTDIR:=	Release/
 CFLAGS:=	-O3 -I.
 CXXFLAGS:=	-O3 -I.
-LINKFLAGS:=	-s -Wl,--subsystem,console:4.0 --image-base 0x62e40000 -Wl,--insert-timestamp
-#SBFLAGS:=	-Wl,--add-stdcall-alias
+RCFLAGS:=	
+LINKFLAGS:=	-s -Wl,--subsystem,console:4.0 --image-base 0x62e40000 -Wl,--insert-timestamp -Wl,--enable-stdcall-fixup
 IMPLIB:=	bass.lib mss32.lib
 IMPOBJ:=	
 
@@ -45,13 +43,14 @@ DEFFILE:=	swrap.def
 BIN:=		$(OUTDIR)swrap.dll
 DEBUGBIN:=	$(OUTDIR)swrapd.dll
 
-.PHONY: all clean cleanobj
+.PHONY: all debug clean cleanobj
 
 all:	$(BIN)
 
 debug:	$(DEBUGBIN)
 debug:	CFLAGS += -DDEBUG
 debug:	CXXFLAGS += -DDEBUG
+debug:	RCFLAGS += -DDEBUG -D_DEBUG
 
 clean:
 	$(RM) $(BIN) $(DEBUGBIN) $(LINKOBJ) *.o
@@ -67,7 +66,7 @@ $(DEBUGBIN): $(LINKOBJ)
 	$(LINK) -o $(DEBUGBIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE) $(LINKFLAGS)
 
 $(RES): swrap.rc
-	$(RC) $< -o $(RES) -O coff
+	$(RC) $(RCFLAGS) $< -o $(RES) -O coff
 
 $(COBJ): $(CSRC)
 
