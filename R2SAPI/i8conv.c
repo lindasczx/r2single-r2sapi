@@ -71,10 +71,14 @@ int64_t API BstrI8(const BSTR a) {
 	int64_t r;
 	int base = 0;
 	const wchar_t *p, *s = a;
+	if (a == NULL) {
+		SetLastError(ERROR_INVALID_PARAMETER);
+		return 0;
+	}
 	if (SysStringLen(a) == 0) return 0;
 	if ((p = wcschr(a, L'&')) != NULL) {
 		p++;
-		if (*p) switch(*p) {
+		if (*p) switch (*p) {
 			case 'H':
 			case 'h':
 				base = 16;
@@ -105,6 +109,10 @@ uint64_t API BstrUI8(const BSTR a) {
 	int64_t r;
 	int base = 0;
 	const wchar_t *p, *s = a;
+	if (a == NULL) {
+		SetLastError(ERROR_INVALID_PARAMETER);
+		return 0;
+	}
 	if (SysStringLen(a) == 0) return 0;
 	if ((p = wcschr(a, L'&')) != NULL) {
 		p++;

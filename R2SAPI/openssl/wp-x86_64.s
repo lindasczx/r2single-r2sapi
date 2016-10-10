@@ -1,9 +1,9 @@
 .text	
 
-.globl	whirlpool_block
-.def	whirlpool_block;	.scl 2;	.type 32;	.endef
+.globl	whirlpool_block
+.def	whirlpool_block;	.scl 2;	.type 32;	.endef
 .p2align	4
-whirlpool_block:
+whirlpool_block:
 	movq	%rdi,8(%rsp)
 	movq	%rsi,16(%rsp)
 	movq	%rsp,%rax
@@ -937,7 +937,7 @@ se_handler:
 	movq	%r11,40(%rsp)
 	movq	%r12,48(%rsp)
 	movq	%rcx,56(%rsp)
-	call	*__imp_RtlVirtualUnwind(%rip)
+	call	*__imp_RtlVirtualUnwind(%rip)
 
 	movl	$1,%eax
 	addq	$64,%rsp

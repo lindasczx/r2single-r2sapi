@@ -1,10 +1,10 @@
 .text	
 
 
-.globl	sha1_block_data_order
-.def	sha1_block_data_order;	.scl 2;	.type 32;	.endef
+.globl	sha1_block_data_order
+.def	sha1_block_data_order;	.scl 2;	.type 32;	.endef
 .p2align	4
-sha1_block_data_order:
+sha1_block_data_order:
 	movq	%rdi,8(%rsp)
 	movq	%rsi,16(%rsp)
 	movq	%rsp,%rax
@@ -13,9 +13,9 @@
 	movq	%rdx,%rsi
 	movq	%r8,%rdx
 
-	movl	OPENSSL_ia32cap_P+0(%rip),%r9d
-	movl	OPENSSL_ia32cap_P+4(%rip),%r8d
-	movl	OPENSSL_ia32cap_P+8(%rip),%r10d
+	movl	OPENSSL_ia32cap_P+0(%rip),%r9d
+	movl	OPENSSL_ia32cap_P+4(%rip),%r8d
+	movl	OPENSSL_ia32cap_P+8(%rip),%r10d
 	testl	$512,%r8d
 	jz	.Lialu
 	testl	$536870912,%r10d
@@ -1272,9 +1272,9 @@ _shaext_shortcut:
 	movdqa	K_XX_XX+160(%rip),%xmm3
 
 	movdqu	(%rsi),%xmm4
-	pshufd	$0b00011011,%xmm0,%xmm0
+	pshufd	$27,%xmm0,%xmm0
 	movdqu	16(%rsi),%xmm5
-	pshufd	$0b00011011,%xmm1,%xmm1
+	pshufd	$27,%xmm1,%xmm1
 	movdqu	32(%rsi),%xmm6
 .byte	102,15,56,0,227
 	movdqu	48(%rsi),%xmm7
@@ -1287,9 +1287,9 @@ _shaext_shortcut:
 .p2align	4
 .Loop_shaext:
 	decq	%rdx
-	leaq	64(%rsi),%rax
+	leaq	64(%rsi),%r8
 	paddd	%xmm4,%xmm1
-	cmovneq	%rax,%rsi
+	cmovneq	%r8,%rsi
 	movdqa	%xmm0,%xmm8
 .byte	15,56,201,229
 	movdqa	%xmm0,%xmm2
@@ -1424,8 +1424,8 @@ _shaext_shortcut:
 
 	jnz	.Loop_shaext
 
-	pshufd	$0b00011011,%xmm0,%xmm0
-	pshufd	$0b00011011,%xmm1,%xmm1
+	pshufd	$27,%xmm0,%xmm0
+	pshufd	$27,%xmm1,%xmm1
 	movdqu	%xmm0,(%rdi)
 	movd	%xmm1,16(%rdi)
 	movaps	-8-64(%rax),%xmm6
@@ -5645,7 +5645,7 @@ ssse3_handler:
 	movq	%r11,40(%rsp)
 	movq	%r12,48(%rsp)
 	movq	%rcx,56(%rsp)
-	call	*__imp_RtlVirtualUnwind(%rip)
+	call	*__imp_RtlVirtualUnwind(%rip)
 
 	movl	$1,%eax
 	addq	$64,%rsp

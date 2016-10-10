@@ -7,8 +7,8 @@
 #		如果忽略可选项，请自己改makefile
 #
 # 测试平台：	Windows 7 SP1
-#		MinGW-W64 32位套件 (i686-5.3.0-release-win32-sjlj-rt_v4-rev0)
-#		MinGW-W64 64位套件 (x86_64-5.3.0-release-win32-seh-rt_v4-rev0)
+#		MinGW-W64 32位套件 (i686-6.2.0-release-win32-sjlj-rt_v5-rev1)
+#		MinGW-W64 64位套件 (x86_64-6.2.0-release-win32-seh-rt_v5-rev1)
 #		MSVC 2010 SP1 (cl + lib + link 10.0.40219.1)
 #		WinSDK 7.1 (midl + midlc 7.0.555.1)
 #
@@ -48,7 +48,7 @@ endif
 RM:=		rm
 CP:=		cp
 
-GCCFLAGS:=	-O3 -I. -D_USRDLL -DL_ENDIAN -DDSO_WIN32 -DMD5_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DWHIRLPOOL_ASM -DZLIB_WINAPI -DASMV -D_LARGEFILE64_SOURCE -D_LFS64_LARGEFILE -Wall -Wno-unknown-pragmas -Wno-parentheses -Wno-comments
+GCCFLAGS:=	-O3 -I. -municode -D_USRDLL -DL_ENDIAN -DDSO_WIN32 -DMD5_ASM -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DWHIRLPOOL_ASM -DZLIB_WINAPI -DASMV -D_LARGEFILE64_SOURCE -D_LFS64_LARGEFILE -Wall -Wno-unknown-pragmas -Wno-parentheses -Wno-comments
 X86FLAGS:=	-m32 -march=i686 -DRMD160_ASM
 AMD64FLAGS:=	-m64
 ifneq ($(BUILDAMD64), 1)
@@ -187,7 +187,7 @@ BIN:=		r2sapi64.dll
 endif
 DESTDIR:=	bin
 
-.PHONY: all clean cleanobj
+.PHONY: all clean cleanobj install
 
 all:	$(BIN)
 

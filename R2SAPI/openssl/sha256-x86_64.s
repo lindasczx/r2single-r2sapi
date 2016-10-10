@@ -1,10 +1,10 @@
 .text	
 
 
-.globl	sha256_block_data_order
-.def	sha256_block_data_order;	.scl 2;	.type 32;	.endef
+.globl	sha256_block_data_order
+.def	sha256_block_data_order;	.scl 2;	.type 32;	.endef
 .p2align	4
-sha256_block_data_order:
+sha256_block_data_order:
 	movq	%rdi,8(%rsp)
 	movq	%rsi,16(%rsp)
 	movq	%rsp,%rax
@@ -13,7 +13,7 @@
 	movq	%rdx,%rsi
 	movq	%r8,%rdx
 
-	leaq	OPENSSL_ia32cap_P(%rip),%r11
+	leaq	OPENSSL_ia32cap_P(%rip),%r11
 	movl	0(%r11),%r9d
 	movl	4(%r11),%r10d
 	movl	8(%r11),%r11d
@@ -5533,7 +5533,7 @@ se_handler:
 	movq	%r11,40(%rsp)
 	movq	%r12,48(%rsp)
 	movq	%rcx,56(%rsp)
-	call	*__imp_RtlVirtualUnwind(%rip)
+	call	*__imp_RtlVirtualUnwind(%rip)
 
 	movl	$1,%eax
 	addq	$64,%rsp
