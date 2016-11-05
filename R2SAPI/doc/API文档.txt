@@ -16,6 +16,8 @@
 327		*	EnumFileFromPakW	从PAK文件中枚举文件（线程安全）
 65	276	*	GetFileFromPakA		从PAK文件中读取一个文件（V327起线程安全）
 129	276	*	GetFileFromPakW		从PAK文件中读取一个文件（V327起线程安全）
+435		*	GetFileFromPakOffsetA	从PAK文件中的指定位置读取数据（线程安全）
+435		*	GetFileFromPakOffsetW	从PAK文件中的指定位置读取数据（线程安全）
 352	353	*	I4Rol			32位整数循环左移
 352	353	*	I4Ror			32位整数循环右移
 352		32	I4Shl			32位整数左移
@@ -45,9 +47,9 @@
 352		32	I8R8			64位整数转为双精度浮点数（ByVal版）
 352		32	I8R8R			64位整数转为双精度浮点数（ByRef版）
 352	353	*	I8Rol			64位整数循环左移（ByVal版）
-352		*	I8RolR			64位整数循环左移（ByRef版）
+352		32	I8RolR			64位整数循环左移（ByRef版）
 352	353	*	I8Ror			64位整数循环右移（ByVal版）
-352		*	I8RorR			64位整数循环右移（ByRef版）
+352		32	I8RorR			64位整数循环右移（ByRef版）
 352		32	I8Shl			64位整数左移（ByVal版）
 352		32	I8ShlR			64位整数左移（ByRef版）
 352		32	I8Shr			64位整数算术右移（ByVal版）
@@ -58,6 +60,7 @@
 352		32	I8XorR			64位整数位异或（ByRef版）
 272	276	*	LzssCompress		LZSS压缩函数
 276	324	*	LzssCompress2		LZSS压缩函数（可变压缩级别）
+435		*	LzssCompressBound	计算LZSS压缩后数据大小上限
 272	276	*	LzssDecompress		LZSS解压函数
 164		*	MD4			MD4散列函数
 164	339	*	MD4_Final		MD4散列函数
@@ -77,6 +80,7 @@
 164	339	*	MDC2_Final		MDC-2散列函数
 164		*	MDC2_Init		MDC-2散列函数
 164		*	MDC2_Update		MDC-2散列函数
+435		*	QuickSort		快速排序函数
 352		32	R8I8			双精度浮点数转为64位整数
 352		32	R8UI8			双精度浮点数转为无符号64位整数
 164		*	RIPEMD160		RIPEMD-160散列函数
@@ -202,15 +206,15 @@
 318		*	ZlibCompressBound	计算zlib压缩后数据大小上限
 318		*	ZlibUncompress		zlib解压函数
 1		*	_			R2SAPI库版本号
-70		32	compress		zlib压缩函数		（2014-5废弃，请用ZlibCompress）
-70		32	compress2		zlib压缩函数		（2014-5废弃，请用ZlibCompress2）
-70		32	compressBound		zlib压缩函数		（2014-5废弃，请用ZlibCompressBound）
-120		*	cpConvertEncoding	转换字符串编码			（推荐使用）
+70		32	compress		zlib压缩函数	（2014-5废弃，随时可能删除，请用ZlibCompress）
+70		32	compress2		zlib压缩函数	（2014-5废弃，随时可能删除，请用ZlibCompress2）
+70		32	compressBound		zlib压缩函数	（2014-5废弃，随时可能删除，请用ZlibCompressBound）
+120		*	cpConvertEncoding	转换字符串编码	（推荐使用）
 252		*	cpMakeTrCode		生成转换码
 120		*	cpTrCodeSupported	转换码是否支持
-87		32	crc32			CRC32校验函数		（2014-5废弃，请用CRC32）
-120		32	crc32_combine		CRC32校验函数		（2014-5废弃，请用CRC32_Combine）
-120		32	get_crc_table		CRC32校验函数		（2014-5废弃，请用CRC32_GetTable）
-67		32	uncompress		zlib解压函数		（2014-5废弃，请用ZlibUncompress）
-120		32	zlibVersion		zlib库版本号		（2015-12废弃，请用_）
+87		32	crc32			CRC32校验函数	（2014-5废弃，随时可能删除，请用CRC32）
+120		32	crc32_combine		CRC32校验函数	（2014-5废弃，随时可能删除，请用CRC32_Combine）
+120		32	get_crc_table		CRC32校验函数	（2014-5废弃，随时可能删除，请用CRC32_GetTable）
+67		32	uncompress		zlib解压函数	（2014-5废弃，随时可能删除，请用ZlibUncompress）
+120		32	zlibVersion		zlib库版本号	（2015-12废弃，随时可能删除，请用_）
 

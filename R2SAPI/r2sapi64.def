@@ -13,8 +13,11 @@ EnumFileFromPakA
 EnumFileFromPakW
 GetFileFromPakA
 GetFileFromPakW
+GetFileFromPakOffsetA
+GetFileFromPakOffsetW
 LzssCompress		=lzsscompress
 LzssCompress2		=lzsscompress2
+LzssCompressBound	=lzsscompressbound
 LzssDecompress		=lzssdecompress
 
 ;///////////////////////////////////////////
@@ -198,6 +201,11 @@ I4Ror
 ;// i8helper.c
 I8Rol
 I8Ror
-I8RolR
-I8RorR
+
+;///////////////////////////////////////////
+;//////// 7. 排序函数
+;///////////////////////////////////////////
+
+;// sort.c
+QuickSort
 

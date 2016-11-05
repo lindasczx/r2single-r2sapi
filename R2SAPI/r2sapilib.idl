@@ -1,7 +1,7 @@
 [
-	version(1.41),
+	version(1.42),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.41 Type Library")
+	helpstring("R2Single API 1.42 Type Library")
 ]
 library R2SAPILib
 {
@@ -13,7 +13,7 @@ library R2SAPILib
 	]
 	module R2SAPIConstants
 	{
-		const LPSTR STR_ERROR = "^ERROR";
+		const LPSTR STR_ERROR = "^ERROR";	// VB不能识别LPWSTR
 		const long  XML_ERR_OK = 0;
 		const long  XML_ERR_NOTFOUND = -1;
 		const long  XML_ERR_BUFFER = -2;
@@ -186,13 +186,17 @@ library R2SAPILib
 		[entry("EnumFileFromPakW")]
 			long __stdcall EnumFileFromPak([in,string]LPCWSTR PakFileName, [in]long lpEnumFunc, [in]long Param);
 		[entry("GetFileFromPakW")]
-			long __stdcall GetFileFromPak([in,out]void* pBuffer, [in]long ulBufLen, [in,string]LPCWSTR PakFileName, [in,string]LPCWSTR FileWant);
+			long __stdcall GetFileFromPak([in,out]void* Buffer, [in]long BufLen, [in,string]LPCWSTR PakFileName, [in,string]LPCWSTR FileWant);
+		[entry("GetFileFromPakOffsetW")]
+			long __stdcall GetFileFromPakOffset([in,out]void* Buffer, [in]long BufLen, [in,string]LPCWSTR PakFileName, [in]long Offset, [in]long CompressedSize);
 		[entry("LzssCompress")]
-			void __stdcall LzssCompress([in,out]void* pDataBuffer, [in]long ulDataBytes, [in,out]void* pOutputBuffer, [in,out]long* ulOutputBytes);
+			void __stdcall LzssCompress([in,out]void* DataBuffer, [in]long DataBytes, [in,out]void* OutputBuffer, [in,out]long* OutputBytes);
 		[entry("LzssCompress2")]
-			void __stdcall LzssCompress2([in,out]void* pDataBuffer, [in]long ulDataBytes, [in,out]void* pOutputBuffer, [in,out]long* ulOutputBytes, [in]long CompressLevel);
+			void __stdcall LzssCompress2([in,out]void* DataBuffer, [in]long DataBytes, [in,out]void* OutputBuffer, [in,out]long* OutputBytes, [in]long CompressLevel);
+		[entry("LzssCompressBound")]
+			long __stdcall LzssCompressBound([in]long SrcLen);
 		[entry("LzssDecompress")]
-			void __stdcall LzssDecompress([in,out]void* pDataBuffer, [in]long ulDataBytes, [in,out]void* pOutputBuffer, [in]long ulOutputBytes);
+			long __stdcall LzssDecompress([in,out]void* DataBuffer, [in]long DataBytes, [in,out]void* OutputBuffer, [in]long OutputBytes);
 ///////////////////////////////////////////
 //////// 2. 解析XML
 ///////////////////////////////////////////
@@ -589,6 +593,12 @@ library R2SAPILib
 			BSTR __stdcall I8Hex([in]Int64* A);
 		[entry("I8BstrOctR")]
 			BSTR __stdcall I8Oct([in]Int64* A);
+///////////////////////////////////////////
+//////// 7. 排序函数
+///////////////////////////////////////////
+////	sort.c
+		[entry("QuickSort")]
+			void __stdcall QuickSort([in]void* ArrayBase, [in]long ElementNum, [in]long ElementSize, [in]long CompareFunc);
 
 	};
 

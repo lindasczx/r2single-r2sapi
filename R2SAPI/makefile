@@ -126,6 +126,7 @@ CSRC+=		openssl/wp_dgst.c
 CSRC+=		sha3.c
 CSRC+=		sha512-t.c
 CSRC+=		sm3.c
+CSRC+=		sort.c
 CSRC+=		stdc.c
 CSRC+=		utf.c
 CSRC+=		utf7.c
@@ -192,10 +193,10 @@ DESTDIR:=	bin
 all:	$(BIN)
 
 clean:
-	$(RM) $(BIN) $(OUTLIB) $(LINKOBJ) $(TYPELIB) *.o
+	-$(RM) $(BIN) $(OUTLIB) $(LINKOBJ) $(TYPELIB) *.o
 
 cleanobj:
-	$(RM) $(LINKOBJ) $(TYPELIB) *.o
+	-$(RM) $(LINKOBJ) $(TYPELIB) *.o
 
 install:
 	$(CP) $(BIN) $(OUTLIB) $(DESTDIR)

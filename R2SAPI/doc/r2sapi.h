@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.41.0.424
+	1.42.0.435
 --*/
 
 #ifndef R2SAPI_H_
@@ -60,8 +60,8 @@ typedef struct {
 	size_t Size;
 	char FileName[MAX_PATH];
 } ENUMPAKFILEA;
-typedef int (API ENUMPAKPROCW)(const ENUMPAKFILEW *, const void *);
-typedef int (API ENUMPAKPROCA)(const ENUMPAKFILEA *, const void *);
+typedef int (API ENUMPAKPROCW)(const ENUMPAKFILEW *, void *);
+typedef int (API ENUMPAKPROCA)(const ENUMPAKFILEA *, void *);
 
 #define MD4_LBLOCK 16
 typedef struct MD4state_st
@@ -194,13 +194,16 @@ int API _();
 ///////////////////////////////////////////
 
 ////westpak
-size_t API EnumFileFromPakA(const char *fn, ENUMPAKPROCA lpEnumFunc, const void *param);
-size_t API EnumFileFromPakW(const wchar_t *fn, ENUMPAKPROCW lpEnumFunc, const void *param);
-size_t API GetFileFromPakA(void* pBuf, size_t ulBufLen, LPCSTR pszFn, LPCSTR pszFnWant);
-size_t API GetFileFromPakW(void* pBuf, size_t ulBufLen, LPCWSTR pszFn, LPCWSTR pszFnWant);
-void API LzssCompress(const void* pDataBuffer, size_t ulDataBytes, void* pOutputBuffer, size_t* ulOutputBytes);
-void API LzssCompress2(const void* pDataBuffer, size_t ulDataBytes, void* pOutputBuffer, size_t* ulOutputBytes, int CompressLevel);
-size_t API LzssDecompress(const void* pDataBuffer, size_t ulDataBytes, void* pOutputBuffer, size_t ulOutputBytes);
+size_t API EnumFileFromPakA(LPCSTR PakFileName, ENUMPAKPROCA lpEnumFunc, void* Param);
+size_t API EnumFileFromPakW(LPCWSTR PakFileName, ENUMPAKPROCW lpEnumFunc, void* Param);
+size_t API GetFileFromPakA(void* pBuf, size_t BufLen, LPCSTR PakFileName, LPCSTR FileWant);
+size_t API GetFileFromPakW(void* pBuf, size_t BufLen, LPCWSTR PakFileName, LPCWSTR FileWant);
+size_t API GetFileFromPakOffsetA(void* pBuf, size_t BufLen, LPCSTR PakFileName, size_t Offset, size_t CompressedSize);
+size_t API GetFileFromPakOffsetW(void* pBuf, size_t BufLen, LPCWSTR PakFileName, size_t Offset, size_t CompressedSize);
+void API LzssCompress(const void* pDataBuffer, size_t DataBytes, void* pOutputBuffer, size_t* OutputBytes);
+void API LzssCompress2(const void* pDataBuffer, size_t DataBytes, void* pOutputBuffer, size_t* OutputBytes, int CompressLevel);
+size_t API LzssCompressBound(size_t DataLen);
+size_t API LzssDecompress(const void* pDataBuffer, size_t DataBytes, void* pOutputBuffer, size_t OutputBytes);
 
 ///////////////////////////////////////////
 //////// 2. 解析XML
@@ -317,7 +320,7 @@ int API MD6_Final(MD6_CTX *c, unsigned char *md);
 unsigned char * API MD6(const void *d, size_t n, unsigned char *md);
 unsigned char * API MD6_Len(const void *d, size_t n, unsigned char *md, int mdlen);
 
-////blake2sp
+////unrar
 int API BLAKE2SP_Init(BLAKE2SP_CTX *c);
 int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
 int API BLAKE2SP_Final(BLAKE2SP_CTX *c, unsigned char *md);
@@ -380,11 +383,18 @@ int API I4Ror(int, int);
 ////i8helper
 int64_t API I8Rol(int64_t, int);
 int64_t API I8Ror(int64_t, int);
+#ifndef _WIN64
 int64_t API I8RolR(int64_t *, int);
 int64_t API I8RorR(int64_t *, int);
+#endif
 
 ///////////////////////////////////////////
-//////// 7. 不再使用的旧函数
+//////// 7. 排序函数
+///////////////////////////////////////////
+////本模块很多函数C/C++等语言原生支持，因此不列
+
+///////////////////////////////////////////
+//////// 8. 不再使用的旧函数
 ///////////////////////////////////////////
 
 #ifndef _WIN64
