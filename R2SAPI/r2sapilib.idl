@@ -187,8 +187,8 @@ library R2SAPILib
 			long __stdcall EnumFileFromPak([in,string]LPCWSTR PakFileName, [in]long lpEnumFunc, [in]long Param);
 		[entry("GetFileFromPakW")]
 			long __stdcall GetFileFromPak([in,out]void* Buffer, [in]long BufLen, [in,string]LPCWSTR PakFileName, [in,string]LPCWSTR FileWant);
-		[entry("GetFileFromPakOffsetW")]
-			long __stdcall GetFileFromPakOffset([in,out]void* Buffer, [in]long BufLen, [in,string]LPCWSTR PakFileName, [in]long Offset, [in]long CompressedSize);
+		[entry("GetFileFromPakOffset2W")]
+			long __stdcall GetFileFromPakOffset([in,out]void* Buffer, [in]long BufLen, [in,string]LPCWSTR PakFileName, [in]long Offset, [in]long CompressedSize, [in]long Algo);
 		[entry("LzssCompress")]
 			void __stdcall LzssCompress([in,out]void* DataBuffer, [in]long DataBytes, [in,out]void* OutputBuffer, [in,out]long* OutputBytes);
 		[entry("LzssCompress2")]

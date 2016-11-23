@@ -14,10 +14,12 @@
 284		*	CRC64_GetTable		CRC64校验函数
 327		*	EnumFileFromPakA	从PAK文件中枚举文件（线程安全）
 327		*	EnumFileFromPakW	从PAK文件中枚举文件（线程安全）
-65	276	*	GetFileFromPakA		从PAK文件中读取一个文件（V327起线程安全）
-129	276	*	GetFileFromPakW		从PAK文件中读取一个文件（V327起线程安全）
-435		*	GetFileFromPakOffsetA	从PAK文件中的指定位置读取数据（线程安全）
-435		*	GetFileFromPakOffsetW	从PAK文件中的指定位置读取数据（线程安全）
+65	436	*	GetFileFromPakA		从PAK文件中读取一个文件（线程安全）
+129	436	*	GetFileFromPakW		从PAK文件中读取一个文件（线程安全）
+435		*	GetFileFromPakOffsetA	从PAK文件中的指定位置读取LZSS压缩的数据（不推荐使用）
+435		*	GetFileFromPakOffsetW	从PAK文件中的指定位置读取LZSS压缩的数据（不推荐使用）
+436		*	GetFileFromPakOffset2A	从PAK文件中的指定位置读取数据（线程安全，推荐使用）
+436		*	GetFileFromPakOffset2W	从PAK文件中的指定位置读取数据（线程安全，推荐使用）
 352	353	*	I4Rol			32位整数循环左移
 352	353	*	I4Ror			32位整数循环右移
 352		32	I4Shl			32位整数左移

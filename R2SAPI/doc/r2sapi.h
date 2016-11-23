@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.42.0.435
+	1.42.0.436
 --*/
 
 #ifndef R2SAPI_H_
@@ -200,6 +200,8 @@ size_t API GetFileFromPakA(void* pBuf, size_t BufLen, LPCSTR PakFileName, LPCSTR
 size_t API GetFileFromPakW(void* pBuf, size_t BufLen, LPCWSTR PakFileName, LPCWSTR FileWant);
 size_t API GetFileFromPakOffsetA(void* pBuf, size_t BufLen, LPCSTR PakFileName, size_t Offset, size_t CompressedSize);
 size_t API GetFileFromPakOffsetW(void* pBuf, size_t BufLen, LPCWSTR PakFileName, size_t Offset, size_t CompressedSize);
+size_t API GetFileFromPakOffset2A(void* pBuf, size_t BufLen, LPCSTR PakFileName, size_t Offset, size_t CompressedSize, int algo);
+size_t API GetFileFromPakOffset2W(void* pBuf, size_t BufLen, LPCWSTR PakFileName, size_t Offset, size_t CompressedSize, int algo);
 void API LzssCompress(const void* pDataBuffer, size_t DataBytes, void* pOutputBuffer, size_t* OutputBytes);
 void API LzssCompress2(const void* pDataBuffer, size_t DataBytes, void* pOutputBuffer, size_t* OutputBytes, int CompressLevel);
 size_t API LzssCompressBound(size_t DataLen);

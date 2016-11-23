@@ -11,8 +11,8 @@ Hash函数			Win95+
 
 本程序使用以下外部类库:
 nettle		3.3		Win95+
-openssl		1.1.0b		Win95+
-westpak		1.8.1.82	Win95+
+openssl		1.1.0c		Win95+
+westpak		1.9.0.90	Win95+
 xmlparser	1.0.62.145	Win95+
 zlib		1.2.8		Win95+
 
