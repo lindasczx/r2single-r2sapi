@@ -8,7 +8,11 @@
 #include <memory.h>
 #define _forceinline inline
 #define ALIGN_VALUE(v, a) ((size_t)(v) + ( (~(size_t)(v) + 1) & ((a) - 1) ) )
+#ifdef _WIN64
+#define _WIN_64
+#else
 #define _WIN_32
+#endif
 #define USE_SSE
 typedef unsigned char byte;
 static inline uint32_t RawGet4(const byte *D)

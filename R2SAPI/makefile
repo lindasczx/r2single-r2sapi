@@ -82,14 +82,14 @@ endif
 endif
 
 CSRC:=		r2sapi.c
-CSRCSSE:=
+CSRCSSE2:=
+CSRCSSE3:=
 CXXSRC:=	
 CXXSRCSSE:=	
 ASMSRC:=
 CSRC+=		blake2.c
 CSRC+=		blake2s.c
 CSRC+=		blake2sp.c
-CSRCSSE+=	blake2s_sse.c
 CSRC+=		crc32.c
 CSRC+=		crc64.c
 CSRC+=		getcpuid.c
@@ -140,6 +140,7 @@ CSRC+=		zlib/trees.c
 CSRC+=		zlib/uncompr.c
 CSRC+=		zlib/zutil.c
 ifneq ($(BUILDAMD64), 1)
+CSRCSSE2+=	blake2s_sse.c
 CSRC+=		nettle/sha3-permute.c
 ASMSRC+=	openssl/des-586.s
 ASMSRC+=	openssl/md5-586.s
@@ -151,6 +152,7 @@ CSRC+=		openssl/wp_block.c
 ASMSRC+=	openssl/wp-mmx.s
 ASMSRC+=	zlib/match.S
 else
+CSRCSSE3+=	blake2s_sse.c
 ASMSRC+=	nettle/sha3-permute-amd64.s
 CSRC+=		openssl/des_enc.c
 ASMSRC+=	openssl/md5-x86_64.s
@@ -168,14 +170,15 @@ CXXSRC+=	../r2pak/fileio.cpp
 endif
 
 COBJ:=		$(CSRC:%.c=%.o)
-COBJSSE:=	$(CSRCSSE:%.c=%.o)
+COBJSSE2:=	$(CSRCSSE2:%.c=%.o)
+COBJSSE3:=	$(CSRCSSE3:%.c=%.o)
 CXXOBJ:=	$(CXXSRC:%.cpp=%.o)
 CXXOBJSSE:=	$(CXXSRCSSE:%.cpp=%.o)
 ASMOBJ:=	$(ASMSRC:%.s=%.o)
 ASMOBJ:=	$(ASMOBJ:%.S=%.o)
 
 RES:=		r2sapi.res
-LINKOBJ:=	$(COBJ) $(COBJSSE) $(CXXOBJ) $(CXXOBJSSE) $(ASMOBJ) $(RES)
+LINKOBJ:=	$(COBJ) $(COBJSSE2) $(COBJSSE3) $(CXXOBJ) $(CXXOBJSSE) $(ASMOBJ) $(RES)
 TYPELIB:=	r2sapilib.tlb
 ifneq ($(BUILDAMD64), 1)
 DEFFILE:=	r2sapi.def
@@ -213,17 +216,16 @@ $(TYPELIB): r2sapilib.idl
 
 $(COBJ): $(CSRC)
 
-$(COBJSSE): $(CSRCSSE)
-ifneq ($(BUILDAMD64), 1)
-$(COBJSSE): CFLAGS += -msse2
-endif
+$(COBJSSE2): $(CSRCSSE2)
+$(COBJSSE2): CFLAGS += -msse2
+
+$(COBJSSE3): $(CSRCSSE3)
+$(COBJSSE3): CFLAGS += -mssse3
 
 $(CXXOBJ): $(CXXSRC)
 
 $(CXXOBJSSE): $(CXXSRCSSE)
-ifneq ($(BUILDAMD64), 1)
 $(CXXOBJSSE): CXXFLAGS += -msse2
-endif
 
 %.o:%.c
 	$(CC) -o $@ $(CFLAGS) -c $<

@@ -1,7 +1,11 @@
 // Based on public domain code written in 2012 by Samuel Neves
 
 #include "blake2s.h"
+#ifdef _WIN_32
 #include <emmintrin.h>
+#else
+#include <tmmintrin.h>
+#endif
 
 extern const byte blake2s_sigma[10][16];
 
