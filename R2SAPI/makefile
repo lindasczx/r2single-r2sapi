@@ -165,6 +165,7 @@ endif
 ifeq ($(COMPILE_FROM_PUBLIC), FALSE)
 CSRC+=		../../../xmlparser.c
 CSRC+=		../r2pak/lzssdec.c
+CSRC+=		../r2pak/lzssdecxor.c
 CSRC+=		../r2pak/lzssenc.c
 CXXSRC+=	../r2pak/fileio.cpp
 endif

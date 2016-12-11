@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.42.0.436
+	1.42.0.438
 --*/
 
 #ifndef R2SAPI_H_
@@ -45,6 +45,11 @@ typedef const int * LPCLSTR;
 
 #define MAKETRCODE(a,b) ( (uint32_t)( (((uint32_t)(uint16_t)a)<<16) | ((uint32_t)(uint16_t)b) ) )
 //unsigned int WINAPI cpMakeTrCode(unsigned short cpfrom, unsigned short cpto);
+
+#define ALGO_NO		0
+#define ALGO_LZSS	1
+#define ALGO_DIR	2
+#define ALGO_LZSS_XOR	3
 
 typedef struct {
 	unsigned int Type;
@@ -198,14 +203,15 @@ size_t API EnumFileFromPakA(LPCSTR PakFileName, ENUMPAKPROCA lpEnumFunc, void* P
 size_t API EnumFileFromPakW(LPCWSTR PakFileName, ENUMPAKPROCW lpEnumFunc, void* Param);
 size_t API GetFileFromPakA(void* pBuf, size_t BufLen, LPCSTR PakFileName, LPCSTR FileWant);
 size_t API GetFileFromPakW(void* pBuf, size_t BufLen, LPCWSTR PakFileName, LPCWSTR FileWant);
-size_t API GetFileFromPakOffsetA(void* pBuf, size_t BufLen, LPCSTR PakFileName, size_t Offset, size_t CompressedSize);
-size_t API GetFileFromPakOffsetW(void* pBuf, size_t BufLen, LPCWSTR PakFileName, size_t Offset, size_t CompressedSize);
+#define GetFileFromPakOffsetA GetFileFromPakOffset2A
+#define GetFileFromPakOffsetW GetFileFromPakOffset2W
 size_t API GetFileFromPakOffset2A(void* pBuf, size_t BufLen, LPCSTR PakFileName, size_t Offset, size_t CompressedSize, int algo);
 size_t API GetFileFromPakOffset2W(void* pBuf, size_t BufLen, LPCWSTR PakFileName, size_t Offset, size_t CompressedSize, int algo);
-void API LzssCompress(const void* pDataBuffer, size_t DataBytes, void* pOutputBuffer, size_t* OutputBytes);
-void API LzssCompress2(const void* pDataBuffer, size_t DataBytes, void* pOutputBuffer, size_t* OutputBytes, int CompressLevel);
+void API LzssCompress(const void* InBuf, size_t InLen, void* OutBuf, size_t* pOutLen);
+void API LzssCompress2(const void* InBuf, size_t InLen, void* OutBuf, size_t* pOutLen, int CompressLevel);
 size_t API LzssCompressBound(size_t DataLen);
-size_t API LzssDecompress(const void* pDataBuffer, size_t DataBytes, void* pOutputBuffer, size_t OutputBytes);
+size_t API LzssDecompress(const void* InBuf, size_t InLen, void* OutBuf, size_t OutLen);
+size_t API LzssDecompressXor(const void* InBuf, size_t InLen, void* OutBuf, size_t OutLen);
 
 ///////////////////////////////////////////
 //////// 2. 解析XML

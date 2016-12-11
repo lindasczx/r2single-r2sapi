@@ -19,6 +19,11 @@ library R2SAPILib
 		const long  XML_ERR_BUFFER = -2;
 		const long  XML_ERR_INVALID_PARAM = -3;
 
+		const long  ALGO_NO = 0;
+		const long  ALGO_LZSS = 1;
+		const long  ALGO_DIR = 2;
+		const long  ALGO_LZSS_XOR = 3;
+
 		const long  Z_OK = 0;
 		const long  Z_STREAM_ERROR = -2;
 		const long  Z_DATA_ERROR = -3;
@@ -190,13 +195,15 @@ library R2SAPILib
 		[entry("GetFileFromPakOffset2W")]
 			long __stdcall GetFileFromPakOffset([in,out]void* Buffer, [in]long BufLen, [in,string]LPCWSTR PakFileName, [in]long Offset, [in]long CompressedSize, [in]long Algo);
 		[entry("LzssCompress")]
-			void __stdcall LzssCompress([in,out]void* DataBuffer, [in]long DataBytes, [in,out]void* OutputBuffer, [in,out]long* OutputBytes);
+			void __stdcall LzssCompress([in,out]void* InBuf, [in]long InLen, [in,out]void* OutBuf, [in,out]long* OutLen);
 		[entry("LzssCompress2")]
-			void __stdcall LzssCompress2([in,out]void* DataBuffer, [in]long DataBytes, [in,out]void* OutputBuffer, [in,out]long* OutputBytes, [in]long CompressLevel);
+			void __stdcall LzssCompress2([in,out]void* InBuf, [in]long InLen, [in,out]void* OutBuf, [in,out]long* OutLen, [in]long CompressLevel);
 		[entry("LzssCompressBound")]
 			long __stdcall LzssCompressBound([in]long SrcLen);
 		[entry("LzssDecompress")]
-			long __stdcall LzssDecompress([in,out]void* DataBuffer, [in]long DataBytes, [in,out]void* OutputBuffer, [in]long OutputBytes);
+			long __stdcall LzssDecompress([in,out]void* InBuf, [in]long InLen, [in,out]void* OutBuf, [in]long OutLen);
+		[entry("LzssDecompressXor")]
+			long __stdcall LzssDecompressXor([in,out]void* InBuf, [in]long InLen, [in,out]void* OutBuf, [in]long OutLen);
 ///////////////////////////////////////////
 //////// 2. 解析XML
 ///////////////////////////////////////////
@@ -269,9 +276,9 @@ library R2SAPILib
 			long __stdcall SHA224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA224_Init")]
 			long __stdcall SHA224_Init([in,out]SHA256_CTX* c);
-		[entry("SHA224_Update")]
+		[entry("SHA256_Update")]
 			long __stdcall SHA224_Update([in,out]SHA256_CTX* c, [in]void* pBuffer, [in]long lBufLen);
-		[entry("SHA224_Final")]
+		[entry("SHA256_Final")]
 			long __stdcall SHA224_Final([in,out]SHA256_CTX* c, [in,out]void* pResult);
 		[entry("SHA256")]
 			long __stdcall SHA256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
@@ -285,9 +292,9 @@ library R2SAPILib
 			long __stdcall SHA384([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA384_Init")]
 			long __stdcall SHA384_Init([in,out]SHA512_CTX* c);
-		[entry("SHA384_Update")]
+		[entry("SHA512_Update")]
 			long __stdcall SHA384_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
-		[entry("SHA384_Final")]
+		[entry("SHA512_Final")]
 			long __stdcall SHA384_Final([in,out]SHA512_CTX* c, [in,out]void* pResult);
 		[entry("SHA512")]
 			long __stdcall SHA512([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
@@ -310,17 +317,17 @@ library R2SAPILib
 			long __stdcall SHA512_224([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA512_224_Init")]
 			long __stdcall SHA512_224_Init([in,out]SHA512_CTX* c);
-		[entry("SHA512_224_Update")]
+		[entry("SHA512_Update")]
 			long __stdcall SHA512_224_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
-		[entry("SHA512_224_Final")]
+		[entry("SHA512_Final")]
 			long __stdcall SHA512_224_Final([in,out]SHA512_CTX* c, [in,out]void* pResult);
 		[entry("SHA512_256")]
 			long __stdcall SHA512_256([in]void* pBuffer, [in]long lBufLen, [in,out]void* pResult);
 		[entry("SHA512_256_Init")]
 			long __stdcall SHA512_256_Init([in,out]SHA512_CTX* c);
-		[entry("SHA512_256_Update")]
+		[entry("SHA512_Update")]
 			long __stdcall SHA512_256_Update([in,out]SHA512_CTX* c, [in]void* pBuffer, [in]long lBufLen);
-		[entry("SHA512_256_Final")]
+		[entry("SHA512_Final")]
 			long __stdcall SHA512_256_Final([in,out]SHA512_CTX* c, [in,out]void* pResult);
 ////	nettle模块
 		[entry("SHA3_224_Init")]

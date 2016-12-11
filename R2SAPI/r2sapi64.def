@@ -21,6 +21,7 @@ LzssCompress		=lzsscompress
 LzssCompress2		=lzsscompress2
 LzssCompressBound	=lzsscompressbound
 LzssDecompress		=lzssdecompress
+LzssDecompressXor	=lzssdecompress_xor
 
 ;///////////////////////////////////////////
 ;//////// 2. 解析XML
