@@ -12,7 +12,7 @@ Hash函数			Win95+
 本程序使用以下外部类库:
 nettle		3.3		Win95+	LGPL v3
 openssl		1.1.0c		Win95+	OpenSSL Licence
-westpak		1.9.1.95	Win95+	Private
+westpak		1.9.1.99	Win95+	Private
 xmlparser	1.0.62.145	Win95+	Private
 zlib		1.2.8		Win95+	ZLIB Licence
 

@@ -167,6 +167,7 @@ CSRC+=		../../../xmlparser.c
 CSRC+=		../r2pak/lzssdec.c
 CSRC+=		../r2pak/lzssdecxor.c
 CSRC+=		../r2pak/lzssenc.c
+CSRC+=		../r2pak/lzssencxor.c
 CXXSRC+=	../r2pak/fileio.cpp
 endif
 

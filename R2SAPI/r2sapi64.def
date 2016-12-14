@@ -19,6 +19,8 @@ GetFileFromPakOffset2A
 GetFileFromPakOffset2W
 LzssCompress		=lzsscompress
 LzssCompress2		=lzsscompress2
+LzssCompressXor		=lzsscompress_xor
+LzssCompressXor2	=lzsscompress2_xor
 LzssCompressBound	=lzsscompressbound
 LzssDecompress		=lzssdecompress
 LzssDecompressXor	=lzssdecompress_xor

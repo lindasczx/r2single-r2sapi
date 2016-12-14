@@ -198,6 +198,10 @@ library R2SAPILib
 			void __stdcall LzssCompress([in,out]void* InBuf, [in]long InLen, [in,out]void* OutBuf, [in,out]long* OutLen);
 		[entry("LzssCompress2")]
 			void __stdcall LzssCompress2([in,out]void* InBuf, [in]long InLen, [in,out]void* OutBuf, [in,out]long* OutLen, [in]long CompressLevel);
+		[entry("LzssCompressXor")]
+			void __stdcall LzssCompressXor([in,out]void* InBuf, [in]long InLen, [in,out]void* OutBuf, [in,out]long* OutLen);
+		[entry("LzssCompressXor2")]
+			void __stdcall LzssCompressXor2([in,out]void* InBuf, [in]long InLen, [in,out]void* OutBuf, [in,out]long* OutLen, [in]long CompressLevel);
 		[entry("LzssCompressBound")]
 			long __stdcall LzssCompressBound([in]long SrcLen);
 		[entry("LzssDecompress")]
@@ -466,6 +470,10 @@ library R2SAPILib
 //////// 6. 大整数操作辅助函数
 ///////////////////////////////////////////
 ////	i4helper.c
+		[entry("I4Add")]
+			long __stdcall I4Add([in]long A, [in]long B);
+		[entry("I4Sub")]
+			long __stdcall I4Sub([in]long A, [in]long B);
 		[entry("I4Shl")]
 			long __stdcall I4Shl([in]long A, [in]long B);
 		[entry("I4Shr")]
