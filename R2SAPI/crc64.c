@@ -1,7 +1,7 @@
 /* crc64.c -- compute the CRC-64/XZ of a data stream
- * Copyright (C) 1995-2006, 2010, 2011, 2012 Mark Adler
+ * Copyright (C) 1995-2006, 2010, 2011, 2012, 2016 Mark Adler
  * Copyright (C) 2007-2009 Lasse Collin
- * Copyright (C) 2014 Linda Zhang
+ * Copyright (C) 2014, 2017 Linda Zhang
  *
  * Thanks to Lasse Collin <lasse.collin@tukaani.org> for his contribution of faster CRC methods:
  * using the slice-by-four algorithm instead of slice-by-eight to avoid increasing CPU cache usage.
@@ -40,8 +40,13 @@
 //                   (((q) >> 24 & 0xff) << 32) | (((q) >> 16 & 0xff) << 40) | (((q) >> 8 & 0xff) << 48) | (((q) & 0xff) << 56))
 typedef unsigned __int64 z_crc_t;
 typedef __int64 z_off64_t;
-
-#define local static
+typedef size_t z_size_t;
+#ifndef local
+#  define local static
+#endif
+/* since "static" is used to mean two completely different things in C, we
+   define "local" for the non-static meaning of "static", for readability
+   (compile with -Dlocal if your debugger can't find static symbols) */
 
 /* Definitions for doing the crc 8 data bytes at a time. */
 #if !defined(NOBYFOUR)
@@ -49,7 +54,7 @@ typedef __int64 z_off64_t;
 #endif
 #ifdef BYFOUR
    local z_crc_t crc64_little OF((z_crc_t, const unsigned char FAR *, unsigned __int64));
-   local z_crc_t crc64_big OF((z_crc_t, const unsigned char FAR *, unsigned __int64));
+   //local z_crc_t crc64_big OF((z_crc_t, const unsigned char FAR *, unsigned __int64));
 #  if defined(BIGENDIAN) || defined(MAKECRCH)
 #    define TBLS 8
 #  else
@@ -219,10 +224,10 @@ const z_crc_t FAR * ZEXPORT get_crc64_table()
 #define DO8 DO1; DO1; DO1; DO1; DO1; DO1; DO1; DO1
 
 /* ========================================================================= */
-z_crc_t ZEXPORT crc64(crc, buf, len)
+z_crc_t ZEXPORT crc64_z(crc, buf, len)
     z_crc_t crc;
     const unsigned char FAR *buf;
-    unsigned __int64 len;
+    z_size_t len;
 {
     if (buf == Z_NULL) return 0ULL;
 
@@ -233,13 +238,13 @@ z_crc_t ZEXPORT crc64(crc, buf, len)
 
 #ifdef BYFOUR
     if (sizeof(void *) == sizeof(ptrdiff_t)) {
-        z_crc_t endian;
+        //z_crc_t endian;
 
-        endian = 1;
-        if (*((unsigned char *)(&endian)))
+        //endian = 1;
+        //if (*((unsigned char *)(&endian)))
             return crc64_little(crc, buf, len);
-        else
-            return crc64_big(crc, buf, len);
+        //else
+        //    return crc64_big(crc, buf, len);
     }
 #endif /* BYFOUR */
     crc = crc ^ 0xffffffffffffffffULL;
@@ -254,7 +259,29 @@ z_crc_t ZEXPORT crc64(crc, buf, len)
     return crc;
 }
 
+/* ========================================================================= */
+unsigned int ZEXPORT crc64(crc, buf, len)
+    z_crc_t crc;
+    const unsigned char FAR *buf;
+    unsigned __int64 len;
+{
+    return crc64_z(crc, buf, len);
+}
+
 #ifdef BYFOUR
+
+
+/*
+   This BYFOUR code accesses the passed unsigned char * buffer with a 64-bit
+   integer pointer type. This violates the strict aliasing rule, where a
+   compiler can assume, for optimization purposes, that two pointers to
+   fundamentally different types won't ever point to the same memory. This can
+   manifest as a problem only if one of the pointers is written to. This code
+   only reads from those pointers. So long as this code remains isolated in
+   this compilation unit, there won't be a problem. For this reason, this code
+   should not be copied and pasted into a compilation unit in which other code
+   writes to the buffer that is passed to these routines.
+ */
 
 /* ========================================================================= */
 #define DOLIT4 { \
@@ -306,6 +333,7 @@ local z_crc_t crc64_little(crc, buf, len)
 #define DOBIG32 DOBIG4; DOBIG4; DOBIG4; DOBIG4; DOBIG4; DOBIG4; DOBIG4; DOBIG4
 
 /* ========================================================================= */
+/*
 local z_crc_t crc64_big(crc, buf, len)
     z_crc_t crc;
     const unsigned char FAR *buf;
@@ -334,7 +362,7 @@ local z_crc_t crc64_big(crc, buf, len)
     c = ~c;
     return (z_crc_t)(ZSWAP64(c));
 }
-
+*/
 #endif /* BYFOUR */
 
 #define GF2_DIM 64      /* dimension of GF(2) vectors (length of CRC) */

@@ -4,7 +4,7 @@
 #		GNU Make
 #
 # 测试平台：	Windows 7 SP1
-#		MinGW-W64 32位套件 (i686-5.3.0-release-win32-sjlj-rt_v4-rev0)
+#		MinGW-W64 32位套件 (i686-6.2.0-release-win32-sjlj-rt_v5-rev1)
 #
 # 运行平台：	所有Windows系统
 #
@@ -12,7 +12,6 @@
 CC:=		gcc
 CXX:=		g++
 RC:=		windres
-LINK:=		dllwrap
 LIB:=		lib
 MIDL:=		midl
 RM:=		rm
@@ -21,7 +20,7 @@ OUTDIR:=	Release/
 CFLAGS:=	-O3 -I.
 CXXFLAGS:=	-O3 -I.
 RCFLAGS:=	
-LINKFLAGS:=	-s -Wl,--subsystem,console:4.0 --image-base 0x62e40000 -Wl,--insert-timestamp -Wl,--enable-stdcall-fixup
+LINKFLAGS:=	-s -static -Wl,--subsystem,console:4.0 -Wl,--image-base,0x62e40000 -Wl,--insert-timestamp -Wl,--enable-stdcall-fixup
 IMPLIB:=	bass.lib mss32.lib
 IMPOBJ:=	
 
@@ -59,11 +58,11 @@ cleanobj:
 	$(RM) $(LINKOBJ) *.o
 
 $(BIN): $(LINKOBJ)
-	$(LINK) -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE) $(LINKFLAGS)
+	$(CC) -shared -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) $(DEFFILE) $(LINKFLAGS)
 #	$(LIB) /nologo /def:$(DEFFILE) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) /out:$(OUTLIB)
 
 $(DEBUGBIN): $(LINKOBJ)
-	$(LINK) -o $(DEBUGBIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE) $(LINKFLAGS)
+	$(CC) -shared -o $(DEBUGBIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) $(DEFFILE) $(LINKFLAGS)
 
 $(RES): swrap.rc
 	$(RC) $(RCFLAGS) $< -o $(RES) -O coff

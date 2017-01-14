@@ -33,7 +33,7 @@ CC:=		gcc
 CXX:=		g++
 ASM:=		as
 RC:=		windres
-LINK:=		dllwrap
+LINK:=		ld
 LIB:=		lib
 MIDL:=		midl
 else
@@ -41,7 +41,7 @@ CC:=		gcc64
 CXX:=		g++64
 ASM:=		as64
 RC:=		windres64
-LINK:=		dllwrap64
+LINK:=		ld64
 LIB:=		lib64
 MIDL:=		midl
 endif
@@ -60,7 +60,7 @@ CFLAGS:=	$(GCCFLAGS) $(AMD64FLAGS)
 CXXFLAGS:=	$(GCCFLAGS) $(AMD64FLAGS)
 ASMFLAGS:=	-DNO_UNDERLINE
 endif
-LINKFLAGS:=	-s -Wl,--subsystem,console:5.1 --image-base 0x65000000 -Wl,--insert-timestamp -Wl,--enable-stdcall-fixup
+LINKFLAGS:=	-s -static -Wl,--subsystem,console:5.1 -Wl,--image-base,0x65000000 -Wl,--insert-timestamp -Wl,--enable-stdcall-fixup
 MIDLFLAGS:=	
 ifneq ($(NO_MSVC_SDK), FALSE)
 MIDLFLAGS:=	-I include
@@ -207,7 +207,7 @@ install:
 	$(CP) $(BIN) $(OUTLIB) $(DESTDIR)
 
 $(BIN): $(LINKOBJ)
-	$(LINK) -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) --def $(DEFFILE) $(LINKFLAGS)
+	$(CC) -shared -o $(BIN) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) $(DEFFILE) $(LINKFLAGS)
 	$(LIB) /nologo /def:$(DEFFILE) $(LINKOBJ) $(IMPOBJ) $(IMPLIB) /out:$(OUTLIB) /name:$(BIN)
 
 $(RES): r2sapi.rc $(TYPELIB)

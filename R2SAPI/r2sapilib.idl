@@ -1,7 +1,7 @@
 [
-	version(1.42),
+	version(1.43),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.42 Type Library")
+	helpstring("R2Single API 1.43 Type Library")
 ]
 library R2SAPILib
 {
@@ -429,7 +429,7 @@ library R2SAPILib
 			long __stdcall ZlibUncompress([in,out]void* pDest, [in,out]long* lDestLen, [in]void* pSrc, [in]long lSrcLen);
 ////	CRC64.c
 		[entry("CRC64")]
-			Int64 __stdcall CRC64([in]long CRCLo, [in]long CRCHi, [in]void* pBuf, [in]long lBufLenLo, [in]long lBufLenHi);
+			Int64 __stdcall CRC64([in]long CRCLo, [in]long CRCHi, [in]void* pBuf, [in]long lBufLen);
 		[entry("CRC64_Combine")]
 			Int64 __stdcall CRC64_Combine([in]long CRC1Lo, [in]long CRC1Hi, [in]long CRC2Lo, [in]long CRC2Hi, [in]long Len2Lo, [in]long Len2Hi);
 ///////////////////////////////////////////
@@ -612,6 +612,8 @@ library R2SAPILib
 //////// 7. 排序函数
 ///////////////////////////////////////////
 ////	sort.c
+		[entry("MergeSort")]
+			void __stdcall MergeSort([in]void* ArrayBase, [in]long ElementNum, [in]long ElementSize, [in]long CompareFunc);
 		[entry("QuickSort")]
 			void __stdcall QuickSort([in]void* ArrayBase, [in]long ElementNum, [in]long ElementSize, [in]long CompareFunc);
 

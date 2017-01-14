@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.42.1.439
+	1.43.0.442
 --*/
 
 #ifndef R2SAPI_H_
@@ -347,19 +347,17 @@ unsigned char * API SM3(const void *d, size_t n, unsigned char *md);
 ///////////////////////////////////////////
 
 ////zlib
-uint32_t API CRC32(uint32_t crc, const void *buf, uint32_t len);
+uint32_t API CRC32(uint32_t crc, const void *buf, size_t len);
 uint32_t API CRC32_Combine(uint32_t crc1, uint32_t crc2, int32_t len2);
 uint32_t API CRC32_Combine64(uint32_t crc1, uint32_t crc2, int64_t len2);
-const uint32_t * API CRC32_GetTable(void);
 int API ZlibCompress(void *dest, unsigned int *destLen, const void *source, unsigned int sourceLen);
 int API ZlibCompress2(void *dest, unsigned int *destLen, const void *source, unsigned int sourceLen, int level);
 unsigned int API ZlibCompressBound(unsigned int sourceLen);
 int API ZlibUncompress(void *dest, unsigned int *destLen, const void *source, unsigned int sourceLen);
 
 ////crc64
-uint64_t API CRC64(uint64_t crc, const void *buf, uint64_t len);
+uint64_t API CRC64(uint64_t crc, const void *buf, size_t len);
 uint64_t API CRC64_Combine(uint64_t crc1, uint64_t crc2, int64_t len2);
-const uint64_t * API CRC64_GetTable(void);
 
 ///////////////////////////////////////////
 //////// 5. 字符编码转换
@@ -403,20 +401,13 @@ int64_t API I8RorR(int64_t *, int);
 ///////////////////////////////////////////
 ////本模块很多函数C/C++等语言原生支持，因此不列
 
+////sort
+void __stdcall MergeSort(void* base, size_t num, size_t size, int (__stdcall *stdcallcompare)(const void *a, const void *b));
+
 ///////////////////////////////////////////
 //////// 8. 不再使用的旧函数
 ///////////////////////////////////////////
 
-#ifndef _WIN64
-#define crc32(crc, buf, len)					CRC32((crc), (buf), (len))
-#define crc32_combine(crc1, crc2, len2)				CRC32_Combine((crc1), (crc2), (len2))
-#define get_crc_table()						CRC32_GetTable()
-#define compress(dest, destLen, source, sourceLen)		ZlibCompress((dest), (destLen), (source), (sourceLen))
-#define compress2(dest, destLen, source, sourceLen, level)	ZlibCompress2((dest), (destLen), (source), (sourceLen), (level))
-#define compressBound(sourceLen)				ZlibCompressBound(sourceLen)
-#define uncompress(dest, destLen, source, sourceLen)		ZlibUncompress((dest), (destLen), (source), (sourceLen))
-const char * API zlibVersion(void);
-#endif
 
 #ifdef __cplusplus
 }

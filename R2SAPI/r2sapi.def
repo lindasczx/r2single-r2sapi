@@ -158,27 +158,17 @@ SM3_Update
 ;///////////////////////////////////////////
 
 ;// zlib模块
-CRC32			=crc32
+CRC32			=crc32_z
 CRC32_Combine		=crc32_combine
 CRC32_Combine64		=crc32_combine64
-CRC32_GetTable		=get_crc_table
 ZlibCompress		=compress
 ZlibCompress2		=compress2
 ZlibCompressBound	=compressBound
 ZlibUncompress		=uncompress
-compress		;// 废弃
-compress2		;// 废弃
-compressBound		;// 废弃
-crc32			;// 废弃
-crc32_combine		;// 废弃
-get_crc_table		;// 废弃
-uncompress		;// 废弃
-zlibVersion		;// 废弃
 
 ;// CRC64.c
-CRC64			=crc64
+CRC64			=crc64_z
 CRC64_Combine		=crc64_combine
-CRC64_GetTable		=get_crc64_table
 
 ;///////////////////////////////////////////
 ;//////// 5. 字符编码转换
@@ -284,5 +274,6 @@ I8BstrOctR
 ;///////////////////////////////////////////
 
 ;// sort.c
+MergeSort
 QuickSort
 

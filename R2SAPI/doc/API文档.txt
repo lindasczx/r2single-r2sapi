@@ -1,115 +1,114 @@
 ﻿初版	兼容版	32/64?	DLL导出函数名称		说明
-200		*	BLAKE2SP		BLAKE2sp散列函数
-200	339	*	BLAKE2SP_Final		BLAKE2sp散列函数
-200		*	BLAKE2SP_Init		BLAKE2sp散列函数
-200		*	BLAKE2SP_Update		BLAKE2sp散列函数
-363		*	BstrI8			字符串转为64位整数
-363		*	BstrUI8			字符串转为64位无符号整数
-284		*	CRC32			CRC32校验函数
-284		*	CRC32_Combine		CRC32校验函数（多线程）
-284		*	CRC32_Combine64		CRC32校验函数（多线程）
-284		*	CRC32_GetTable		CRC32校验函数
-284		*	CRC64			CRC64校验函数
-284		*	CRC64_Combine		CRC64校验函数（多线程）
-284		*	CRC64_GetTable		CRC64校验函数
-327		*	EnumFileFromPakA	从PAK文件中枚举文件（线程安全）
-327		*	EnumFileFromPakW	从PAK文件中枚举文件（线程安全）
+200	392	*	BLAKE2SP		BLAKE2sp散列函数
+200	392	*	BLAKE2SP_Final		BLAKE2sp散列函数
+200	392	*	BLAKE2SP_Init		BLAKE2sp散列函数
+200	392	*	BLAKE2SP_Update		BLAKE2sp散列函数
+363	392	*	BstrI8			字符串转为64位整数
+363	392	*	BstrUI8			字符串转为64位无符号整数
+284	442	*	CRC32			CRC32校验函数
+284	392	*	CRC32_Combine		CRC32校验函数（多线程）
+284	392	*	CRC32_Combine64		CRC32校验函数（多线程）
+284	442	*	CRC64			CRC64校验函数
+284	392	*	CRC64_Combine		CRC64校验函数（多线程）
+327	392	*	EnumFileFromPakA	从PAK文件中枚举文件（线程安全）
+327	392	*	EnumFileFromPakW	从PAK文件中枚举文件（线程安全）
 65	440	*	GetFileFromPakA		从PAK文件中读取一个文件（线程安全）
 129	440	*	GetFileFromPakW		从PAK文件中读取一个文件（线程安全）
 435	440	*	GetFileFromPakOffsetA	从PAK文件中的指定位置读取LZSS压缩的数据（2016-11废弃）
 435	440	*	GetFileFromPakOffsetW	从PAK文件中的指定位置读取LZSS压缩的数据（2016-11废弃）
 436	440	*	GetFileFromPakOffset2A	从PAK文件中的指定位置读取数据（线程安全）
 436	440	*	GetFileFromPakOffset2W	从PAK文件中的指定位置读取数据（线程安全）
-439		32	I4Add			32位整数相加
-352	353	*	I4Rol			32位整数循环左移
-352	353	*	I4Ror			32位整数循环右移
-352		32	I4Shl			32位整数左移
-352		32	I4Shr			32位整数算术右移
+439	392	32	I4Add			32位整数相加
+352	392	*	I4Rol			32位整数循环左移
+352	392	*	I4Ror			32位整数循环右移
+352	392	32	I4Shl			32位整数左移
+352	392	32	I4Shr			32位整数算术右移
 439		32	I4Sub			32位整数相减
-352		32	I8Add			64位整数相加（ByVal版）
-352		32	I8AddR			64位整数相加（ByRef版）
-352		32	I8And			64位整数位与（ByVal版）
-352		32	I8AndR			64位整数位与（ByRef版）
-363		32	I8Bstr			64位整数转为字符串（ByVal版）
-363		32	I8BstrHex		64位整数转为16进制字符串（ByVal版）
-363		32	I8BstrHexR		64位整数转为16进制字符串（ByRef版）
-363		32	I8BstrOct		64位整数转为8进制字符串（ByVal版）
-363		32	I8BstrOctR		64位整数转为8进制字符串（ByRef版）
-363		32	I8BstrR			64位整数转为字符串（ByRef版）
-352		32	I8Cmp			64位整数比较（ByVal版）
-352		32	I8CmpR			64位整数比较（ByRef版）
-352		32	I8Div			64位整数相除（ByVal版）
-352		32	I8DivR			64位整数相除（ByRef版）
-352		32	I8Mod			64位整数求余（ByVal版）
-352		32	I8ModR			64位整数求余（ByRef版）
-352		32	I8Mul			64位整数相乘（ByVal版）
-352		32	I8MulR			64位整数相乘（ByRef版）
-352		32	I8Not			64位整数取反（ByVal版）
-352		32	I8NotR			64位整数取反（ByRef版）
-352		32	I8Or			64位整数位或（ByVal版）
-352		32	I8OrR			64位整数位或（ByRef版）
-352		32	I8R8			64位整数转为双精度浮点数（ByVal版）
-352		32	I8R8R			64位整数转为双精度浮点数（ByRef版）
-352	353	*	I8Rol			64位整数循环左移（ByVal版）
-352		32	I8RolR			64位整数循环左移（ByRef版）
-352	353	*	I8Ror			64位整数循环右移（ByVal版）
-352		32	I8RorR			64位整数循环右移（ByRef版）
-352		32	I8Shl			64位整数左移（ByVal版）
-352		32	I8ShlR			64位整数左移（ByRef版）
-352		32	I8Shr			64位整数算术右移（ByVal版）
-352		32	I8ShrR			64位整数算术右移（ByRef版）
-352		32	I8Sub			64位整数相减（ByVal版）
-352		32	I8SubR			64位整数相减（ByRef版）
-352		32	I8Xor			64位整数位异或（ByVal版）
-352		32	I8XorR			64位整数位异或（ByRef版）
-272	276	*	LzssCompress		LZSS压缩函数（线程不安全）
-276	324	*	LzssCompress2		LZSS压缩函数（可变压缩级别，线程不安全）
+352	392	32	I8Add			64位整数相加（ByVal版）
+352	392	32	I8AddR			64位整数相加（ByRef版）
+352	392	32	I8And			64位整数位与（ByVal版）
+352	392	32	I8AndR			64位整数位与（ByRef版）
+363	392	32	I8Bstr			64位整数转为字符串（ByVal版）
+363	392	32	I8BstrHex		64位整数转为16进制字符串（ByVal版）
+363	392	32	I8BstrHexR		64位整数转为16进制字符串（ByRef版）
+363	392	32	I8BstrOct		64位整数转为8进制字符串（ByVal版）
+363	392	32	I8BstrOctR		64位整数转为8进制字符串（ByRef版）
+363	392	32	I8BstrR			64位整数转为字符串（ByRef版）
+352	392	32	I8Cmp			64位整数比较（ByVal版）
+352	392	32	I8CmpR			64位整数比较（ByRef版）
+352	392	32	I8Div			64位整数相除（ByVal版）
+352	392	32	I8DivR			64位整数相除（ByRef版）
+352	392	32	I8Mod			64位整数求余（ByVal版）
+352	392	32	I8ModR			64位整数求余（ByRef版）
+352	392	32	I8Mul			64位整数相乘（ByVal版）
+352	392	32	I8MulR			64位整数相乘（ByRef版）
+352	392	32	I8Not			64位整数取反（ByVal版）
+352	392	32	I8NotR			64位整数取反（ByRef版）
+352	392	32	I8Or			64位整数位或（ByVal版）
+352	392	32	I8OrR			64位整数位或（ByRef版）
+352	392	32	I8R8			64位整数转为双精度浮点数（ByVal版）
+352	392	32	I8R8R			64位整数转为双精度浮点数（ByRef版）
+352	392	*	I8Rol			64位整数循环左移（ByVal版）
+352	392	32	I8RolR			64位整数循环左移（ByRef版）
+352	392	*	I8Ror			64位整数循环右移（ByVal版）
+352	392	32	I8RorR			64位整数循环右移（ByRef版）
+352	392	32	I8Shl			64位整数左移（ByVal版）
+352	392	32	I8ShlR			64位整数左移（ByRef版）
+352	392	32	I8Shr			64位整数算术右移（ByVal版）
+352	392	32	I8ShrR			64位整数算术右移（ByRef版）
+352	392	32	I8Sub			64位整数相减（ByVal版）
+352	392	32	I8SubR			64位整数相减（ByRef版）
+352	392	32	I8Xor			64位整数位异或（ByVal版）
+352	392	32	I8XorR			64位整数位异或（ByRef版）
+272	392	*	LzssCompress		LZSS压缩函数（线程不安全）
+276	392	*	LzssCompress2		LZSS压缩函数（可变压缩级别，线程不安全）
 435		*	LzssCompressBound	计算LZSS压缩后数据大小上限
 439		*	LzssCompressXor		LZSS+XOR压缩函数（线程不安全）
 439		*	LzssCompressXor2	LZSS+XOR压缩函数（可变压缩级别，线程不安全）
-272	276	*	LzssDecompress		LZSS解压函数（线程安全）
+272	392	*	LzssDecompress		LZSS解压函数（线程安全）
 438		*	LzssDecompressXor	LZSS+XOR解压函数（线程安全）
-164		*	MD4			MD4散列函数
-164	339	*	MD4_Final		MD4散列函数
-164		*	MD4_Init		MD4散列函数
-164		*	MD4_Update		MD4散列函数
-65		*	MD5			MD5散列函数
-164	339	*	MD5_Final		MD5散列函数
-164		*	MD5_Init		MD5散列函数
-164		*	MD5_Update		MD5散列函数
-164		*	MD6			MD6散列函数
-164	339	*	MD6_Final		MD6散列函数
-164		*	MD6_Init		MD6散列函数
-164		*	MD6_Init_Len		MD6散列函数（可变长度）
-164		*	MD6_Len			MD6散列函数（可变长度）
-164		*	MD6_Update		MD6散列函数
-164		*	MDC2			MDC-2散列函数
-164	339	*	MDC2_Final		MDC-2散列函数
-164		*	MDC2_Init		MDC-2散列函数
-164		*	MDC2_Update		MDC-2散列函数
+164	392	*	MD4			MD4散列函数
+164	392	*	MD4_Final		MD4散列函数
+164	392	*	MD4_Init		MD4散列函数
+164	392	*	MD4_Update		MD4散列函数
+65	392	*	MD5			MD5散列函数
+164	392	*	MD5_Final		MD5散列函数
+164	392	*	MD5_Init		MD5散列函数
+164	392	*	MD5_Update		MD5散列函数
+164	392	*	MD6			MD6散列函数
+164	392	*	MD6_Final		MD6散列函数
+164	392	*	MD6_Init		MD6散列函数
+164	392	*	MD6_Init_Len		MD6散列函数（可变长度）
+164	392	*	MD6_Len			MD6散列函数（可变长度）
+164	392	*	MD6_Update		MD6散列函数
+164	392	*	MDC2			MDC-2散列函数
+164	392	*	MDC2_Final		MDC-2散列函数
+164	392	*	MDC2_Init		MDC-2散列函数
+164	392	*	MDC2_Update		MDC-2散列函数
+442		*	MergeSort		归并排序函数（稳定排序）
 435		*	QuickSort		快速排序函数（不稳定排序）
-352		32	R8I8			双精度浮点数转为64位整数
-352		32	R8UI8			双精度浮点数转为无符号64位整数
-164		*	RIPEMD160		RIPEMD-160散列函数
-164	339	*	RIPEMD160_Final		RIPEMD-160散列函数
-164		*	RIPEMD160_Init		RIPEMD-160散列函数
-164		*	RIPEMD160_Update	RIPEMD-160散列函数
-65		*	SHA1			NIST SHA-1散列函数
-164	339	*	SHA1_Final		NIST SHA-1散列函数
-164		*	SHA1_Init		NIST SHA-1散列函数
-164		*	SHA1_Update		NIST SHA-1散列函数
-255		*	SHA224			NIST SHA-224散列函数
-255	339	*	SHA224_Final		NIST SHA-224散列函数
-255		*	SHA224_Init		NIST SHA-224散列函数
-255		*	SHA224_Update		NIST SHA-224散列函数
-65		*	SHA256			NIST SHA-256散列函数
-164	339	*	SHA256_Final		NIST SHA-256散列函数
-164		*	SHA256_Init		NIST SHA-256散列函数
-164		*	SHA256_Update		NIST SHA-256散列函数
-255		*	SHA384			NIST SHA-384散列函数
-255	339	*	SHA384_Final		NIST SHA-384散列函数
-255		*	SHA384_Init		NIST SHA-384散列函数
-255		*	SHA384_Update		NIST SHA-384散列函数
+352	392	32	R8I8			双精度浮点数转为64位整数
+352	392	32	R8UI8			双精度浮点数转为无符号64位整数
+164	392	*	RIPEMD160		RIPEMD-160散列函数
+164	392	*	RIPEMD160_Final		RIPEMD-160散列函数
+164	392	*	RIPEMD160_Init		RIPEMD-160散列函数
+164	392	*	RIPEMD160_Update	RIPEMD-160散列函数
+65	392	*	SHA1			NIST SHA-1散列函数
+164	392	*	SHA1_Final		NIST SHA-1散列函数
+164	392	*	SHA1_Init		NIST SHA-1散列函数
+164	392	*	SHA1_Update		NIST SHA-1散列函数
+255	392	*	SHA224			NIST SHA-224散列函数
+255	392	*	SHA224_Final		NIST SHA-224散列函数
+255	392	*	SHA224_Init		NIST SHA-224散列函数
+255	392	*	SHA224_Update		NIST SHA-224散列函数
+65	392	*	SHA256			NIST SHA-256散列函数
+164	392	*	SHA256_Final		NIST SHA-256散列函数
+164	392	*	SHA256_Init		NIST SHA-256散列函数
+164	392	*	SHA256_Update		NIST SHA-256散列函数
+255	392	*	SHA384			NIST SHA-384散列函数
+255	392	*	SHA384_Final		NIST SHA-384散列函数
+255	392	*	SHA384_Init		NIST SHA-384散列函数
+255	392	*	SHA384_Update		NIST SHA-384散列函数
 403		*	SHA3_224		NIST SHA3-224散列函数
 403		*	SHA3_224_Final		NIST SHA3-224散列函数
 403		*	SHA3_224_Init		NIST SHA3-224散列函数
@@ -126,18 +125,18 @@
 403		*	SHA3_512_Final		NIST SHA3-512散列函数
 403		*	SHA3_512_Init		NIST SHA3-512散列函数
 403		*	SHA3_512_Update		NIST SHA3-512散列函数
-65		*	SHA512			NIST SHA-512散列函数
+65	392	*	SHA512			NIST SHA-512散列函数
 255	403	*	SHA512_224		NIST SHA-512/224散列函数
 255	403	*	SHA512_224_Final	NIST SHA-512/224散列函数
-255		*	SHA512_224_Init		NIST SHA-512/224散列函数
-255		*	SHA512_224_Update	NIST SHA-512/224散列函数
+255	392	*	SHA512_224_Init		NIST SHA-512/224散列函数
+255	392	*	SHA512_224_Update	NIST SHA-512/224散列函数
 255	403	*	SHA512_256		NIST SHA-512/256散列函数
 255	403	*	SHA512_256_Final	NIST SHA-512/256散列函数
-255		*	SHA512_256_Init		NIST SHA-512/256散列函数
-255		*	SHA512_256_Update	NIST SHA-512/256散列函数
-164	339	*	SHA512_Final		NIST SHA-512散列函数
-164		*	SHA512_Init		NIST SHA-512散列函数
-164		*	SHA512_Update		NIST SHA-512散列函数
+255	392	*	SHA512_256_Init		NIST SHA-512/256散列函数
+255	392	*	SHA512_256_Update	NIST SHA-512/256散列函数
+164	392	*	SHA512_Final		NIST SHA-512散列函数
+164	392	*	SHA512_Init		NIST SHA-512散列函数
+164	392	*	SHA512_Update		NIST SHA-512散列函数
 403		*	SHAKE128		NIST SHA3-SHAKE128散列函数
 403		*	SHAKE128_Final		NIST SHA3-SHAKE128散列函数
 403		*	SHAKE128_Init		NIST SHA3-SHAKE128散列函数
@@ -146,82 +145,85 @@
 403		*	SHAKE256_Final		NIST SHA3-SHAKE256散列函数
 403		*	SHAKE256_Init		NIST SHA3-SHAKE256散列函数
 403		*	SHAKE256_Update		NIST SHA3-SHAKE256散列函数
-259		*	SM3			国密SM3散列函数
-259	339	*	SM3_Final		国密SM3散列函数
-259		*	SM3_Init		国密SM3散列函数
-259		*	SM3_Update		国密SM3散列函数
-352		32	UI4Cmp			32位无符号整数比较
-352		32	UI4Div			32位无符号整数相除
-352		32	UI4Mod			32位无符号整数求余
-352		32	UI4Mul			32位无符号整数相乘
-352		32	UI4Shl			32位无符号整数左移
-352		32	UI4Shr			32位整数逻辑右移
-363		32	UI8Bstr			64位无符号整数转为字符串（ByVal版）
-363		32	UI8BstrR		64位无符号整数转为字符串（ByRef版）
-352		32	UI8Cmp			64位无符号整数比较（ByVal版）
-352		32	UI8CmpR			64位无符号整数比较（ByRef版）
-352		32	UI8Div			64位无符号整数相除（ByVal版）
-352		32	UI8DivR			64位无符号整数相除（ByRef版）
-352		32	UI8Mod			64位无符号整数求余（ByVal版）
-352		32	UI8ModR			64位无符号整数求余（ByRef版）
-352		32	UI8Mul			64位无符号整数相乘（ByVal版）
-352		32	UI8MulR			64位无符号整数相乘（ByRef版）
-352		32	UI8R8			64位无符号整数转为双精度浮点数（ByVal版）
-352		32	UI8R8R			64位无符号整数转为双精度浮点数（ByRef版）
-352		32	UI8Shl			64位无符号整数左移（ByVal版）
-352		32	UI8ShlR			64位无符号整数左移（ByRef版）
-352		32	UI8Shr			64位整数逻辑右移（ByVal版）
-352		32	UI8ShrR			64位整数逻辑右移（ByRef版）
-84		*	UTF16BEToUTF16		把字符串从UTF-16BE编码转为UTF-16LE编码（仅VB推荐使用）
-84		*	UTF16ToUTF16BE		把字符串从UTF-16LE编码转为UTF-16BE编码（仅VB推荐使用）
-84		*	UTF16ToUTF32		把字符串从UTF-16LE编码转为UTF-32LE编码（仅VB推荐使用）
-84		*	UTF16ToUTF32BE		把字符串从UTF-16LE编码转为UTF-32BE编码（仅VB推荐使用）
-84		*	UTF16ToUTF8		把字符串从UTF-16LE编码转为UTF-8编码   （仅VB推荐使用）
-84		*	UTF32BEToUTF16		把字符串从UTF-32BE编码转为UTF-16LE编码（仅VB推荐使用）
-84		*	UTF32BEToUTF32		把字符串从UTF-32BE编码转为UTF-32LE编码（不推荐使用）
-84		*	UTF32ToUTF16		把字符串从UTF-32LE编码转为UTF-16LE编码（仅VB推荐使用）
-84		*	UTF32ToUTF32BE		把字符串从UTF-32LE编码转为UTF-32BE编码（不推荐使用）
-84		*	UTF32ToUTF8		把字符串从UTF-32LE编码转为UTF-8编码   （不推荐使用）
-84		*	UTF8ToUTF16		把字符串从UTF-8编码转为UTF-16LE编码   （仅VB推荐使用）
-84		*	UTF8ToUTF32		把字符串从UTF-8编码转为UTF-32LE编码   （不推荐使用）
-339		*	WHIRLPOOL		WHIRLPOOL散列函数
-339		*	WHIRLPOOL_Final		WHIRLPOOL散列函数
-339		*	WHIRLPOOL_Init		WHIRLPOOL散列函数
-339		*	WHIRLPOOL_Update	WHIRLPOOL散列函数
-204		*	XMLPickAttrib2A		提取一个XML标记的属性（ANSI）	（安全版，推荐使用）
-204		*	XMLPickAttrib2W		提取一个XML标记的属性（Unicode）（安全版，推荐使用）
-129		*	XMLPickAttribA		提取一个XML标记的属性（ANSI）	（不推荐使用）
-129		*	XMLPickAttribPosA	提取一个XML标记的属性（ANSI）	（位置版，推荐使用）
-120		*	XMLPickAttribPosW	提取一个XML标记的属性（Unicode）（位置版，推荐使用）
-65		*	XMLPickAttribW		提取一个XML标记的属性（Unicode）（不推荐使用）
-204		*	XMLPickFullTag2A	提取一个完整的XML标记（ANSI）	（安全版，推荐使用）
-204		*	XMLPickFullTag2W	提取一个完整的XML标记（Unicode）（安全版，推荐使用）
-129		*	XMLPickFullTagA		提取一个完整的XML标记（ANSI）	（不推荐使用）
-129		*	XMLPickFullTagPosA	提取一个完整的XML标记（ANSI）	（位置版，推荐使用）
-120		*	XMLPickFullTagPosW	提取一个完整的XML标记（Unicode）（位置版，推荐使用）
-65		*	XMLPickFullTagW		提取一个完整的XML标记（Unicode）（不推荐使用）
-129		*	XMLPickTag2A		提取一个XML标记的内容（ANSI）	（不推荐使用）
-65		*	XMLPickTag2W		提取一个XML标记的内容（Unicode）（不推荐使用）
-204		*	XMLPickTag3A		提取一个XML标记的内容（ANSI）	（安全版，推荐使用）
-204		*	XMLPickTag3W		提取一个XML标记的内容（Unicode）（安全版，推荐使用）
-129		*	XMLPickTagA		提取一个XML标记的内容（ANSI）	（简化版，不推荐使用）
-129		*	XMLPickTagPosA		提取一个XML标记的内容（ANSI）	（位置版，推荐使用）
-120		*	XMLPickTagPosW		提取一个XML标记的内容（Unicode）（位置版，推荐使用）
-65		*	XMLPickTagW		提取一个XML标记的内容（Unicode）（简化版，不推荐使用）
-318		*	ZlibCompress		zlib压缩函数
-318		*	ZlibCompress2		zlib压缩函数（可变压缩级别）
-318		*	ZlibCompressBound	计算zlib压缩后数据大小上限
-318		*	ZlibUncompress		zlib解压函数
-1		*	_			R2SAPI库版本号
-70		32	compress		zlib压缩函数	（2014-5废弃，随时可能删除，请用ZlibCompress）
-70		32	compress2		zlib压缩函数	（2014-5废弃，随时可能删除，请用ZlibCompress2）
-70		32	compressBound		zlib压缩函数	（2014-5废弃，随时可能删除，请用ZlibCompressBound）
-120		*	cpConvertEncoding	转换字符串编码	（推荐使用）
-252		*	cpMakeTrCode		生成转换码
-120		*	cpTrCodeSupported	转换码是否支持
-87		32	crc32			CRC32校验函数	（2014-5废弃，随时可能删除，请用CRC32）
-120		32	crc32_combine		CRC32校验函数	（2014-5废弃，随时可能删除，请用CRC32_Combine）
-120		32	get_crc_table		CRC32校验函数	（2014-5废弃，随时可能删除，请用CRC32_GetTable）
-67		32	uncompress		zlib解压函数	（2014-5废弃，随时可能删除，请用ZlibUncompress）
-120		32	zlibVersion		zlib库版本号	（2015-12废弃，随时可能删除，请用_）
+259	392	*	SM3			国密SM3散列函数
+259	392	*	SM3_Final		国密SM3散列函数
+259	392	*	SM3_Init		国密SM3散列函数
+259	392	*	SM3_Update		国密SM3散列函数
+352	392	32	UI4Cmp			32位无符号整数比较
+352	392	32	UI4Div			32位无符号整数相除
+352	392	32	UI4Mod			32位无符号整数求余
+352	392	32	UI4Mul			32位无符号整数相乘
+352	392	32	UI4Shl			32位无符号整数左移
+352	392	32	UI4Shr			32位整数逻辑右移
+363	392	32	UI8Bstr			64位无符号整数转为字符串（ByVal版）
+363	392	32	UI8BstrR		64位无符号整数转为字符串（ByRef版）
+352	392	32	UI8Cmp			64位无符号整数比较（ByVal版）
+352	392	32	UI8CmpR			64位无符号整数比较（ByRef版）
+352	392	32	UI8Div			64位无符号整数相除（ByVal版）
+352	392	32	UI8DivR			64位无符号整数相除（ByRef版）
+352	392	32	UI8Mod			64位无符号整数求余（ByVal版）
+352	392	32	UI8ModR			64位无符号整数求余（ByRef版）
+352	392	32	UI8Mul			64位无符号整数相乘（ByVal版）
+352	392	32	UI8MulR			64位无符号整数相乘（ByRef版）
+352	392	32	UI8R8			64位无符号整数转为双精度浮点数（ByVal版）
+352	392	32	UI8R8R			64位无符号整数转为双精度浮点数（ByRef版）
+352	392	32	UI8Shl			64位无符号整数左移（ByVal版）
+352	392	32	UI8ShlR			64位无符号整数左移（ByRef版）
+352	392	32	UI8Shr			64位整数逻辑右移（ByVal版）
+352	392	32	UI8ShrR			64位整数逻辑右移（ByRef版）
+84	392	*	UTF16BEToUTF16		把字符串从UTF-16BE编码转为UTF-16LE编码（仅VB推荐使用）
+84	392	*	UTF16ToUTF16BE		把字符串从UTF-16LE编码转为UTF-16BE编码（仅VB推荐使用）
+84	392	*	UTF16ToUTF32		把字符串从UTF-16LE编码转为UTF-32LE编码（仅VB推荐使用）
+84	392	*	UTF16ToUTF32BE		把字符串从UTF-16LE编码转为UTF-32BE编码（仅VB推荐使用）
+84	392	*	UTF16ToUTF8		把字符串从UTF-16LE编码转为UTF-8编码   （仅VB推荐使用）
+84	392	*	UTF32BEToUTF16		把字符串从UTF-32BE编码转为UTF-16LE编码（仅VB推荐使用）
+84	392	*	UTF32BEToUTF32		把字符串从UTF-32BE编码转为UTF-32LE编码（不推荐使用）
+84	392	*	UTF32ToUTF16		把字符串从UTF-32LE编码转为UTF-16LE编码（仅VB推荐使用）
+84	392	*	UTF32ToUTF32BE		把字符串从UTF-32LE编码转为UTF-32BE编码（不推荐使用）
+84	392	*	UTF32ToUTF8		把字符串从UTF-32LE编码转为UTF-8编码   （不推荐使用）
+84	392	*	UTF8ToUTF16		把字符串从UTF-8编码转为UTF-16LE编码   （仅VB推荐使用）
+84	392	*	UTF8ToUTF32		把字符串从UTF-8编码转为UTF-32LE编码   （不推荐使用）
+339	392	*	WHIRLPOOL		WHIRLPOOL散列函数
+339	392	*	WHIRLPOOL_Final		WHIRLPOOL散列函数
+339	392	*	WHIRLPOOL_Init		WHIRLPOOL散列函数
+339	392	*	WHIRLPOOL_Update	WHIRLPOOL散列函数
+204	392	*	XMLPickAttrib2A		提取一个XML标记的属性（ANSI）	（安全版，推荐使用）
+204	392	*	XMLPickAttrib2W		提取一个XML标记的属性（Unicode）（安全版，推荐使用）
+129	392	*	XMLPickAttribA		提取一个XML标记的属性（ANSI）	（不推荐使用）
+129	392	*	XMLPickAttribPosA	提取一个XML标记的属性（ANSI）	（位置版，推荐使用）
+120	392	*	XMLPickAttribPosW	提取一个XML标记的属性（Unicode）（位置版，推荐使用）
+65	392	*	XMLPickAttribW		提取一个XML标记的属性（Unicode）（不推荐使用）
+204	392	*	XMLPickFullTag2A	提取一个完整的XML标记（ANSI）	（安全版，推荐使用）
+204	392	*	XMLPickFullTag2W	提取一个完整的XML标记（Unicode）（安全版，推荐使用）
+129	392	*	XMLPickFullTagA		提取一个完整的XML标记（ANSI）	（不推荐使用）
+129	392	*	XMLPickFullTagPosA	提取一个完整的XML标记（ANSI）	（位置版，推荐使用）
+120	392	*	XMLPickFullTagPosW	提取一个完整的XML标记（Unicode）（位置版，推荐使用）
+65	392	*	XMLPickFullTagW		提取一个完整的XML标记（Unicode）（不推荐使用）
+129	392	*	XMLPickTag2A		提取一个XML标记的内容（ANSI）	（不推荐使用）
+65	392	*	XMLPickTag2W		提取一个XML标记的内容（Unicode）（不推荐使用）
+204	392	*	XMLPickTag3A		提取一个XML标记的内容（ANSI）	（安全版，推荐使用）
+204	392	*	XMLPickTag3W		提取一个XML标记的内容（Unicode）（安全版，推荐使用）
+129	392	*	XMLPickTagA		提取一个XML标记的内容（ANSI）	（简化版，不推荐使用）
+129	392	*	XMLPickTagPosA		提取一个XML标记的内容（ANSI）	（位置版，推荐使用）
+120	392	*	XMLPickTagPosW		提取一个XML标记的内容（Unicode）（位置版，推荐使用）
+65	392	*	XMLPickTagW		提取一个XML标记的内容（Unicode）（简化版，不推荐使用）
+318	392	*	ZlibCompress		zlib压缩函数
+318	392	*	ZlibCompress2		zlib压缩函数（可变压缩级别）
+318	392	*	ZlibCompressBound	计算zlib压缩后数据大小上限
+318	392	*	ZlibUncompress		zlib解压函数
+1	392	*	_			R2SAPI库版本号
+120	392	*	cpConvertEncoding	转换字符串编码	（推荐使用）
+252	392	*	cpMakeTrCode		生成转换码
+120	392	*	cpTrCodeSupported	转换码是否支持
+
+284	392-440	-	CRC32_GetTable		CRC32校验函数	（已删除，因无用途）
+284	392-440	-	CRC64_GetTable		CRC64校验函数	（已删除，因无用途）
+70	392-440	-	compress		zlib压缩函数	（已删除，请用ZlibCompress）
+70	392-440	-	compress2		zlib压缩函数	（已删除，请用ZlibCompress2）
+70	392-440	-	compressBound		zlib压缩函数	（已删除，请用ZlibCompressBound）
+87	392-440	-	crc32			CRC32校验函数	（已删除，请用CRC32）
+120	392-440	-	crc32_combine		CRC32校验函数	（已删除，请用CRC32_Combine）
+120	392-440	-	get_crc_table		CRC32校验函数	（已删除，因无用途）
+67	392-440	-	uncompress		zlib解压函数	（已删除，请用ZlibUncompress）
+120	392-440	-	zlibVersion		zlib库版本号	（已删除，请用_）
 

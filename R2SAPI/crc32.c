@@ -1,7 +1,7 @@
 /* crc32.c -- compute the CRC-32 of a data stream
- * Copyright (C) 1995-2006, 2010, 2011, 2012 Mark Adler
+ * Copyright (C) 1995-2006, 2010, 2011, 2012, 2016 Mark Adler
  * Copyright (C) 2007-2009 Lasse Collin
- * Copyright (C) 2014 Linda Zhang
+ * Copyright (C) 2014, 2017 Linda Zhang
  *
  * Thanks to Lasse Collin <lasse.collin@tukaani.org> for his contribution of faster CRC methods:
  * using the slice-by-eight algorithm instead of slice-by-four to increase speed on i686 and later.
@@ -38,16 +38,21 @@
 typedef unsigned int z_crc_t;
 typedef int z_off_t;
 typedef __int64 z_off64_t;
-
-#define local static
+typedef size_t z_size_t;
+#ifndef local
+#  define local static
+#endif
+/* since "static" is used to mean two completely different things in C, we
+   define "local" for the non-static meaning of "static", for readability
+   (compile with -Dlocal if your debugger can't find static symbols) */
 
 /* Definitions for doing the crc four data bytes at a time. */
 #if !defined(NOBYEIGHT)
 #  define BYEIGHT
 #endif
 #ifdef BYEIGHT
-   local z_crc_t crc32_little OF((z_crc_t, const unsigned char FAR *, unsigned));
-   local z_crc_t crc32_big OF((z_crc_t, const unsigned char FAR *, unsigned));
+   local z_crc_t crc32_little OF((z_crc_t, const unsigned char FAR *, z_size_t));
+   //local z_crc_t crc32_big OF((z_crc_t, const unsigned char FAR *, z_size_t));
 #  if defined(BIGENDIAN) || defined(MAKECRCH)
 #    define TBLS 16
 #  else
@@ -217,10 +222,10 @@ const z_crc_t FAR * ZEXPORT get_crc_table()
 #define DO8 DO1; DO1; DO1; DO1; DO1; DO1; DO1; DO1
 
 /* ========================================================================= */
-z_crc_t ZEXPORT crc32(crc, buf, len)
+z_crc_t ZEXPORT crc32_z(crc, buf, len)
     z_crc_t crc;
     const unsigned char FAR *buf;
-    unsigned int len;
+    z_size_t len;
 {
     if (buf == Z_NULL) return 0UL;
 
@@ -231,13 +236,13 @@ z_crc_t ZEXPORT crc32(crc, buf, len)
 
 #ifdef BYEIGHT
     if (sizeof(void *) == sizeof(ptrdiff_t)) {
-        z_crc_t endian;
+        //z_crc_t endian;
 
-        endian = 1;
-        if (*((unsigned char *)(&endian)))
+        //endian = 1;
+        //if (*((unsigned char *)(&endian)))
             return crc32_little(crc, buf, len);
-        else
-            return crc32_big(crc, buf, len);
+        //else
+        //    return crc32_big(crc, buf, len);
     }
 #endif /* BYEIGHT */
     crc = crc ^ 0xffffffffUL;
@@ -251,7 +256,28 @@ z_crc_t ZEXPORT crc32(crc, buf, len)
     return crc ^ 0xffffffffUL;
 }
 
+/* ========================================================================= */
+unsigned int ZEXPORT crc32(crc, buf, len)
+    z_crc_t crc;
+    const unsigned char FAR *buf;
+    unsigned int len;
+{
+    return crc32_z(crc, buf, len);
+}
+
 #ifdef BYEIGHT
+
+/*
+   This BYEIGHT code accesses the passed unsigned char * buffer with a 32-bit
+   integer pointer type. This violates the strict aliasing rule, where a
+   compiler can assume, for optimization purposes, that two pointers to
+   fundamentally different types won't ever point to the same memory. This can
+   manifest as a problem only if one of the pointers is written to. This code
+   only reads from those pointers. So long as this code remains isolated in
+   this compilation unit, there won't be a problem. For this reason, this code
+   should not be copied and pasted into a compilation unit in which other code
+   writes to the buffer that is passed to these routines.
+ */
 
 /* ========================================================================= */
 #define DOLIT8 { \
@@ -270,7 +296,7 @@ z_crc_t ZEXPORT crc32(crc, buf, len)
 local z_crc_t crc32_little(crc, buf, len)
     z_crc_t crc;
     const unsigned char FAR *buf;
-    unsigned int len;
+    z_size_t len;
 {
     register z_crc_t c;
 
@@ -311,10 +337,11 @@ local z_crc_t crc32_little(crc, buf, len)
 #define DOBIG64 DOBIG8; DOBIG8; DOBIG8; DOBIG8; DOBIG8; DOBIG8; DOBIG8; DOBIG8
 
 /* ========================================================================= */
+/*
 local z_crc_t crc32_big(crc, buf, len)
     z_crc_t crc;
     const unsigned char FAR *buf;
-    unsigned int len;
+    z_size_t len;
 {
     register z_crc_t c;
 
@@ -339,7 +366,7 @@ local z_crc_t crc32_big(crc, buf, len)
     c = ~c;
     return (z_crc_t)(ZSWAP32(c));
 }
-
+*/
 #endif /* BYEIGHT */
 
 #define GF2_DIM 32      /* dimension of GF(2) vectors (length of CRC) */
