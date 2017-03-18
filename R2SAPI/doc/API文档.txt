@@ -18,8 +18,8 @@
 129	440	*	GetFileFromPakW		从PAK文件中读取一个文件（线程安全）
 435	440	*	GetFileFromPakOffsetA	从PAK文件中的指定位置读取LZSS压缩的数据（2016-11废弃）
 435	440	*	GetFileFromPakOffsetW	从PAK文件中的指定位置读取LZSS压缩的数据（2016-11废弃）
-436	440	*	GetFileFromPakOffset2A	从PAK文件中的指定位置读取数据（线程安全）
-436	440	*	GetFileFromPakOffset2W	从PAK文件中的指定位置读取数据（线程安全）
+436	446	*	GetFileFromPakOffset2A	从PAK文件中的指定位置读取数据（线程安全）
+436	446	*	GetFileFromPakOffset2W	从PAK文件中的指定位置读取数据（线程安全）
 439		32	I4Add			32位整数相加
 352	392	*	I4Rol			32位整数循环左移
 352	392	*	I4Ror			32位整数循环右移
