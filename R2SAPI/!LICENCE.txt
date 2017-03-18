@@ -20,9 +20,9 @@
 * 代商品或劳务之购用、使用损失、资料损失、利益损失、业务中断等等），不负
 * 任何责任，即在该种使用已获事前告知可能会造成此类损害的情形下亦然。
 * 
-* 本软件使用了nettle类库，Copyright © 2005-2014 Niels Möller。该类库使用LGPL v3开源协议。
-* 本软件使用了openssl类库，Copyright © 1995-2016 The OpenSSL Project Authors。该类库使用OpenSSL开源协议。
-* 本软件使用了zlib类库，Copyright © 1995-2013 Jean-loup Gailly and Mark Adler。该类库使用ZLIB开源协议。
+* 本软件使用了nettle类库，Copyright © 2005-2016 Niels Möller。该类库使用LGPL v3开源协议。
+* 本软件使用了openssl类库，Copyright © 1995-2017 The OpenSSL Project Authors。该类库使用OpenSSL开源协议。
+* 本软件使用了zlib类库，Copyright © 1995-2017 Jean-loup Gailly and Mark Adler。该类库使用ZLIB开源协议。
 
 === BSD Licence ===
 
@@ -51,8 +51,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * This code contains GNU nettle, Copyright © 2005-2014 Niels Möller. LGPL v3.
- * This code contains openssl, Copyright © 1995-2016 The OpenSSL Project Authors. OpenSSL Licence.
- * This code contains zlib, Copyright © 1995-2013 Jean-loup Gailly and Mark Adler. Zlib Licence.
+ * This code contains GNU nettle, Copyright © 2005-2016 Niels Möller. LGPL v3.
+ * This code contains openssl, Copyright © 1995-2017 The OpenSSL Project Authors. OpenSSL Licence.
+ * This code contains zlib, Copyright © 1995-2017 Jean-loup Gailly and Mark Adler. Zlib Licence.
  */
 

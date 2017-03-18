@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.43.0.442
+	1.43.0.445
 --*/
 
 #ifndef R2SAPI_H_
@@ -65,8 +65,8 @@ typedef struct {
 	size_t Size;
 	char FileName[MAX_PATH];
 } ENUMPAKFILEA;
-typedef int (API ENUMPAKPROCW)(const ENUMPAKFILEW *, void *);
-typedef int (API ENUMPAKPROCA)(const ENUMPAKFILEA *, void *);
+typedef int (API ENUMPAKPROCW)(LPCWSTR, const ENUMPAKFILEW *, void *);
+typedef int (API ENUMPAKPROCA)(LPCSTR, const ENUMPAKFILEA *, void *);
 
 #define MD4_LBLOCK 16
 typedef struct MD4state_st
@@ -199,8 +199,10 @@ int API _();
 ///////////////////////////////////////////
 
 ////westpak
-size_t API EnumFileFromPakA(LPCSTR PakFileName, ENUMPAKPROCA lpEnumFunc, void* Param);
-size_t API EnumFileFromPakW(LPCWSTR PakFileName, ENUMPAKPROCW lpEnumFunc, void* Param);
+#define EnumFileFromPakA EnumFileFromPak2A
+#define EnumFileFromPakW EnumFileFromPak2W
+size_t API EnumFileFromPak2A(LPCSTR PakFileName, ENUMPAKPROCA lpEnumFunc, void* Param);
+size_t API EnumFileFromPak2W(LPCWSTR PakFileName, ENUMPAKPROCW lpEnumFunc, void* Param);
 size_t API GetFileFromPakA(void* pBuf, size_t BufLen, LPCSTR PakFileName, LPCSTR FileWant);
 size_t API GetFileFromPakW(void* pBuf, size_t BufLen, LPCWSTR PakFileName, LPCWSTR FileWant);
 #define GetFileFromPakOffsetA GetFileFromPakOffset2A

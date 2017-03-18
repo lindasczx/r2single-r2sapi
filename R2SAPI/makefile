@@ -7,8 +7,8 @@
 #		如果忽略可选项，请自己改makefile
 #
 # 测试平台：	Windows 7 SP1
-#		MinGW-W64 32位套件 (i686-6.2.0-release-win32-sjlj-rt_v5-rev1)
-#		MinGW-W64 64位套件 (x86_64-6.2.0-release-win32-seh-rt_v5-rev1)
+#		MinGW-W64 32位套件 (i686-6.3.0-release-win32-sjlj-rt_v5-rev1)
+#		MinGW-W64 64位套件 (x86_64-6.3.0-release-win32-seh-rt_v5-rev1)
 #		MSVC 2010 SP1 (cl + lib + link 10.0.40219.1)
 #		WinSDK 7.1 (midl + midlc 7.0.555.1)
 #
@@ -29,20 +29,20 @@ endif
 endif
 
 ifneq ($(BUILDAMD64), 1)
-CC:=		gcc
-CXX:=		g++
-ASM:=		as
-RC:=		windres
-LINK:=		ld
-LIB:=		lib
+CC:=		gcc -m32
+CXX:=		g++ -m32
+#ASM:=		as --32
+RC:=		windres -F pe-i386
+#LINK:=		ld -b pe-i386
+LIB:=		lib /MACHINE:X86
 MIDL:=		midl
 else
-CC:=		gcc64
-CXX:=		g++64
-ASM:=		as64
-RC:=		windres64
-LINK:=		ld64
-LIB:=		lib64
+CC:=		gcc -m64
+CXX:=		g++ -m64
+#ASM:=		as --64
+RC:=		windres -F pe-x86-64
+#LINK:=		ld -b pe-x86-64
+LIB:=		lib /MACHINE:X64
 MIDL:=		midl
 endif
 RM:=		rm
@@ -68,18 +68,12 @@ endif
 
 ifneq ($(BUILDAMD64), 1)
 IMPLIB:=	-loleaut32 x86/c_g18030.lib
+IMPOBJ:=	
 else
 IMPLIB:=	-loleaut32 amd64/c_g18030.lib
+IMPOBJ:=	
 endif
 
-IMPOBJ:=	
-ifneq ($(COMPILE_FROM_PUBLIC), FALSE)
-ifneq ($(BUILDAMD64), 1)
-IMPOBJ:=	$(IMPOBJ) x86/private/xmlparser.o x86/private/fileio.o x86/private/lzssdec.o x86/private/lzssenc.o
-else
-IMPOBJ:=	$(IMPOBJ) amd64/private/xmlparser.o amd64/private/fileio.o amd64/private/lzssdec.o amd64/private/lzssenc.o
-endif
-endif
 
 CSRC:=		r2sapi.c
 CSRCSSE2:=
@@ -169,6 +163,22 @@ CSRC+=		../r2pak/lzssdecxor.c
 CSRC+=		../r2pak/lzssenc.c
 CSRC+=		../r2pak/lzssencxor.c
 CXXSRC+=	../r2pak/fileio.cpp
+else
+ifneq ($(BUILDAMD64), 1)
+IMPOBJ+=	x86/private/xmlparser.o
+IMPOBJ+=	x86/private/lzssdec.o
+IMPOBJ+=	x86/private/lzssdecxor.o
+IMPOBJ+=	x86/private/lzssenc.o
+IMPOBJ+=	x86/private/lzssencxor.o
+IMPOBJ+=	x86/private/fileio.o
+else
+IMPOBJ+=	amd64/private/xmlparser.o
+IMPOBJ+=	amd64/private/lzssdec.o
+IMPOBJ+=	amd64/private/lzssdecxor.o
+IMPOBJ+=	amd64/private/lzssenc.o
+IMPOBJ+=	amd64/private/lzssencxor.o
+IMPOBJ+=	amd64/private/fileio.o
+endif
 endif
 
 COBJ:=		$(CSRC:%.c=%.o)

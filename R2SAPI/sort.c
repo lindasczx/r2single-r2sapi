@@ -36,18 +36,18 @@ void __stdcall MergeSort(void* base, size_t num, size_t size, stdcallcomparefunc
 			int start1 = low, end1 = mid;
 			int start2 = mid, end2 = high;
 			while (start1 < end1 && start2 < end2)
-				memcpy(b + size * k++, stdcallcompare(a + size * start1, a + size * start2) <= 0 ? a + size * start1++ : a + size * start2++, size);
+				memmove(b + size * k++, stdcallcompare(a + size * start1, a + size * start2) <= 0 ? a + size * start1++ : a + size * start2++, size);
 			while (start1 < end1)
-				memcpy(b + size * k++, a + size * start1++, size);
+				memmove(b + size * k++, a + size * start1++, size);
 			while (start2 < end2)
-				memcpy(b + size * k++, a + size * start2++, size);
+				memmove(b + size * k++, a + size * start2++, size);
 		}
 		char* temp = a;
 		a = b;
 		b = temp;
 	}
 	if (a != base) {
-		memcpy(b, a, num * size);
+		memmove(b, a, num * size);
 		b = a;
 	}
 	free(b);

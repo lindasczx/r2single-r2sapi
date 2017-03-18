@@ -188,7 +188,7 @@ library R2SAPILib
 //////// 1. R2Beat PAK文件格式相关
 ///////////////////////////////////////////
 ////	westpak模块
-		[entry("EnumFileFromPakW")]
+		[entry("EnumFileFromPak2W")]
 			long __stdcall EnumFileFromPak([in,string]LPCWSTR PakFileName, [in]long lpEnumFunc, [in]long Param);
 		[entry("GetFileFromPakW")]
 			long __stdcall GetFileFromPak([in,out]void* Buffer, [in]long BufLen, [in,string]LPCWSTR PakFileName, [in,string]LPCWSTR FileWant);

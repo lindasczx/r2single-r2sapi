@@ -11,6 +11,8 @@ _
 ;// westpak模块
 EnumFileFromPakA
 EnumFileFromPakW
+EnumFileFromPak2A
+EnumFileFromPak2W
 GetFileFromPakA
 GetFileFromPakW
 GetFileFromPakOffsetA
