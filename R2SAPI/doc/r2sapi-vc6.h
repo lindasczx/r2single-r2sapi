@@ -1,4 +1,4 @@
-ï»¿/*++
+/*++
 Module Name:
 	r2sapi.h
 
@@ -199,7 +199,7 @@ int API _();
 #define R2SAPIVer (_())
 
 ///////////////////////////////////////////
-//////// 1. R2Beat PAKæ–‡ä»¶æ ¼å¼ç›¸å…³
+//////// 1. R2Beat PAKÎÄ¼ş¸ñÊ½Ïà¹Ø
 ///////////////////////////////////////////
 
 ////westpak
@@ -222,7 +222,7 @@ size_t API LzssDecompress(const void* InBuf, size_t InLen, void* OutBuf, size_t 
 size_t API LzssDecompressXor(const void* InBuf, size_t InLen, void* OutBuf, size_t OutLen);
 
 ///////////////////////////////////////////
-//////// 2. R2Beat æ¸¸æˆå†…å®¹ç›¸å…³
+//////// 2. R2Beat ÓÎÏ·ÄÚÈİÏà¹Ø
 ///////////////////////////////////////////
 
 ////game
@@ -239,7 +239,7 @@ int API gmGetRandomItemID(int IsTeamMode, int UserCount, int MySlot, int TotalFr
 int API gmGetAttackSlot(int IsTeamMode, int UserCount, int MySlot, int TotalFrame, PlayerList* Users, int ItemID);
 
 ///////////////////////////////////////////
-//////// 3. è§£æXML
+//////// 3. ½âÎöXML
 ///////////////////////////////////////////
 
 ////xmlparser
@@ -265,7 +265,7 @@ int API XMLPickTagPosW(size_t*, size_t*, LPCWSTR, LPCWSTR, size_t*, size_t);
 int API XMLPickTagPosA(size_t*, size_t*, LPCSTR, LPCSTR, size_t*, size_t);
 
 ///////////////////////////////////////////
-//////// 4. Hashå‡½æ•°
+//////// 4. Hashº¯Êı
 ///////////////////////////////////////////
 
 ////libcrypto
@@ -359,14 +359,14 @@ int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
 int API BLAKE2SP_Final(BLAKE2SP_CTX *c, unsigned char *md);
 unsigned char * API BLAKE2SP(const void *d, size_t n, unsigned char *md);
 
-////å›½å¯†SM3
+////¹úÃÜSM3
 int API SM3_Init(SM3_CTX *c);
 int API SM3_Update(SM3_CTX *c, const void *data, size_t len);
 int API SM3_Final(SM3_CTX *c, unsigned char *md);
 unsigned char * API SM3(const void *d, size_t n, unsigned char *md);
 
 ///////////////////////////////////////////
-//////// 5. å‹ç¼©è§£å‹
+//////// 5. Ñ¹Ëõ½âÑ¹
 ///////////////////////////////////////////
 
 ////zlib
@@ -383,7 +383,7 @@ uint64_t API CRC64(uint64_t crc, const void *buf, size_t len);
 uint64_t API CRC64_Combine(uint64_t crc1, uint64_t crc2, int64_t len2);
 
 ///////////////////////////////////////////
-//////// 6. å­—ç¬¦ç¼–ç è½¬æ¢
+//////// 6. ×Ö·û±àÂë×ª»»
 ///////////////////////////////////////////
 
 ////utf
@@ -403,9 +403,9 @@ int API UTF32BEToUTF16(LPCLSTR lpSrcStr, int cchSrc, LPWSTR lpDestStr, int cchDe
 int API UTF32BEToUTF32(LPCLSTR lpSrcStr, int cchSrc, LPLSTR lpDestStr, int cchDest);
 
 ///////////////////////////////////////////
-//////// 7. å¤§æ•´æ•°æ“ä½œè¾…åŠ©å‡½æ•°
+//////// 7. ´óÕûÊı²Ù×÷¸¨Öúº¯Êı
 ///////////////////////////////////////////
-////æœ¬æ¨¡å—å¾ˆå¤šå‡½æ•°C/C++ç­‰è¯­è¨€åŸç”Ÿæ”¯æŒï¼Œå› æ­¤ä¸åˆ—
+////±¾Ä£¿éºÜ¶àº¯ÊıC/C++µÈÓïÑÔÔ­ÉúÖ§³Ö£¬Òò´Ë²»ÁĞ
 
 ////i4helper
 int API I4Rol(int, int);
@@ -420,17 +420,17 @@ int64_t API I8RorR(int64_t *, int);
 #endif
 
 ///////////////////////////////////////////
-//////// 8. æ’åºå‡½æ•°
+//////// 8. ÅÅĞòº¯Êı
 ///////////////////////////////////////////
-////æœ¬æ¨¡å—å¾ˆå¤šå‡½æ•°C/C++ç­‰è¯­è¨€åŸç”Ÿæ”¯æŒï¼Œå› æ­¤ä¸åˆ—
+////±¾Ä£¿éºÜ¶àº¯ÊıC/C++µÈÓïÑÔÔ­ÉúÖ§³Ö£¬Òò´Ë²»ÁĞ
 
 ////sort
 void API MergeSort(void* base, size_t num, size_t size, int (API *stdcallcompare)(const void *a, const void *b));
 
 ///////////////////////////////////////////
-//////// 9. éšæœºå‡½æ•°
+//////// 9. Ëæ»úº¯Êı
 ///////////////////////////////////////////
-////æœ¬æ¨¡å—å¾ˆå¤šå‡½æ•°C++11åŸç”Ÿæ”¯æŒ
+////±¾Ä£¿éºÜ¶àº¯ÊıC++11Ô­ÉúÖ§³Ö
 
 ////mt19937
 void API MT_SRand(uint64_t seed);
@@ -440,7 +440,7 @@ uint64_t API MT_Rand64();
 double API MT_DRand();
 
 ///////////////////////////////////////////
-//////// 10. ä¸å†ä½¿ç”¨çš„æ—§å‡½æ•°
+//////// 10. ²»ÔÙÊ¹ÓÃµÄ¾Éº¯Êı
 ///////////////////////////////////////////
 
 

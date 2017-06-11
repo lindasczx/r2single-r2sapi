@@ -1,5 +1,5 @@
 @echo off
-make clean
-make
+mingw32-make clean
+mingw32-make
 pause
-make cleanobj
+mingw32-make cleanobj

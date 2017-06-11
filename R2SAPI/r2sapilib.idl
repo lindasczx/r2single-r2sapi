@@ -13,7 +13,7 @@ library R2SAPILib
 	]
 	module R2SAPIConstants
 	{
-		const LPSTR STR_ERROR = "^ERROR";	// VB不能识别LPWSTR
+		const LPSTR STR_ERROR = "^ERROR";	// VB不能识别LPWSTR常量
 		const long  XML_ERR_OK = 0;
 		const long  XML_ERR_NOTFOUND = -1;
 		const long  XML_ERR_BUFFER = -2;
@@ -62,6 +62,15 @@ library R2SAPILib
 		long Size;
 		short FileName[MAX_PATH];
 	} ENUMPAKFILE;
+	typedef struct PlayerList{
+		unsigned char Enabled;
+		unsigned char Slot;
+		unsigned char Team;
+		unsigned char Rank;
+		long Frame;
+		float FramePos;
+		float FrameRate;
+	} PlayerList;
 	typedef struct BLAKE2S_CTX
 	{
 		unsigned char UBuf[240];
@@ -209,7 +218,15 @@ library R2SAPILib
 		[entry("LzssDecompressXor")]
 			long __stdcall LzssDecompressXor([in,out]void* InBuf, [in]long InLen, [in,out]void* OutBuf, [in]long OutLen);
 ///////////////////////////////////////////
-//////// 2. 解析XML
+//////// 2. R2Beat 游戏内容相关
+///////////////////////////////////////////
+////	game模块
+		[entry("gmGetRandomItemID")]
+			int __stdcall gmGetRandomItemID([in]bool IsTeamMode, [in]long UserCount, [in]long MySlot, [in]long TotalFrame, [in]PlayerList* Users, [in]long MusicLevel);
+		[entry("gmGetAttackSlot")]
+			int __stdcall gmGetAttackSlot([in]bool IsTeamMode, [in]long UserCount, [in]long MySlot, [in]long TotalFrame, [in]PlayerList* Users, [in]long ItemID);
+///////////////////////////////////////////
+//////// 3. 解析XML
 ///////////////////////////////////////////
 ////	xmlparser模块
 		[entry("XMLPickAttribW")]
@@ -233,7 +250,7 @@ library R2SAPILib
 		[entry("XMLPickTagPosW")]
 			long __stdcall XMLPickTagPosW([in,out]long* OutPos, [in,out]long* OutLen, [in,string]LPCWSTR StrFrom, [in,string]LPCWSTR Tag, [in,out,defaultvalue(0)]long* NextPtr, [in,defaultvalue(1)]long Pos);
 ///////////////////////////////////////////
-//////// 3. Hash函数
+//////// 4. Hash函数
 ///////////////////////////////////////////
 ////	openssl模块
 		[entry("MD4")]
@@ -410,7 +427,7 @@ library R2SAPILib
 		[entry("SM3_Final")]
 			long __stdcall SM3_Final([in,out]SM3_CTX* c, [in,out]void* pResult);
 ///////////////////////////////////////////
-//////// 4. 压缩解压
+//////// 5. 压缩解压
 ///////////////////////////////////////////
 ////	zlib模块
 		[entry("CRC32")]
@@ -433,7 +450,7 @@ library R2SAPILib
 		[entry("CRC64_Combine")]
 			Int64 __stdcall CRC64_Combine([in]long CRC1Lo, [in]long CRC1Hi, [in]long CRC2Lo, [in]long CRC2Hi, [in]long Len2Lo, [in]long Len2Hi);
 ///////////////////////////////////////////
-//////// 5. 字符编码转换
+//////// 6. 字符编码转换
 ///////////////////////////////////////////
 ////	UTF.c
 		[entry("cpConvertEncoding")]
@@ -467,7 +484,7 @@ library R2SAPILib
 		[entry("UTF32BEToUTF32")]
 			long __stdcall UTF32BEToUTF32([in]void* lpSrcStr, [in]long cchSrc, [in,out]void* lpDestStr, [in]long cchDest);
 ///////////////////////////////////////////
-//////// 6. 大整数操作辅助函数
+//////// 7. 大整数操作辅助函数
 ///////////////////////////////////////////
 ////	i4helper.c
 		[entry("I4Add")]
@@ -609,13 +626,27 @@ library R2SAPILib
 		[entry("I8BstrOctR")]
 			BSTR __stdcall I8Oct([in]Int64* A);
 ///////////////////////////////////////////
-//////// 7. 排序函数
+//////// 8. 排序函数
 ///////////////////////////////////////////
 ////	sort.c
 		[entry("MergeSort")]
 			void __stdcall MergeSort([in]void* ArrayBase, [in]long ElementNum, [in]long ElementSize, [in]long CompareFunc);
 		[entry("QuickSort")]
 			void __stdcall QuickSort([in]void* ArrayBase, [in]long ElementNum, [in]long ElementSize, [in]long CompareFunc);
+///////////////////////////////////////////
+//////// 9. 随机函数
+///////////////////////////////////////////
+////	mt19937.c
+		[entry("MT_SRand")]
+			void __stdcall MT_SRand([in]long Seed, [in,defaultvalue(0)]long SeedHi);
+		[entry("MT_SRand_Array")]
+			void __stdcall MT_SRand_Array([in]void* SeedArray, [in]long ArrayLength);
+		[entry("MT_Rand")]
+			long __stdcall MT_Rand();
+		[entry("MT_Rand64")]
+			Int64 __stdcall MT_Rand64();
+		[entry("MT_DRand")]
+			double __stdcall MT_DRand();
 
 	};
 

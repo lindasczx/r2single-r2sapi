@@ -87,6 +87,11 @@
 164	392	*	MDC2_Final		MDC-2散列函数
 164	392	*	MDC2_Init		MDC-2散列函数
 164	392	*	MDC2_Update		MDC-2散列函数
+457	458	*	MT_DRand		MT19937随机数（0到1的小数）
+457		*	MT_Rand			MT19937随机数（0到2^32-1的整数）
+457		*	MT_Rand64		MT19937随机数（0到2^64-1的整数）
+457		*	MT_SRand		用整数种子初始化MT19937随机数生成器
+457		*	MT_SRand_Array		用数组种子初始化MT19937随机数生成器
 442		*	MergeSort		归并排序函数（稳定排序）
 435		*	QuickSort		快速排序函数（不稳定排序）
 352	392	32	R8I8			双精度浮点数转为64位整数
@@ -217,6 +222,8 @@
 120	392	*	cpConvertEncoding	转换字符串编码	（推荐使用）
 252	392	*	cpMakeTrCode		生成转换码
 120	392	*	cpTrCodeSupported	转换码是否支持
+457		*	gmGetAttackSlot		（游戏内容专用）
+457		*	gmGetRandomItemID	（游戏内容专用）
 
 284	392-440	-	CRC32_GetTable		CRC32校验函数	（已删除，因无用途）
 284	392-440	-	CRC64_GetTable		CRC64校验函数	（已删除，因无用途）

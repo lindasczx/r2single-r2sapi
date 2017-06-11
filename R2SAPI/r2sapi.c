@@ -1,5 +1,8 @@
 #include "r2sapi.h"
 #include "getcpuid.h"
+#include "mt19937.h"
+#include <stdlib.h>
+#include <time.h>
 #include <windows.h>
 
 SIMD_VERSION SIMD_Version = {0};
@@ -53,6 +56,8 @@ BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
 		//if (!IsValidCodePage(54936))	// GB18030
 		//	return FALSE;
 		GetSIMDVersion();
+		srand(time(NULL));
+		MT64_SRand(time(NULL));
 		break;
 		
 	case DLL_PROCESS_DETACH:

@@ -1,12 +1,11 @@
 #ifndef _SORT_H_
 #define _SORT_H_
 
-#include <stdlib.h>
-#include <string.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stddef.h>
 
 typedef int (__stdcall *stdcallcomparefunc)(const void *a, const void *b);
 

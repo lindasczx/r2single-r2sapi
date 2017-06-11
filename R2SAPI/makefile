@@ -7,8 +7,8 @@
 #		如果忽略可选项，请自己改makefile
 #
 # 测试平台：	Windows 7 SP1
-#		MinGW-W64 32位套件 (i686-6.3.0-release-win32-sjlj-rt_v5-rev1)
-#		MinGW-W64 64位套件 (x86_64-6.3.0-release-win32-seh-rt_v5-rev1)
+#		MinGW-W64 32位套件 (i686-7.1.0-release-win32-sjlj-rt_v5-rev0)
+#		MinGW-W64 64位套件 (x86_64-7.1.0-release-win32-seh-rt_v5-rev0)
 #		MSVC 2010 SP1 (cl + lib + link 10.0.40219.1)
 #		WinSDK 7.1 (midl + midlc 7.0.555.1)
 #
@@ -86,6 +86,7 @@ CSRC+=		blake2s.c
 CSRC+=		blake2sp.c
 CSRC+=		crc32.c
 CSRC+=		crc64.c
+CSRC+=		game.c
 CSRC+=		getcpuid.c
 CSRC+=		i4helper.c
 CSRC+=		i8conv.c
@@ -93,6 +94,7 @@ CSRC+=		i8helper.c
 CSRC+=		md6.c
 CSRC+=		md6_compress.c
 CSRC+=		md6_mode.c
+CSRC+=		mt19937-64.c
 CSRC+=		nettle/memxor.c
 CSRC+=		nettle/sha3.c
 CSRC+=		nettle/sha3-224.c
