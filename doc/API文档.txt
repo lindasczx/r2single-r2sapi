@@ -31,10 +31,10 @@
 352	392	32	I8And			64位整数位与（ByVal版）
 352	392	32	I8AndR			64位整数位与（ByRef版）
 363	392	32	I8Bstr			64位整数转为字符串（ByVal版）
-363	392	32	I8BstrHex		64位整数转为16进制字符串（ByVal版）
-363	392	32	I8BstrHexR		64位整数转为16进制字符串（ByRef版）
-363	392	32	I8BstrOct		64位整数转为8进制字符串（ByVal版）
-363	392	32	I8BstrOctR		64位整数转为8进制字符串（ByRef版）
+363	460	32	I8BstrHex		64位整数转为16进制字符串（ByVal版）
+363	460	32	I8BstrHexR		64位整数转为16进制字符串（ByRef版）
+363	460	32	I8BstrOct		64位整数转为8进制字符串（ByVal版）
+363	460	32	I8BstrOctR		64位整数转为8进制字符串（ByRef版）
 363	392	32	I8BstrR			64位整数转为字符串（ByRef版）
 352	392	32	I8Cmp			64位整数比较（ByVal版）
 352	392	32	I8CmpR			64位整数比较（ByRef版）
@@ -87,7 +87,7 @@
 164	392	*	MDC2_Final		MDC-2散列函数
 164	392	*	MDC2_Init		MDC-2散列函数
 164	392	*	MDC2_Update		MDC-2散列函数
-457	458	*	MT_DRand		MT19937随机数（0到1的小数）
+457	458	*	MT_DRand		MT19937随机数（0到1（不包括1）的小数）
 457		*	MT_Rand			MT19937随机数（0到2^32-1的整数）
 457		*	MT_Rand64		MT19937随机数（0到2^64-1的整数）
 457		*	MT_SRand		用整数种子初始化MT19937随机数生成器
@@ -224,6 +224,7 @@
 120	392	*	cpTrCodeSupported	转换码是否支持
 457		*	gmGetAttackSlot		（游戏内容专用）
 457		*	gmGetRandomItemID	（游戏内容专用）
+462		*	gmGetRank		（游戏内容专用）
 
 284	392-440	-	CRC32_GetTable		CRC32校验函数	（已删除，因无用途）
 284	392-440	-	CRC64_GetTable		CRC64校验函数	（已删除，因无用途）

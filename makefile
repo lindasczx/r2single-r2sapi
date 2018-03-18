@@ -91,6 +91,7 @@ CSRC+=		getcpuid.c
 CSRC+=		i4helper.c
 CSRC+=		i8conv.c
 CSRC+=		i8helper.c
+CSRC+=		lltow.c
 CSRC+=		md6.c
 CSRC+=		md6_compress.c
 CSRC+=		md6_mode.c

@@ -19,6 +19,9 @@ typedef struct {
 // 排序名次
 void __stdcall gmSortRank(int UserCount, int Frame, PlayerList* UsersIn, PlayerList* UsersOut);
 
+// 获得名次
+int __stdcall gmGetRank(int UserCount, int MySlot, int TotalFrame, PlayerList* UsersIn, PlayerList* UsersOut, bool AllowSameRank);
+
 // 获得道具ID
 int __stdcall gmGetRandomItemID(bool IsTeamMode, int UserCount, int MySlot, int TotalFrame, PlayerList* Users, int MusicLevel);
 
@@ -155,8 +158,10 @@ void __stdcall gmSortRank(int UserCount, int Frame, PlayerList* UsersIn, PlayerL
 	memmove(UsersOut, UsersIn, 6*sizeof(PlayerList));
 	int i;
 	for (i=0; i<6; i++)
-		if (UsersOut[i].Enabled)
+		if (UsersOut[i].Enabled) {
 			UsersOut[i].FramePos += (Frame - UsersOut[i].Frame) * UsersOut[i].FrameRate;
+			UsersOut[i].Frame = Frame;
+		}
 	MergeSort(UsersOut, 6, sizeof(PlayerList), &RankCompareProc);
 	UsersOut[0].Rank = 0;
 	for (i=1; i<UserCount; i++) {
@@ -177,6 +182,25 @@ static int GetIndexBySlot(int UserCount, int MySlot, PlayerList* Users) {
 	return -1;
 }
 
+// 获得名次
+int __stdcall gmGetRank(int UserCount, int MySlot, int TotalFrame, PlayerList* UsersIn, PlayerList* UsersOut, bool AllowSameRank) {
+	int i;
+	if (UserCount <= 1) return 0;
+
+	PlayerList u[6];
+	i = GetIndexBySlot(6, MySlot, UsersIn);
+	gmSortRank(UserCount, UsersIn[i].Frame, UsersIn, u);
+	if (UsersOut != NULL) {
+		memmove(UsersOut, u, 6*sizeof(PlayerList));
+	}
+	int myindex = GetIndexBySlot(UserCount, MySlot, u);
+	if (AllowSameRank) {
+		return u[myindex].Rank;
+	} else {
+		return myindex;
+	}
+}
+
 // 获得道具ID
 int __stdcall gmGetRandomItemID(bool IsTeamMode, int UserCount, int MySlot, int TotalFrame, PlayerList* Users, int MusicLevel) {
 	int i;
@@ -189,7 +213,7 @@ int __stdcall gmGetRandomItemID(bool IsTeamMode, int UserCount, int MySlot, int 
 	char myrank = u[myindex].Rank;
 	//std::vector<char> p;	// 概率因子序号集合
 	//std::vector<char> s;	// 开关序号集合
-	char p[8], s[5]; int pc=0, sc=0;
+	int p[8], s[5]; int pc=0, sc=0;
 
 	if (UserCount == 6)
 		//p.push_back(myrank);
@@ -311,13 +335,14 @@ int __stdcall gmGetRandomItemID(bool IsTeamMode, int UserCount, int MySlot, int 
 // 获得攻击道具的目标Slot
 int __stdcall gmGetAttackSlot(bool IsTeamMode, int UserCount, int MySlot, int TotalFrame, PlayerList* Users, int ItemID) {
 	int i;
-	char myteam = 0, myrank = 0;
+	char myteam = 0;
+	int myrank = 0;
 	if (UserCount <= 1) return 6;
 
 	PlayerList u[6];
 	i = GetIndexBySlot(6, MySlot, Users);
 	gmSortRank(UserCount, Users[i].Frame, Users, u);
-	myrank = GetIndexBySlot(UserCount, MySlot, u);	// 我故意的
+	myrank = GetIndexBySlot(UserCount, MySlot, u);	// 我故意的，计算我的名次时，不计并列
 	myteam = u[myrank].Team;
 
 	switch (ItemID) {

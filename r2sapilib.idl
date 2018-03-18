@@ -1,7 +1,7 @@
 [
-	version(1.43),
+	version(1.44),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.43 Type Library")
+	helpstring("R2Single API 1.44 Type Library")
 ]
 library R2SAPILib
 {
@@ -221,10 +221,12 @@ library R2SAPILib
 //////// 2. R2Beat 游戏内容相关
 ///////////////////////////////////////////
 ////	game模块
+		[entry("gmGetRank")]
+			long __stdcall gmGetRank([in]long UserCount, [in]long MySlot, [in]long TotalFrame, [in]PlayerList* UsersIn, [in]long pUsersOut, [in]bool AllowSameRank);
 		[entry("gmGetRandomItemID")]
-			int __stdcall gmGetRandomItemID([in]bool IsTeamMode, [in]long UserCount, [in]long MySlot, [in]long TotalFrame, [in]PlayerList* Users, [in]long MusicLevel);
+			long __stdcall gmGetRandomItemID([in]bool IsTeamMode, [in]long UserCount, [in]long MySlot, [in]long TotalFrame, [in]PlayerList* Users, [in]long MusicLevel);
 		[entry("gmGetAttackSlot")]
-			int __stdcall gmGetAttackSlot([in]bool IsTeamMode, [in]long UserCount, [in]long MySlot, [in]long TotalFrame, [in]PlayerList* Users, [in]long ItemID);
+			long __stdcall gmGetAttackSlot([in]bool IsTeamMode, [in]long UserCount, [in]long MySlot, [in]long TotalFrame, [in]PlayerList* Users, [in]long ItemID);
 ///////////////////////////////////////////
 //////// 3. 解析XML
 ///////////////////////////////////////////

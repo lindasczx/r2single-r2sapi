@@ -33,6 +33,7 @@ LzssDecompressXor	=lzssdecompress_xor
 
 ;// game.cpp
 ;gmSortRank
+gmGetRank
 gmGetRandomItemID
 gmGetAttackSlot
 

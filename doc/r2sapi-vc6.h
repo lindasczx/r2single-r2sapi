@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.43.1.457
+	1.44.0.462
 --*/
 
 #ifndef R2SAPI_H_
@@ -235,6 +235,7 @@ typedef struct{
 	float FramePos;
 	float FrameRate;	// 0, 0.9, 1.0, 1.1
 } PlayerList;
+int API gmGetRank(int UserCount, int MySlot, int TotalFrame, PlayerList* UsersIn, PlayerList* UsersOut, bool AllowSameRank);
 int API gmGetRandomItemID(int IsTeamMode, int UserCount, int MySlot, int TotalFrame, PlayerList* Users, int MusicLevel);
 int API gmGetAttackSlot(int IsTeamMode, int UserCount, int MySlot, int TotalFrame, PlayerList* Users, int ItemID);
 

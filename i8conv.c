@@ -1,4 +1,5 @@
 ﻿#include "r2sapi.h"
+#include "lltow.h"
 #include <stdint.h>
 #include <wchar.h>
 #include <errno.h>
@@ -38,29 +39,28 @@ uint64_t API R8UI8(double a) {
 
 BSTR API I8Bstr(int64_t a) {
 	wchar_t b[65];
-	_i64tow(a, b, 10);
+	lltow_upper(a, b, 10);
 	BSTR s = SysAllocString(b);
 	return s;
 }
 
 BSTR API UI8Bstr(uint64_t a) {
 	wchar_t b[65];
-	_ui64tow(a, b, 10);
+	ulltow_upper(a, b, 10);
 	BSTR s = SysAllocString(b);
 	return s;
 }
 
 BSTR API I8BstrHex(int64_t a) {
 	wchar_t b[65];
-	_i64tow(a, b, 16);
+	ulltow_upper(a, b, 16);
 	BSTR s = SysAllocString(b);
 	return s;
 }
 
-
 BSTR API I8BstrOct(int64_t a) {
 	wchar_t b[65];
-	_i64tow(a, b, 8);
+	ulltow_upper(a, b, 8);
 	BSTR s = SysAllocString(b);
 	return s;
 }
