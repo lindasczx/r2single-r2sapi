@@ -13,6 +13,7 @@ sha512_block_data_order:
 	movq	%rdx,%rsi
 	movq	%r8,%rdx
 
+
 	leaq	OPENSSL_ia32cap_P(%rip),%r11
 	movl	0(%r11),%r9d
 	movl	4(%r11),%r10d
@@ -27,13 +28,20 @@ sha512_block_data_order:
 	orl	%r9d,%r10d
 	cmpl	$1342177792,%r10d
 	je	.Lavx_shortcut
+	movq	%rsp,%rax
+
 	pushq	%rbx
+
 	pushq	%rbp
+
 	pushq	%r12
+
 	pushq	%r13
+
 	pushq	%r14
+
 	pushq	%r15
-	movq	%rsp,%r11
+
 	shlq	$4,%rdx
 	subq	$128+32,%rsp
 	leaq	(%rsi,%rdx,8),%rdx
@@ -41,7 +49,8 @@ sha512_block_data_order:
 	movq	%rdi,128+0(%rsp)
 	movq	%rsi,128+8(%rsp)
 	movq	%rdx,128+16(%rsp)
-	movq	%r11,128+24(%rsp)
+	movq	%rax,152(%rsp)
+
 .Lprologue:
 
 	movq	0(%rdi),%rax
@@ -1705,18 +1714,27 @@ sha512_block_data_order:
 	movq	%r11,56(%rdi)
 	jb	.Lloop
 
-	movq	128+24(%rsp),%rsi
-	movq	(%rsi),%r15
-	movq	8(%rsi),%r14
-	movq	16(%rsi),%r13
-	movq	24(%rsi),%r12
-	movq	32(%rsi),%rbp
-	movq	40(%rsi),%rbx
-	leaq	48(%rsi),%rsp
+	movq	152(%rsp),%rsi
+
+	movq	-48(%rsi),%r15
+
+	movq	-40(%rsi),%r14
+
+	movq	-32(%rsi),%r13
+
+	movq	-24(%rsi),%r12
+
+	movq	-16(%rsi),%rbp
+
+	movq	-8(%rsi),%rbx
+
+	leaq	(%rsi),%rsp
+
 .Lepilogue:
 	movq	8(%rsp),%rdi
 	movq	16(%rsp),%rsi
 	.byte	0xf3,0xc3
+
 .LSEH_end_sha512_block_data_order:
 .p2align	6
 
@@ -1816,14 +1834,22 @@ sha512_block_data_order_xop:
 	movq	%rdx,%rsi
 	movq	%r8,%rdx
 
+
 .Lxop_shortcut:
+	movq	%rsp,%rax
+
 	pushq	%rbx
+
 	pushq	%rbp
+
 	pushq	%r12
+
 	pushq	%r13
+
 	pushq	%r14
+
 	pushq	%r15
-	movq	%rsp,%r11
+
 	shlq	$4,%rdx
 	subq	$256,%rsp
 	leaq	(%rsi,%rdx,8),%rdx
@@ -1831,7 +1857,8 @@ sha512_block_data_order_xop:
 	movq	%rdi,128+0(%rsp)
 	movq	%rsi,128+8(%rsp)
 	movq	%rdx,128+16(%rsp)
-	movq	%r11,128+24(%rsp)
+	movq	%rax,152(%rsp)
+
 	movaps	%xmm6,128+32(%rsp)
 	movaps	%xmm7,128+48(%rsp)
 	movaps	%xmm8,128+64(%rsp)
@@ -2890,7 +2917,8 @@ sha512_block_data_order_xop:
 	movq	%r11,56(%rdi)
 	jb	.Lloop_xop
 
-	movq	128+24(%rsp),%rsi
+	movq	152(%rsp),%rsi
+
 	vzeroupper
 	movaps	128+32(%rsp),%xmm6
 	movaps	128+48(%rsp),%xmm7
@@ -2898,17 +2926,25 @@ sha512_block_data_order_xop:
 	movaps	128+80(%rsp),%xmm9
 	movaps	128+96(%rsp),%xmm10
 	movaps	128+112(%rsp),%xmm11
-	movq	(%rsi),%r15
-	movq	8(%rsi),%r14
-	movq	16(%rsi),%r13
-	movq	24(%rsi),%r12
-	movq	32(%rsi),%rbp
-	movq	40(%rsi),%rbx
-	leaq	48(%rsi),%rsp
+	movq	-48(%rsi),%r15
+
+	movq	-40(%rsi),%r14
+
+	movq	-32(%rsi),%r13
+
+	movq	-24(%rsi),%r12
+
+	movq	-16(%rsi),%rbp
+
+	movq	-8(%rsi),%rbx
+
+	leaq	(%rsi),%rsp
+
 .Lepilogue_xop:
 	movq	8(%rsp),%rdi
 	movq	16(%rsp),%rsi
 	.byte	0xf3,0xc3
+
 .LSEH_end_sha512_block_data_order_xop:
 .def	sha512_block_data_order_avx;	.scl 3;	.type 32;	.endef
 .p2align	6
@@ -2921,14 +2957,22 @@ sha512_block_data_order_avx:
 	movq	%rdx,%rsi
 	movq	%r8,%rdx
 
+
 .Lavx_shortcut:
+	movq	%rsp,%rax
+
 	pushq	%rbx
+
 	pushq	%rbp
+
 	pushq	%r12
+
 	pushq	%r13
+
 	pushq	%r14
+
 	pushq	%r15
-	movq	%rsp,%r11
+
 	shlq	$4,%rdx
 	subq	$256,%rsp
 	leaq	(%rsi,%rdx,8),%rdx
@@ -2936,7 +2980,8 @@ sha512_block_data_order_avx:
 	movq	%rdi,128+0(%rsp)
 	movq	%rsi,128+8(%rsp)
 	movq	%rdx,128+16(%rsp)
-	movq	%r11,128+24(%rsp)
+	movq	%rax,152(%rsp)
+
 	movaps	%xmm6,128+32(%rsp)
 	movaps	%xmm7,128+48(%rsp)
 	movaps	%xmm8,128+64(%rsp)
@@ -4059,7 +4104,8 @@ sha512_block_data_order_avx:
 	movq	%r11,56(%rdi)
 	jb	.Lloop_avx
 
-	movq	128+24(%rsp),%rsi
+	movq	152(%rsp),%rsi
+
 	vzeroupper
 	movaps	128+32(%rsp),%xmm6
 	movaps	128+48(%rsp),%xmm7
@@ -4067,17 +4113,25 @@ sha512_block_data_order_avx:
 	movaps	128+80(%rsp),%xmm9
 	movaps	128+96(%rsp),%xmm10
 	movaps	128+112(%rsp),%xmm11
-	movq	(%rsi),%r15
-	movq	8(%rsi),%r14
-	movq	16(%rsi),%r13
-	movq	24(%rsi),%r12
-	movq	32(%rsi),%rbp
-	movq	40(%rsi),%rbx
-	leaq	48(%rsi),%rsp
+	movq	-48(%rsi),%r15
+
+	movq	-40(%rsi),%r14
+
+	movq	-32(%rsi),%r13
+
+	movq	-24(%rsi),%r12
+
+	movq	-16(%rsi),%rbp
+
+	movq	-8(%rsi),%rbx
+
+	leaq	(%rsi),%rsp
+
 .Lepilogue_avx:
 	movq	8(%rsp),%rdi
 	movq	16(%rsp),%rsi
 	.byte	0xf3,0xc3
+
 .LSEH_end_sha512_block_data_order_avx:
 .def	sha512_block_data_order_avx2;	.scl 3;	.type 32;	.endef
 .p2align	6
@@ -4090,14 +4144,22 @@ sha512_block_data_order_avx2:
 	movq	%rdx,%rsi
 	movq	%r8,%rdx
 
+
 .Lavx2_shortcut:
+	movq	%rsp,%rax
+
 	pushq	%rbx
+
 	pushq	%rbp
+
 	pushq	%r12
+
 	pushq	%r13
+
 	pushq	%r14
+
 	pushq	%r15
-	movq	%rsp,%r11
+
 	subq	$1408,%rsp
 	shlq	$4,%rdx
 	andq	$-2048,%rsp
@@ -4106,7 +4168,8 @@ sha512_block_data_order_avx2:
 	movq	%rdi,128+0(%rsp)
 	movq	%rsi,128+8(%rsp)
 	movq	%rdx,128+16(%rsp)
-	movq	%r11,128+24(%rsp)
+	movq	%rax,152(%rsp)
+
 	movaps	%xmm6,128+32(%rsp)
 	movaps	%xmm7,128+48(%rsp)
 	movaps	%xmm8,128+64(%rsp)
@@ -5419,7 +5482,8 @@ sha512_block_data_order_avx2:
 
 .Ldone_avx2:
 	leaq	(%rbp),%rsp
-	movq	128+24(%rsp),%rsi
+	movq	152(%rsp),%rsi
+
 	vzeroupper
 	movaps	128+32(%rsp),%xmm6
 	movaps	128+48(%rsp),%xmm7
@@ -5427,17 +5491,25 @@ sha512_block_data_order_avx2:
 	movaps	128+80(%rsp),%xmm9
 	movaps	128+96(%rsp),%xmm10
 	movaps	128+112(%rsp),%xmm11
-	movq	(%rsi),%r15
-	movq	8(%rsi),%r14
-	movq	16(%rsi),%r13
-	movq	24(%rsi),%r12
-	movq	32(%rsi),%rbp
-	movq	40(%rsi),%rbx
-	leaq	48(%rsi),%rsp
+	movq	-48(%rsi),%r15
+
+	movq	-40(%rsi),%r14
+
+	movq	-32(%rsi),%r13
+
+	movq	-24(%rsi),%r12
+
+	movq	-16(%rsi),%rbp
+
+	movq	-8(%rsi),%rbx
+
+	leaq	(%rsi),%rsp
+
 .Lepilogue_avx2:
 	movq	8(%rsp),%rdi
 	movq	16(%rsp),%rsi
 	.byte	0xf3,0xc3
+
 .LSEH_end_sha512_block_data_order_avx2:
 
 .def	se_handler;	.scl 3;	.type 32;	.endef
@@ -5480,7 +5552,6 @@ se_handler:
 .Lnot_in_avx2:
 	movq	%rax,%rsi
 	movq	128+24(%rax),%rax
-	leaq	48(%rax),%rax
 
 	movq	-8(%rax),%rbx
 	movq	-16(%rax),%rbp

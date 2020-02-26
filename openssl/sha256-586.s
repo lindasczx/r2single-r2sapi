@@ -1,4 +1,3 @@
-.file	"sha512-586.s"
 .text
 .globl	_sha256_block_data_order
 .def	_sha256_block_data_order;	.scl	2;	.type	32;	.endef

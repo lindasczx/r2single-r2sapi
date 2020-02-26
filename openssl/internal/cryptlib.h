@@ -1,5 +1,5 @@
 /*
- * Copyright 1995-2016 The OpenSSL Project Authors. All Rights Reserved.
+ * Copyright 1995-2018 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the OpenSSL license (the "License").  You may not use
  * this file except in compliance with the License.  You can obtain a copy
@@ -13,8 +13,6 @@
 # include <stdlib.h>
 # include <string.h>
 
-# include "e_os.h"
-
 # ifdef OPENSSL_USE_APPLINK
 #  undef BIO_FLAGS_UPLINK
 #  define BIO_FLAGS_UPLINK 0x8000
@@ -25,9 +23,23 @@
 # include <openssl/buffer.h>
 # include <openssl/bio.h>
 # include <openssl/err.h>
+# include "internal/nelem.h"
 
-#ifdef  __cplusplus
-extern "C" {
+#ifdef NDEBUG
+# define ossl_assert(x) ((x) != 0)
+#else
+__owur static ossl_inline int ossl_assert_int(int expr, const char *exprstr,
+                                              const char *file, int line)
+{
+    if (!expr)
+        OPENSSL_die(exprstr, file, line);
+
+    return expr;
+}
+
+# define ossl_assert(x) ossl_assert_int((x) != 0, "Assertion failed: "#x, \
+                                         __FILE__, __LINE__)
+
 #endif
 
 typedef struct ex_callback_st EX_CALLBACK;
@@ -38,6 +50,8 @@ typedef struct app_mem_info_st APP_INFO;
 
 typedef struct mem_st MEM;
 DEFINE_LHASH_OF(MEM);
+
+# define OPENSSL_CONF             "openssl.cnf"
 
 # ifndef OPENSSL_SYS_VMS
 #  define X509_CERT_AREA          OPENSSLDIR
@@ -64,9 +78,12 @@ DEFINE_LHASH_OF(MEM);
 void OPENSSL_cpuid_setup(void);
 extern unsigned int OPENSSL_ia32cap_P[];
 void OPENSSL_showfatal(const char *fmta, ...);
-extern int OPENSSL_NONPIC_relocated;
 void crypto_cleanup_all_ex_data_int(void);
+int openssl_init_fork_handlers(void);
 
+char *ossl_safe_getenv(const char *name);
+
+extern CRYPTO_RWLOCK *memdbg_lock;
 int openssl_strerror_r(int errnum, char *buf, size_t buflen);
 # if !defined(OPENSSL_NO_STDIO)
 FILE *openssl_fopen(const char *filename, const char *mode);
@@ -74,8 +91,6 @@ FILE *openssl_fopen(const char *filename, const char *mode);
 void *openssl_fopen(const char *filename, const char *mode);
 # endif
 
-#ifdef  __cplusplus
-}
-#endif
+uint32_t OPENSSL_rdtsc(void);
 
 #endif

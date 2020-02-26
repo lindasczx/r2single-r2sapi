@@ -152,10 +152,10 @@
 403		*	SHAKE256_Final		NIST SHA3-SHAKE256散列函数
 403		*	SHAKE256_Init		NIST SHA3-SHAKE256散列函数
 403		*	SHAKE256_Update		NIST SHA3-SHAKE256散列函数
-259	392	*	SM3			国密SM3散列函数
-259	392	*	SM3_Final		国密SM3散列函数
-259	392	*	SM3_Init		国密SM3散列函数
-259	392	*	SM3_Update		国密SM3散列函数
+259	470	*	SM3			国密SM3散列函数
+259	470	*	SM3_Final		国密SM3散列函数
+259	470	*	SM3_Init		国密SM3散列函数
+259	470	*	SM3_Update		国密SM3散列函数
 352	392	32	UI4Cmp			32位无符号整数比较
 352	392	32	UI4Div			32位无符号整数相除
 352	392	32	UI4Mod			32位无符号整数求余
@@ -234,6 +234,8 @@
 87	392-440	-	crc32			CRC32校验函数	（已删除，请用CRC32）
 120	392-440	-	crc32_combine		CRC32校验函数	（已删除，请用CRC32_Combine）
 120	392-440	-	get_crc_table		CRC32校验函数	（已删除，因无用途）
+470		32	inet_ntop		Windows XP兼容函数
+470		32	inet_pton		Windows XP兼容函数
 67	392-440	-	uncompress		zlib解压函数	（已删除，请用ZlibUncompress）
 120	392-440	-	zlibVersion		zlib库版本号	（已删除，请用_）
 

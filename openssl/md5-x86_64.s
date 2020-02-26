@@ -12,11 +12,17 @@ md5_block_asm_data_order:
 	movq	%rdx,%rsi
 	movq	%r8,%rdx
 
+
 	pushq	%rbp
+
 	pushq	%rbx
+
 	pushq	%r12
+
 	pushq	%r14
+
 	pushq	%r15
+
 .Lprologue:
 
 
@@ -663,15 +669,22 @@ md5_block_asm_data_order:
 	movl	%edx,12(%rbp)
 
 	movq	(%rsp),%r15
+
 	movq	8(%rsp),%r14
+
 	movq	16(%rsp),%r12
+
 	movq	24(%rsp),%rbx
+
 	movq	32(%rsp),%rbp
+
 	addq	$40,%rsp
+
 .Lepilogue:
 	movq	8(%rsp),%rdi
 	movq	16(%rsp),%rsi
 	.byte	0xf3,0xc3
+
 .LSEH_end_md5_block_asm_data_order:
 
 .def	se_handler;	.scl 3;	.type 32;	.endef

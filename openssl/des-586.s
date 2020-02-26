@@ -1,4 +1,3 @@
-.file	"des-586.s"
 .text
 .globl	_DES_SPtrans
 .def	__x86_DES_encrypt;	.scl	3;	.type	32;	.endef

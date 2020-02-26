@@ -41,7 +41,7 @@ BEGIN
 #endif
             VALUE "FileVersion", FILEVERSTR
             VALUE "InternalName", "r2sapi\0"
-            VALUE "LegalCopyright", "(C)版权所有 2008-2017 ZX Inc.\0"
+            VALUE "LegalCopyright", "(C)版权所有 2008-2019 ZX Inc.\0"
 #ifdef _WIN64
             VALUE "OriginalFilename", "r2sapi64.dll\0"
 #else

@@ -12,14 +12,22 @@ whirlpool_block:
 	movq	%rdx,%rsi
 	movq	%r8,%rdx
 
+
+	movq	%rsp,%rax
+
 	pushq	%rbx
+
 	pushq	%rbp
+
 	pushq	%r12
+
 	pushq	%r13
+
 	pushq	%r14
+
 	pushq	%r15
 
-	movq	%rsp,%r11
+
 	subq	$128+40,%rsp
 	andq	$-64,%rsp
 
@@ -27,7 +35,8 @@ whirlpool_block:
 	movq	%rdi,0(%r10)
 	movq	%rsi,8(%r10)
 	movq	%rdx,16(%r10)
-	movq	%r11,32(%r10)
+	movq	%rax,32(%r10)
+
 .Lprologue:
 
 	movq	%r10,%rbx
@@ -587,17 +596,26 @@ whirlpool_block:
 	jmp	.Louterloop
 .Lalldone:
 	movq	32(%rbx),%rsi
-	movq	(%rsi),%r15
-	movq	8(%rsi),%r14
-	movq	16(%rsi),%r13
-	movq	24(%rsi),%r12
-	movq	32(%rsi),%rbp
-	movq	40(%rsi),%rbx
-	leaq	48(%rsi),%rsp
+
+	movq	-48(%rsi),%r15
+
+	movq	-40(%rsi),%r14
+
+	movq	-32(%rsi),%r13
+
+	movq	-24(%rsi),%r12
+
+	movq	-16(%rsi),%rbp
+
+	movq	-8(%rsi),%rbx
+
+	leaq	(%rsi),%rsp
+
 .Lepilogue:
 	movq	8(%rsp),%rdi
 	movq	16(%rsp),%rsi
 	.byte	0xf3,0xc3
+
 .LSEH_end_whirlpool_block:
 
 .p2align	6
@@ -898,7 +916,6 @@ se_handler:
 	jae	.Lin_prologue
 
 	movq	128+32(%rax),%rax
-	leaq	48(%rax),%rax
 
 	movq	-8(%rax),%rbx
 	movq	-16(%rax),%rbp

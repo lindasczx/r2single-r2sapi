@@ -1,4 +1,3 @@
-.file	"crypto/md5/asm/md5-586.s"
 .text
 .globl	_md5_block_asm_data_order
 .def	_md5_block_asm_data_order;	.scl	2;	.type	32;	.endef

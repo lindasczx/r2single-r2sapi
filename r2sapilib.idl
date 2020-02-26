@@ -1,7 +1,7 @@
 [
-	version(1.44),
+	version(1.50),
 	uuid(30000000-0000-0313-0000-000000000010),
-	helpstring("R2Single API 1.44 Type Library")
+	helpstring("R2Single API 1.50 Type Library")
 ]
 library R2SAPILib
 {
@@ -169,9 +169,10 @@ library R2SAPILib
 	} SHA3_CTX;
 	typedef struct SM3_CTX
 	{
-		long Total[2];
-		long State[8];
-		unsigned char Buffer[64];
+		long A, B, C, D, E, F, G, H;
+		long NL, NH;
+		long Data[16];
+		long Num;
 	} SM3_CTX;
 	typedef struct WHIRLPOOL_CTX
 	{

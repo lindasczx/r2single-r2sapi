@@ -104,12 +104,6 @@ SHA512			=stdc_SHA512
 SHA512_Final		=stdc_SHA512_Final
 SHA512_Init		=stdc_SHA512_Init
 SHA512_Update		=stdc_SHA512_Update
-WHIRLPOOL		=stdc_WHIRLPOOL
-WHIRLPOOL_Final		=stdc_WHIRLPOOL_Final
-WHIRLPOOL_Init		=stdc_WHIRLPOOL_Init
-WHIRLPOOL_Update	=stdc_WHIRLPOOL_Update
-
-;// 增补NIST Hash函数
 SHA512_224
 SHA512_224_Final	=stdc_SHA512_Final
 SHA512_224_Init
@@ -118,6 +112,14 @@ SHA512_256
 SHA512_256_Final	=stdc_SHA512_Final
 SHA512_256_Init
 SHA512_256_Update	=stdc_SHA512_Update
+SM3
+SM3_Final		=stdc_SM3_Final
+SM3_Init		=stdc_SM3_Init
+SM3_Update		=stdc_SM3_Update
+WHIRLPOOL		=stdc_WHIRLPOOL
+WHIRLPOOL_Final		=stdc_WHIRLPOOL_Final
+WHIRLPOOL_Init		=stdc_WHIRLPOOL_Init
+WHIRLPOOL_Update	=stdc_WHIRLPOOL_Update
 
 ;// nettle模块
 SHA3_224
@@ -158,12 +160,6 @@ BLAKE2SP
 BLAKE2SP_Final
 BLAKE2SP_Init
 BLAKE2SP_Update
-
-;// 国密SM3.c
-SM3
-SM3_Final
-SM3_Init
-SM3_Update
 
 ;///////////////////////////////////////////
 ;//////// 5. 压缩解压
@@ -235,4 +231,8 @@ MT_SRand_Array	=MT64_SRand_Array
 MT_Rand		=MT64_Rand
 MT_Rand64	=MT64_Rand64
 MT_DRand	=MT64_DRand
+
+;///////////////////////////////////////////
+;//////// 10. 老系统兼容API
+;///////////////////////////////////////////
 

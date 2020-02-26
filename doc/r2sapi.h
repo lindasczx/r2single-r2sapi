@@ -3,7 +3,7 @@ Module Name:
 	r2sapi.h
 
 Version:
-	1.44.0.462
+	1.50.0.470
 --*/
 
 #ifndef R2SAPI_H_
@@ -188,11 +188,13 @@ typedef struct blake2sp_state
 	unsigned char buf[8 * BLAKE2S_BLOCKBYTES];
 	size_t buflen;
 } BLAKE2SP_CTX;
-typedef struct sm3_context
+#define SM3_LBLOCK	(64/4)
+typedef struct SM3state_st
 {
-	unsigned int total[2]; /*!< number of bytes processed */
-	unsigned int state[8]; /*!< intermediate digest state */
-	unsigned char buffer[64]; /*!< data block being processed */
+	unsigned int A, B, C, D, E, F, G, H;
+	unsigned int Nl, Nh;
+	unsigned int data[SM3_LBLOCK];
+	unsigned int num;
 } SM3_CTX;
 
 int API _();
@@ -306,11 +308,6 @@ int API SHA512_Init(SHA512_CTX *c);
 int API SHA512_Update(SHA512_CTX *c, const void *data, size_t len);
 int API SHA512_Final(SHA512_CTX *c, unsigned char *md);
 unsigned char * API SHA512(const void *d, size_t n, unsigned char *md);
-int API WHIRLPOOL_Init(WHIRLPOOL_CTX *c);
-int API WHIRLPOOL_Update(WHIRLPOOL_CTX *c, const void *data, size_t len);
-int API WHIRLPOOL_Final(WHIRLPOOL_CTX *c, unsigned char *md);
-unsigned char * API WHIRLPOOL(const void *d, size_t n, unsigned char *md);
-////nist sha-2 addition
 int API SHA512_224_Init(SHA512_CTX *c);
 int API SHA512_224_Update(SHA512_CTX *c, const void *data, size_t len);
 int API SHA512_224_Final(SHA512_CTX *c, unsigned char *md);
@@ -319,6 +316,14 @@ int API SHA512_256_Init(SHA512_CTX *c);
 int API SHA512_256_Update(SHA512_CTX *c, const void *data, size_t len);
 int API SHA512_256_Final(SHA512_CTX *c, unsigned char *md);
 unsigned char * API SHA512_256(const void *d, size_t n, unsigned char *md);
+int API SM3_Init(SM3_CTX *c);
+int API SM3_Update(SM3_CTX *c, const void *data, size_t len);
+int API SM3_Final(SM3_CTX *c, unsigned char *md);
+unsigned char * API SM3(const void *d, size_t n, unsigned char *md);
+int API WHIRLPOOL_Init(WHIRLPOOL_CTX *c);
+int API WHIRLPOOL_Update(WHIRLPOOL_CTX *c, const void *data, size_t len);
+int API WHIRLPOOL_Final(WHIRLPOOL_CTX *c, unsigned char *md);
+unsigned char * API WHIRLPOOL(const void *d, size_t n, unsigned char *md);
 
 ////nettle
 int API SHA3_224_Init(SHA3_CTX *c);
@@ -359,12 +364,6 @@ int API BLAKE2SP_Init(BLAKE2SP_CTX *c);
 int API BLAKE2SP_Update(BLAKE2SP_CTX *c, const void *data, size_t len);
 int API BLAKE2SP_Final(BLAKE2SP_CTX *c, unsigned char *md);
 unsigned char * API BLAKE2SP(const void *d, size_t n, unsigned char *md);
-
-////国密SM3
-int API SM3_Init(SM3_CTX *c);
-int API SM3_Update(SM3_CTX *c, const void *data, size_t len);
-int API SM3_Final(SM3_CTX *c, unsigned char *md);
-unsigned char * API SM3(const void *d, size_t n, unsigned char *md);
 
 ///////////////////////////////////////////
 //////// 5. 压缩解压
@@ -441,7 +440,16 @@ uint64_t API MT_Rand64();
 double API MT_DRand();
 
 ///////////////////////////////////////////
-//////// 10. 不再使用的旧函数
+//////// 10. 老系统兼容函数
+///////////////////////////////////////////
+
+#ifndef _WIN64
+const char* WINAPI inet_ntop(int af, void const *src, char *dst, size_t size);
+int WINAPI inet_pton(int af, const char *src, void *dst);
+#endif
+
+///////////////////////////////////////////
+//////// 11. 不再使用的旧函数
 ///////////////////////////////////////////
 
 

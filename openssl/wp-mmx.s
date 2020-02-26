@@ -1,4 +1,3 @@
-.file	"wp-mmx.s"
 .text
 .globl	_whirlpool_block_mmx
 .def	_whirlpool_block_mmx;	.scl	2;	.type	32;	.endef

@@ -4,6 +4,7 @@
 #include <openssl/mdc2.h>
 #include <openssl/ripemd.h>
 #include <openssl/sha.h>
+#include <openssl/sm3.h>
 #include <openssl/whrlpool.h>
 #include "r2sapi.h"
 
@@ -201,6 +202,28 @@ unsigned char * API stdc_SHA512(const void *d, size_t n, unsigned char *md)
 	SHA512(d, n, md);
 	return 0;
 }
+
+////////////////SM3
+int API stdc_SM3_Init(SM3_CTX *c)
+{
+	sm3_init(c);
+	return 0;
+}
+int API stdc_SM3_Update(SM3_CTX *c, const void *data, size_t len)
+{
+	sm3_update(c, data, len);
+	return 0;
+}
+int API stdc_SM3_Final(SM3_CTX *c, unsigned char *md)
+{
+	sm3_final(md, c);
+	return 0;
+}
+//unsigned char * API stdc_SM3(const void *d, size_t n, unsigned char *md)
+//{
+//	SM3(d, n, md);
+//	return 0;
+//}
 
 ////////////////WHIRLPOOL
 int API stdc_WHIRLPOOL_Init(WHIRLPOOL_CTX *c)
